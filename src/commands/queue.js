@@ -93,14 +93,14 @@ exports.run = (client, message, args) => {
       timestamp = "LIVE";
       livestream = true;
     } else {
-      timestamp = client.createTimestamp(queue[0].duration);
+      timestamp = client.createTimestamp(elapsedTime) + '/' + client.createTimestamp(queue[0].duration);
     };
 
     embed.addField(`Now playing:`, `**[${queue[0].title}](https://www.youtube.com/watch?v=${queue[0].id})** added by ${queue[0].requestedBy} \`[${timestamp}]\``)
     
     embed.addField(`Up next:`, list);
 
-    if(songsInQueue > 1) {
+    if(songsInQueue > 1 || songsInQueue == 0) {
       songsInQueueEnglish = "songs";
     }
 
