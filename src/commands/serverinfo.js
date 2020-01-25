@@ -26,6 +26,8 @@ exports.run = (client, message) => {
   content = `**ID:** ${guild.id}\n**Owner:** ${guild.owner}\n**Region:** ${guild.region}\n**Verification Level:** ${vlvl}\n**Members:** ${guild.memberCount}\n**Roles:** ${roleCount}\n**Channels:** ${chanCount}\n**Created:** ${guild.createdAt}${eListOutput}`;
   if (content.length > 2048) {
     eListOutput = "";
+
+    content = `**ID:** ${guild.id}\n**Owner:** ${guild.owner}\n**Region:** ${guild.region}\n**Verification Level:** ${vlvl}\n**Members:** ${guild.memberCount}\n**Roles:** ${roleCount}\n**Channels:** ${chanCount}\n**Created:** ${guild.createdAt}`;
   }
 
   let embed = new Discord.RichEmbed()
