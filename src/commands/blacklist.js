@@ -2,7 +2,7 @@ exports.run = async (client, message, [action, ...member]) => {
   const settings = message.settings;
   
   if(settings.blacklisted == "ARRAY") {
-    client.settings.set(message.guild.id, [], "blacklisted");
+    await client.settings.set(message.guild.id, [], "blacklisted");
   }
 
   if(!action) {
