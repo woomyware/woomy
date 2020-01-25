@@ -93,7 +93,6 @@ exports.run = async (client, message, [action, ...member]) => {
     let blacklisted = false;
 
     settings.blacklisted.forEach(function(ID) {
-      console.log("does this work")
       if(ID == user.id) {
         blacklisted = true;
       }
