@@ -20,7 +20,7 @@ module.exports.run = (client, message, args, level) =>{
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: [],
+  aliases: ["p"],
   permLevel: "User",
   requiredPerms: ["CONNECT", "SPEAK"]
 };
