@@ -3,11 +3,11 @@ const config = {
   "owners": ["433790467830972417", "324937993972350976"],
 
   // Tokens
-  "token": "",
-  "devtoken": "",
-  "ytkey": "",
-  "owmkey": "",
-  "dblkey": "",
+  "token": "NDM1OTYxNzA0MTQ1NDg1ODM1.XW762g.4uLWDkiz0tUkiAHZRrIW39ZJh6A",
+  "devtoken": "NDM5NTk0Njc1MjMwMjEyMDk2.XW77ww.izMA1miEMwRcM1-B6CM58qZq9d8",
+  "ytkey": "AIzaSyCCf9Q04Zy6tNOre3pTkiXRShI55kjGhmg",
+  "owmkey": "c49ea77cf0d3216a1cbc6b683f8d9117",
+  "dblkey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQzNTk2MTcwNDE0NTQ4NTgzNSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTI5NDg5MzgzfQ.Wrjwn2ETwBfRZM7F3PiFf8Gy2MgBZ6Ry7vKv8WTxK_Y",
 
   // Default per-server settings 
   "defaultSettings" : {

@@ -16,6 +16,8 @@ module.exports = async (client, message) => {
     prefix = settings.devprefix;
   }
 
+  let blacklisted = false;
+
   if(message.guild) {
 
     perms = message.channel.permissionsFor(client.user);
@@ -24,7 +26,7 @@ module.exports = async (client, message) => {
     var adminRole = message.guild.roles.get(settings.adminRole);
     var autorole = message.guild.roles.get(settings.autorole);
     var mutedRole = message.guild.roles.get(settings.mutedRole);
-    var welcomeChannel = message.guild.channels.get(settings.welcomeChannel)
+    var welcomeChannel = message.guild.channels.get(settings.welcomeChannel);
 
     if(!welcomeChannel && settings.welcomeChannel != "off" || !adminRole && settings.adminRole != "None set" || !modRole && settings.modRole != "None set" || !mutedRole && settings.mutedRole != "None set" || !autorole && settings.autorole != "off") { 
 
@@ -121,8 +123,6 @@ module.exports = async (client, message) => {
     };
 
     if(message.settings.blacklisted != "ARRAY" && settings.blacklisted.length > 0) {
-      let blacklisted = false;
-
       settings.blacklisted.forEach(function(ID) {
         if(ID == message.author.id) {
           blacklisted = true;
