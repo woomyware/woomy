@@ -128,19 +128,6 @@ module.exports = async (client, message) => {
           blacklisted = true;
         }
       });
-      if(blacklisted == true) {
-        try {
-          return message.author.send(
-            `<:denied:466995195150336020> You have been blacklisted from using commands in \`${message.guild.name}\``
-          );
-        } catch(err) {
-          client.logger.log(err, "error")
-        };
-      };
-    };
-
-    if (!perms.has('SEND_MESSAGES')) {
-      return message.author.send(`<:error:466995152976871434> I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`);
     };
   };
 
@@ -164,6 +151,20 @@ module.exports = async (client, message) => {
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
 
   if (!cmd) return;
+
+  if (!perms.has('SEND_MESSAGES')) {
+    return message.author.send(`<:error:466995152976871434> I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`);
+  };
+
+  if(message.guild && blacklisted == true) {
+    try {
+      return message.author.send(
+        `<:denied:466995195150336020> You have been blacklisted from using commands in \`${message.guild.name}\``
+      );
+    } catch(err) {
+      client.logger.log(err, "error")
+    };
+  };
 
   if (cmd && !message.guild && cmd.conf.guildOnly)
     return message.channel.send("<:denied:466995195150336020> This command is unavailable in DM's. Try running it in a server I'm in!");
