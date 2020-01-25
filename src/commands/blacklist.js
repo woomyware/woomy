@@ -39,6 +39,17 @@ exports.run = async (client, message, [action, ...member]) => {
       if(user.id === client.user.id) {
         return message.channel.send('lol no');
       };
+
+      if (user.id === message.guild.owner.id) {
+        return message.channel.send("<:error:466995152976871434> You can't blacklist the owner!")
+      };
+
+      let admin = message.guild.member(message.author)
+      if (user.highestRole.position >= admin.highestRole.position && admin.user.id !== message.guild.ownerID) {
+        return message.channel.send(
+          `<:error:466995152976871434> You can't blacklist people higher ranked than yourself!`
+        );
+      };
     
       if(user.id === message.member.id) {
         return message.channel.send('<:error:466995152976871434> You can\'t blacklist yourself!');

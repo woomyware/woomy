@@ -65,14 +65,14 @@ exports.run = async (client, message, args) => {
     leaveMessage = "`" + settings.leaveMessage + "`";
   }
 
-  if(settings.blacklisted == "ARRAY") {
+  if(settings.blacklisted == "ARRAY" || settings.blacklisted.length < 1) {
     blacklist = "__Disabled__";
   } else {
     if(settings.blacklisted.length > 0) {
       settings.blacklisted.forEach(function(user) {
-        blacklist += "`" + (client.users.get(user) || user) + "` ,"
+        blacklist += "`" + (client.users.get(user).tag || user.tag) + "`, "
       });
-      blacklist = blacklist.substr(0, blacklist.length, -3)
+      blacklist = blacklist.substring(0, blacklist.length - 2);
     };
   };
 
