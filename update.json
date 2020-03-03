@@ -1,4 +1,4 @@
 {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "changelog": "**Updated to 1.0:**\n> - Music commands have been competely reworked. They're now less buggy and more feature rich!\n> - Added `nowplaying` command\n> - Added `blacklist` command, which lets you stop users from using commands in your server\n> - Woomy works in DM's again\n> - Renamed `calculate` to `math`\n> - The filter has been removed because it sucked\n> - Lots of minor changes to lots of commands\n> - Woomy now lists the permissions she needs to run specific commands in `help`\n> - Invite now lets you choose what permissions Woomy gets\n**Notes:**\n> - Woomy skipped from 0.7.0 to 1.0 so she could have a better way to name her updates. For example, the X in (X.Y.Z) will change only if there is a huge update like a rewrite, Y will change when new features are added to Woomy and Z will change when minor updates are made, like bug fixes.\n> - Woomy is now open source! You can view her code at https://github.com/mudkipscience/woomy"
 }
