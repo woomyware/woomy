@@ -130,13 +130,6 @@ module.exports = async (client, message) => {
       });
     };
   };
-
-  if (commandRanRecently.has(message.author.id)) {
-    return message.channel.send(
-        `<:wait:467115775849922570> You are being ratelimited. Please try again in 2 seconds.`
-      )
-      .then(m => m.delete(2000));
-  };
   
   const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 
@@ -151,6 +144,13 @@ module.exports = async (client, message) => {
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
 
   if (!cmd) return;
+  
+  if (commandRanRecently.has(message.author.id)) {
+    return message.channel.send(
+        `<:wait:467115775849922570> You are being ratelimited. Please try again in 2 seconds.`
+      )
+      .then(m => m.delete(2000));
+  };
 
   if (!perms.has('SEND_MESSAGES')) {
     return message.author.send(`<:error:466995152976871434> I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`);
