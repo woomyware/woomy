@@ -6,11 +6,40 @@ const chalk = require('chalk');
 const DBL = require("dblapi.js");
 const client = new Discord.Client();
 
+try {
 client.config = require('./config');
+} catch (err) {
+	console.log('Could not load config.js. \n', err);
+	process.exit();
+}
+
+try{
 client.version = require('./version.json');
+} catch (err) {
+	console.log('Could not load version.json. \n', err);
+	process.exit();
+}
+
+try{
 client.logger = require('./src/modules/Logger');
+} catch (err) {
+	console.log('Could not load Logger.js. \n', err);
+	process.exit();
+}
+
+try{
 require("./src/modules/functions")(client);
+} catch (err) {
+	console.log('Could not load functions.js. \n', err);
+	process.exit();
+}
+
+try{
 client.logger.setClient(client);
+} catch (err) {
+	console.log('Logger failed to initialize. \n', err);
+	process.exit(1);
+}
 
 if(process.env['USER'] != 'container') {
   client.devmode = true;
@@ -19,11 +48,35 @@ if(process.env['USER'] != 'container') {
   const dblapi = new DBL(client.config.dblkey, client);
 }
 
+try{
 client.commands = new Enmap();
-client.aliases = new Enmap();
-client.settings = new Enmap({name: 'settings'});
-client.blacklist = new Enmap({name: 'blacklist'});
+} catch (err) {
+	console.log('Failed to create the commands map. \n', err);
+	process.exit();
+}
 
+try{
+client.aliases = new Enmap();
+} catch (err) {
+	console.log('Failed to create the aliases map. \n', err);
+	process.exit();
+}
+
+try{
+client.settings = new Enmap({name: 'settings'});
+} catch (err) {
+	console.log('Failed to initialize the settings database. \n', err);
+	process.exit();
+}
+
+try{
+client.blacklist = new Enmap({name: 'blacklist'});
+} catch (err) {
+	console.log('Failed to initialize the blacklist database. \n', err);
+	process.exit(1);
+}
+
+try{
 const init = async () => {
   const cmdFiles = await readdir("./src/commands/");
   client.logger.info(`Loading ${cmdFiles.length} commands.`);
@@ -48,17 +101,30 @@ const init = async () => {
     client.on(eventName, event.bind(null, client));
   });
 
+  try{
   client.levelCache = {};
   for (let i = 0; i < client.config.permLevels.length; i++) {
     const thisLevel = client.config.permLevels[i];
     client.levelCache[thisLevel.name] = thisLevel.level;
   };
+} catch (err) {
+	console.log('Level cache failed to initialize. \n', err);
+	process.exit();
+}
 
+  try{
   if(client.devmode === true) {
     client.login(client.config.devtoken);
   } else {
     client.login(client.config.token);
   };
+} catch (err) {
+	console.log('Unable to login to Discord. \n', err);
+	process.exit(1);
+}
 };
-
 init();
+} catch (err) {
+	console.log('Initialization failed. \n', err);
+	process.exit(1);
+}
