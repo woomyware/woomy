@@ -1,7 +1,7 @@
 const weather = require("weather-js");
 exports.run = async (client, message, args, error) => {
   if(!args[0]) {
-    message.channel.send(
+    return message.channel.send(
       `<:error:466995152976871434> You didn't give me a location. Usage: \`${client.commands.get(`weather`).help.usage}\``
     );
   };
@@ -9,10 +9,13 @@ exports.run = async (client, message, args, error) => {
   if(args.join(" ").toLowerCase() == "antarctica") {
     return;
   }
+
+  message.channel.startTyping();
 	
   weather.find({search: args.join(" "), degreeType: 'C'}, function(err, result) {
 		if(err) client.logger.log(`weather.js error: ${JSON.stringify(error)}`, "error")
     if(result.length < 2 || !result) {
+      message.channel.stopTyping();
       return message.channel.send("<:error:466995152976871434> City not found!");
     };
 
@@ -34,11 +37,12 @@ exports.run = async (client, message, args, error) => {
       embedColour = "#ff614f"
     };
 
-		embed = new Discord.RichEmbed();
+		embed = new Discord.MessageEmbed();
 		embed.addField(`Weather for ${location.name}:`, `**Condition:** ${current.skytext}\n**Temperature:** ${current.temperature}C°\n**Feels like:** ${current.feelslike}C°\n**Humidity:** ${current.humidity}%\n**Wind:** ${current.winddisplay}\n**Warnings:** ${warning}`)
 		embed.setThumbnail(current.imageUrl)
 		embed.setFooter(`Last updated at ${current.observationtime} ${current.date}`)
-		embed.setColor(embedColour)
+    embed.setColor(embedColour)
+    message.channel.stopTyping();
 		message.channel.send(embed)
   });
 };

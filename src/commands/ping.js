@@ -1,8 +1,8 @@
-exports.run = async (client, message) => { // eslint-disable-line no-unused-vars
-  const msg = await message.channel.send("<:wait:467115775849922570> Please wait...");
+exports.run = async (client, message) => {
+  const msg = await message.channel.send("⏱️ Please wait...");
   msg.edit(
-    `:ping_pong: Pong! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms, API Latency is ${Math.round(client.ping)}ms`
-    );
+    `:ping_pong: Pong! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms, API Latency is ${Math.round(client.ws.ping)}ms`
+  );
 };
 
 exports.conf = {

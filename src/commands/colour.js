@@ -1,28 +1,45 @@
 const randomColour = require("randomcolor");
 exports.run = async (client, message, args, level) => {
+  var colour;
 	if(!args[0]) {
-		var colour = randomColour();
-	}
+		colour = randomColour();
+	} else if(isHex(args.join(" ")) != true) {
+    colour = stringToHex(args.join(" "));
+  } else {
+    colour = args[0]
+  }
 
-	if(args[0]) {
-		if(args[0].startsWith('#')) {
-			colour = args[0];   
-		} else {
-			colour = `#${args[0]}`;
-		} 
-		if(colour.length > 7) return message.channel.send(
-      `<:error:466995152976871434> Has to be a hex code! Usage: \`${client.commands.get(`colour`).help.usage}\``
-      );
-		if(colour.length < 7) return message.channel.send(
-      `<:error:466995152976871434> Has to be a hex code! Usage: \`${client.commands.get(`colour`).help.usage}\``
-      );
-	};
-
-  embed = new Discord.RichEmbed();
+  embed = new Discord.MessageEmbed();
+  embed.setTitle(colour)
   embed.setColor(colour);
-  embed.setDescription(colour)
+  embed.setImage("https://api.alexflipnote.xyz/colour/image/" + colour.replace("#", ""));
   message.channel.send(embed)
 };
+
+function isHex(string) {
+  var str = string;
+  if(str.charAt(0) == "#") {
+    str = str.slice(1)
+  };
+
+  return typeof str === 'string'
+      && str.length === 6
+      && !isNaN(Number('0x' + str))
+}
+
+function stringToHex(string) {
+  var hash = 0;
+  for (var i = 0; i < string.length; i++) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var colour = '#';
+  for (var i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xFF;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+  return colour;
+};
+
 
 exports.conf = {
     enabled: true,
@@ -36,5 +53,5 @@ exports.help = {
     name: "colour",
     category: "Utility",
     description: "Gives you a random colour",
-    usage: "colour <hex>"
+    usage: "colour <hex> **OR** colour <text>"
 };

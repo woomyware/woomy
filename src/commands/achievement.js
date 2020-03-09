@@ -13,10 +13,16 @@ exports.run = (client, message, args) => {
   message.channel.startTyping();
   let params = "h=Achievement+Get%21&i=1&t=" + encodeURIComponent(text);
 
-  message.channel.send({
-    files: [new Discord.Attachment(url + "?" + params, "achievement.png")]
-  });
-  message.channel.stopTyping();
+  try {
+    message.channel.stopTyping();
+    message.channel.send({
+      files: [new Discord.MessageAttachment(url + "?" + params, "achievement.png")]
+    });
+
+  } catch(err) {
+    message.channel.stopTyping();
+    message.channel.send(`<:error:466995152976871434> Error when generating image: \`${err}\``)
+  }
 };
 
 exports.conf = {

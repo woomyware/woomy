@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
       );
   };
 
-  user = client.users.get(args[0])
+  user = client.users.cache.get(args[0])
   if(!user) {
     return message.channel.send("<:error:466995152976871434> Invalid ID")
   }
@@ -20,25 +20,27 @@ exports.run = async (client, message, args) => {
 
   let reason = args.slice(1).join(" ");
   if (!reason) reason = `Banned by ${message.author.tag}`;
-  await message.guild.ban(args[0], reason).catch(console.error);
+  await message.guild.members.ban(args[0], {reason: reason}).catch(console.error);
   message.channel.send(`<:success:466995111885144095> Hackbanned \`${user.tag}\``);
   
   if (settings.modlogsChannel !== "off") {
-    const channel = message.guild.channels.find(
+    const channel = message.guild.channels.cache.find(
       channel => channel.name === settings.modlogsChannel
     );
   
     if (channel) {
-    let embed = new Discord.RichEmbed();
-      embed.setColor("#7c0136");
-      embed.setAuthor("User preemptively banned!", user.avatarURL);
-      embed.setDescription(`❯ User: ${user.tag} (${user.id})\n❯ Mod: ${message.author} (${message.author.id})\n❯ Reason: ${reason}`)
+    let embed = new Discord.MessageEmbed();
+      embed.setColor("#BC0057");
+      embed.setAuthor("User banned!", user.avatarURL({format: "png", dynamic: true}));
+      embed.setDescription(
+        `• User: ${user.tag} (${user.id})\n• Mod: ${message.author} (${message.author.id})\n• Reason: ${reason}`
+        );
       try {
-        channel.send({ embed });
+        channel.send(embed);
       } catch (err) {
         // probably no permissions to send messages/embeds there
       };
-    };
+    }
   };
 };
 

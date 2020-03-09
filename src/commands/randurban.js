@@ -11,7 +11,7 @@ exports.run = (client, message) => {
       "<:error:466995152976871434> Example cannot exceed 2000 characters!"
       );
     
-    embed = new Discord.RichEmbed()
+    embed = new Discord.MessageEmbed()
     .setTitle(json.word)
     .setURL(json.permalink)
     .setColor("#EFFF00")

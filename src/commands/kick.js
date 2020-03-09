@@ -27,14 +27,14 @@ if (user.user.id === message.guild.owner.id) {
   return message.channel.send("<:error:466995152976871434> You can't kick the owner!")
 }
 let moderator = message.guild.member(message.author)
-if (user.highestRole.position >= moderator.highestRole.position && moderator.user.id !== message.guild.ownerID) {
+if (user.roles.highest.position >= moderator.roles.highest.position && moderator.user.id !== message.guild.ownerID) {
   return message.channel.send(
     `<:error:466995152976871434> You can't kick people higher ranked than yourself!`
   );
 }
 
 let bot = message.guild.member(client.user)
-if (user.highestRole.position >= bot.highestRole.position) {
+if (user.roles.highest.position >= bot.roles.highest.position) {
   return message.channel.send(
     `<:error:466995152976871434> I can't kick people who are higher ranked than me!`
   );
@@ -51,16 +51,16 @@ await user.kick(reason).catch(console.error);
 message.channel.send(`<:success:466995111885144095> Kicked \`${user.user.tag}\``);
 
 if (settings.modlogsChannel !== "off") {
-  const channel = message.guild.channels.find(
+  const channel = message.guild.channels.cache.find(
     channel => channel.name === settings.modlogsChannel
   );
 
     if (channel) {
-    let embed = new Discord.RichEmbed();
+    let embed = new Discord.MessageEmbed();
     embed.setColor("#fd0061");
-    embed.setAuthor("User kicked!", user.user.avatarURL);
+    embed.setAuthor("User kicked!", user.user.avatarURL({format: "png", dynamic: true}));
     embed.setDescription(
-      `❯ User: ${user.user.tag} (${user.user.id})\n❯ Mod: ${message.author} (${message.author.id})\n❯ Reason: ${reason}`
+      `• User: ${user.user.tag} (${user.user.id})\n• Mod: ${message.author} (${message.author.id})\n• Reason: ${reason}`
       );
     try {
       channel.send({ embed });

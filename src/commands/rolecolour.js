@@ -1,12 +1,11 @@
 exports.run = async (client, message, [colour, ...givenRole], query) => {
     let role = givenRole.join(" ");
 
-    let gRole = message.guild.roles.find(r => r.name === role);
+    let gRole = client.findRole(role, message);
+
     if (!gRole) {
-        return message.channel.send(
-          `<:error:466995152976871434> That role doesn't seem to exist. Usage: \`${client.commands.get(`rolecolour`).help.usage}\``
-          );
-    }
+      return message.channel.send(`<:error:466995152976871434> That role doesn't seem to exist. Try again!`);
+    };
 
     if(!colour.startsWith('#')) {
       colour = `#`+colour;
@@ -19,14 +18,14 @@ exports.run = async (client, message, [colour, ...givenRole], query) => {
       );
 
   let moderator = message.guild.member(message.author)
-  if (gRole.position >= moderator.highestRole.position) {
+  if (gRole.position >= moderator.roles.highest.position) {
     return message.channel.send(
       "<:error:466995152976871434> You cannot modify roles higher than your own!"
     );
   }
 
-  var bot =  message.guild.members.get(client.user.id)
-  if (gRole.position >= bot.highestRole.position) {
+  var bot =  message.guild.members.cache.get(client.user.id)
+  if (gRole.position >= bot.roles.highest.position) {
     return message.channel.send(
       `<:error:466995152976871434> I cannot modify roles higher than my own!`
     );
@@ -34,7 +33,7 @@ exports.run = async (client, message, [colour, ...givenRole], query) => {
   
   await gRole.edit({color: colour})
   message.channel.send(
-    `<:success:466995111885144095> Role colour changed to \`${colour}\``);
+    `<:success:466995111885144095> The colour of the role \`${gRole.name}\` has been set to \`${colour}\``);
 };
 
 exports.conf = {

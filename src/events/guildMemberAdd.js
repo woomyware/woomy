@@ -2,7 +2,7 @@ module.exports = async (client, member) => {
   const settings = client.getSettings(member.guild.id);
 
   if (settings.welcomeMessage !== "off") {
-    let chanExists = member.guild.channels.get(settings.welcomeChannel)
+    let chanExists = member.guild.channels.cache.get(settings.welcomeChannel)
     if (!chanExists) {
       return;
     };
@@ -11,17 +11,17 @@ module.exports = async (client, member) => {
     welcomeMessage = welcomeMessage.replace("[[members]]", member.guild.memberCount);
 
     member.guild.channels
-      .get(settings.welcomeChannel)
+      .cache.get(settings.welcomeChannel)
       .send(welcomeMessage)
       .catch(console.error);
   }
 
   if (settings.autorole !== "off") {
-    let aRole = member.guild.roles.get(settings.autorole)
+    let aRole = member.guild.roles.cache.get(settings.autorole)
     if (!aRole) {
       return;
     };
-    await member.addRole(aRole.id).catch(console.error);
+    await member.roles.add(aRole.id).catch(console.error);
   };
 
   if(settings.raidMode !== "off") {
@@ -29,18 +29,18 @@ module.exports = async (client, member) => {
       member.kick("User bounced.")
 
       if (settings.chatlogsChannel !== "off") {
-        const channel = member.guild.channels.find(
+        const channel = member.guild.channels.cache.find(
           channel => channel.name === settings.chatlogsChannel
         );
     
         if (channel) {
-          let embed = new Discord.RichEmbed();
+          let embed = new Discord.MessageEmbed();
           embed.setColor("#1f1f1f");
-          embed.setAuthor("User bounced:", member.user.avatarURL);
+          embed.setAuthor("User bounced:", member.user.avatarURL({dynamic: true}));
           embed.setDescription(`‏‏‎❯ User: ${member} (${member.user.id})`, true);
           embed.setFooter(`New users are being automatically kicked because raidmode is enabled.`)
           try {
-            channel.send({ embed });
+            channel.send(embed);
           } catch (err) {
             // probably no permissions to send messages/embeds there
           };
@@ -48,24 +48,24 @@ module.exports = async (client, member) => {
         return;
     }
   }
-    let mRole = member.guild.roles.get(settings.mutedRole)
+    let mRole = member.guild.roles.cache.get(settings.mutedRole)
     if (!mRole) {
       return;
     };
-    await member.addRole(mRole.id).catch(console.error);
+    await member.roles.add(mRole.id).catch(console.error);
     if (settings.chatlogsChannel !== "off") {
-      const channel = member.guild.channels.find(
+      const channel = member.guild.channels.cache.find(
         channel => channel.name === settings.chatlogsChannel
       );
   
       if (channel) {
-        let embed = new Discord.RichEmbed();
+        let embed = new Discord.MessageEmbed();
         embed.setColor("#1f1f1f");
-        embed.setAuthor("User automatically muted:", member.user.avatarURL);
+        embed.setAuthor("User automatically muted:", member.user.avatarURL({dynamic: true}));
         embed.setDescription(`‏‏‎❯ User: ${member} (${member.user.id})`, true);
         embed.setFooter(`New users are being automatically muted because raidmode is enabled.`)
         try {
-          channel.send({ embed });
+          channel.send(embed);
         } catch (err) {
           // probably no permissions to send messages/embeds there
         };
@@ -74,14 +74,14 @@ module.exports = async (client, member) => {
 };
   
   if (settings.chatlogsChannel !== "off") {
-    const channel = member.guild.channels.find(
+    const channel = member.guild.channels.cache.find(
       channel => channel.name === settings.chatlogsChannel
     );
 
     if (channel) {
-      let embed = new Discord.RichEmbed();
+      let embed = new Discord.MessageEmbed();
       embed.setColor("#0099e1");
-      embed.setAuthor("User joined:", member.user.avatarURL);
+      embed.setAuthor("User joined:", member.user.avatarURL({dynamic: true}));
       embed.setDescription(`‏‏‎❯ User: ${member} (${member.user.id})`, true);
       try {
         channel.send({ embed });

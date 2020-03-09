@@ -1,13 +1,13 @@
 exports.run = (client, message, args) => {
   if(!args[0]) {
     return message.channel.send(
-      `<:error:466995152976871434> Invalid choice. Usage: \`${client.commands.get(`emojify`).help.usage}\``
+      `<:error:466995152976871434> Invalid choice. Usage: \`${client.commands.get(`flip`).help.usage}\``
     );
   };
 
-  if(args[0].toLowerCase() != "heads" || args[0].toLowerCase() != "tails") {
+  if(args[0].toLowerCase() != "heads" && args[0].toLowerCase() != "tails") {
     return message.channel.send(
-      `<:error:466995152976871434> Invalid choice. Usage: \`${client.commands.get(`emojify`).help.usage}\``
+      `<:error:466995152976871434> Invalid choice. Usage: \`${client.commands.get(`flip`).help.usage}\``
     );
   };
   var coin = [

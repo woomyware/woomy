@@ -8,7 +8,7 @@ Self hosting is generally not recommended, but instructions are provided below i
 
 # Requirements
 - git
-- node.js v8.0.0 or higher
+- node.js v12.0.0 or higher
 - node-gyp build tools
 - ffmpeg
 

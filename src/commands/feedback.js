@@ -1,9 +1,9 @@
 exports.run = (client, message, args, level) => {
   if(!args[0]) return message.channel.send(`<:error:466995152976871434> You didn't give me any feedback! Usage: \`${client.commands.get(`feedback`).help.usage}\``)
   const feedback = args.join(" ")
-  let guild = client.guilds.get("410990517841690625")
-  let channel = guild.channels.get("438825830949453824")
-  let embed = new Discord.RichEmbed()
+  let guild = client.guilds.cache.get("410990517841690625")
+  let channel = guild.channels.cache.get("438825830949453824")
+  let embed = new Discord.MessageEmbed()
       .setTitle(`Feedback:`)
       .setColor(client.embedColour(message))
       .addField("User:",message.author.tag)

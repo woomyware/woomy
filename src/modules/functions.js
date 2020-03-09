@@ -70,7 +70,6 @@ module.exports = client => {
 
   client.loadCommand = commandName => {
     try {
-      client.logger.log(`Loading command: ${commandName}`);
       const props = require(`../commands/${commandName}`);
       if (props.init) {
         props.init(client);
@@ -109,15 +108,6 @@ module.exports = client => {
     return false;
   };
 
-  // EMBED COLOUR CONTROL
-  client.embedColour = function(msg) {
-    if(!msg.guild) {
-      return ["#ff9d68", "#ff97cb", "#d789ff", "#74FFFF"].random();
-    } else {
-      return msg.guild.member(client.user).displayHexColor;
-    };
-  };
-
   // MEMBER SEARCH
   client.searchForMembers = function(guild, query) {
     if (!query) return;
@@ -127,14 +117,14 @@ module.exports = client => {
     var b;
 
     try {
-      b = guild.members.find(x => x.displayName.toLowerCase() == query);
-      if (!b) guild.members.find(x => x.user.username.toLowerCase() == query);
+      b = guild.members.cache.find(x => x.displayName.toLowerCase() == query);
+      if (!b) guild.members.cache.find(x => x.user.username.toLowerCase() == query);
     } catch (err) {};
     if (b) a.push(b);
-    guild.members.forEach(member => {
+    guild.members.cache.forEach(member => {
       if (
         (member.displayName.toLowerCase().startsWith(query) ||
-          member.user.username.toLowerCase().startsWith(query)) &&
+          member.user.tag.toLowerCase().startsWith(query)) &&
         member.id != (b && b.id)
       ) {
         a.push(member);
@@ -143,7 +133,7 @@ module.exports = client => {
     return a;
   };
 
-  // Music stuff
+  // MUSIC
   client.music = {guilds: {}};
 
   client.music.isYoutubeLink = function(input) {
@@ -194,7 +184,7 @@ module.exports = client => {
   
   client.music.play = async function(message, input, bypassQueue)
   {
-      let voiceChannel = message.member.voiceChannel;
+      let voiceChannel = message.member.voice.channel;
       if(!voiceChannel) return message.channel.send('<:error:466995152976871434> You need to be in a voice channel to use this command!');
 
       let permissions = voiceChannel.permissionsFor(client.user);
@@ -204,7 +194,7 @@ module.exports = client => {
       if (!permissions.has('SPEAK')) {
           return message.channel.send('<:error:466995152976871434> I do not have permission to join your voice channel.');
       }
-      if (message.member.voiceChannel.joinable != true) {
+      if (voiceChannel.joinable != true) {
           return message.channel.send("<:error:466995152976871434> I do not have permission to join your voice channel.")
       }
 
@@ -260,9 +250,9 @@ module.exports = client => {
 
           try
           {
-              let dispatcher = client.music.getGuild(message.guild.id).dispatcher = connection.playOpusStream(await ytdl("https://www.youtube.com/watch?v=" + id, {highWaterMark: 1024 * 1024 * 32}));
+              let dispatcher = client.music.getGuild(message.guild.id).dispatcher = connection.play(await ytdl("https://www.youtube.com/watch?v=" + id, {highWaterMark: 1024 * 1024 * 32}), {type: 'opus'});
 
-              dispatcher.on('end', (a, b) =>
+              dispatcher.on('finish', (a, b) =>
               {
                   end(a == "silent");
               });
@@ -284,7 +274,7 @@ module.exports = client => {
       }
   }
   
-  // COVNERT SECONDS TO TIMESTAMP
+  // MUSIC - TIMESTAMP
   client.createTimestamp = function(duration){
     hrs = ~~(duration / 60 / 60),
     min = ~~(duration / 60) % 60,
@@ -310,7 +300,29 @@ module.exports = client => {
     return time;
   };
 
-  // MISCELLANEOUS NON-CRITICAL FUNCTIONS
+  //FIND ROLE
+  client.findRole = function(input, message) {
+    var role;
+    role = message.guild.roles.cache.find(r => r.name.toLowerCase() === input.toLowerCase());
+    if(!role) {
+      role = message.guild.roles.cache.get(input.toLowerCase());
+    };
+  
+    if(!role) {
+      return;
+    };
+  
+    return role;
+  };
+
+  // EMBED COLOUR
+  client.embedColour = function(msg) {
+    if(!msg.guild) {
+      return ["#ff9d68", "#ff97cb", "#d789ff", "#74FFFF"].random();
+    } else {
+      return msg.guild.member(client.user).displayHexColor;
+    };
+  };
 
   // <String>.toPropercase() returns a proper-cased string
   Object.defineProperty(String.prototype, "toProperCase", {
@@ -340,6 +352,6 @@ module.exports = client => {
   });
 
   process.on("unhandledRejection", err => {
-    client.logger.error(`Unhandled rejection: ${err}`);
+    client.logger.error(`Unhandled rejection: ${err.stack}`);
   });
 };

@@ -19,7 +19,7 @@ exports.run = (client, message, args) => {
     user = users[0];
     user = user.user;
   }
-  message.channel.send(`**${user.tag}'s** avatar is: ${user.avatarURL}`);
+  message.channel.send(`**${user.tag}'s** avatar is: ${user.avatarURL({format: "png", dynamic: true})}`);
 };
 
 exports.conf = {

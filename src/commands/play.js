@@ -9,7 +9,7 @@ module.exports.run = (client, message, args, level) =>{
       return;
     }
 
-    let voiceChannel = message.member.voiceChannel;
+    let voiceChannel = message.member.voice.channel;
     if(!voiceChannel) return message.channel.send('<:error:466995152976871434> You need to be in a voice channel to use this command!');
 
     message.channel.send(`🔎 searching YouTube for \`${args.join(" ")}\``);

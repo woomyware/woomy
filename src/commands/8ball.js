@@ -19,13 +19,6 @@ exports.run = async (client, message, args) => {
   ];
 
   let mess = ball.random();
-  var msg = message.content.toLowerCase();
-
-  if (msg.includes("is donald trump a good president".toLowerCase())) {
-    return message.channel.send(
-      ":8ball: Stupid question. You should be ashamed of yourself for even asking."
-    );
-  };
   message.channel.send(":8ball: " + mess);
 };
 

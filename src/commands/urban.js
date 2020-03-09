@@ -19,14 +19,14 @@ exports.run = async (client, message, args) => {
     "<:error:466995152976871434> Example cannot exceed 2000 characters!"
   );
 
-  embed = new Discord.RichEmbed()
+  embed = new Discord.MessageEmbed()
     .setTitle(output.word)
     .setURL(output.urbanURL)
     .setColor("#EFFF00")
     .setDescription(output.definition || "None")
-    .addField("Example", output.example || "None")
-    .addField("Upvotes", output.thumbsUp, true)
-    .addField("Downvotes", output.thumbsDown, true)
+    .addFields(
+      {name: "Example", value: output.example || "None"}, {name: "Upvotes", value: output.thumbsUp, inline: true}, {name: "Downvotes", value: output.thumbsDown, inline: true}
+      )
     .setFooter(`Submitted by ${output.author}`)
   message.channel.send(embed);
 

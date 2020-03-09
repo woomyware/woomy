@@ -7,7 +7,7 @@ exports.run = async (client, message) => {
   }
 
   var song = guild.queue[0];
-  var elapsedTime = client.createTimestamp(guild.dispatcher.time / 1000);
+  var elapsedTime = client.createTimestamp(guild.dispatcher.streamTime / 1000);
   var timestamp;
 
   if(song.duration == 0) {
@@ -16,14 +16,14 @@ exports.run = async (client, message) => {
     timestamp = `\`[${elapsedTime + "/" + client.createTimestamp(song.duration)}]\``;
   };
 
-  embed = new Discord.RichEmbed();
+  embed = new Discord.MessageEmbed();
   embed.setTitle("Now playing:")
   embed.setThumbnail(song.thumbnail)
   embed.setColor(client.embedColour(message));
 	embed.setDescription(`**[${song.title}](https://www.youtube.com/watch?v=${song.id})**`)
 	embed.addField("Channel:", song.author, true)
   embed.addField("Time:", timestamp, true)
-  embed.setFooter("Requested by " + song.requestedBy.tag, song.requestedBy.avatarURL)
+  embed.setFooter("Requested by " + song.requestedBy.tag, song.requestedBy.avatarURL({format: "png", dynamic: true}))
 
 	message.channel.send(embed)
 };

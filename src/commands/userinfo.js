@@ -1,24 +1,26 @@
 const Discord = require("discord.js");
 
 exports.run = (client, message, args) => {
-
   var user;
-  var nickString = "";
-  var guildString = "";
+  var guild;
+  var nick = "";
+  var roles = "";
+  var presence = "";
+  var badges = "";
+  var status;
+  var createdAt;
+  var avurl;
   var tag;
   var id;
-  var createdAt;
-  var colour;
-  var avatarURL;
+  var bot;
 
   if(message.guild) {
-
     user = message.mentions.members.first();
 
     if(!args[0]) {
-      user = message.guild.members.get(message.author.id)
-    }
-  
+      user = message.guild.members.cache.get(message.author.id)
+    };
+
     if (!user) {
       var users;
       users = client.searchForMembers(message.guild, args[0]);
@@ -33,56 +35,78 @@ exports.run = (client, message, args) => {
       user = users[0];
     };
 
-    if (!user.nickname) {
-      nickString = "";
-    } else {
-      nickString = `**Nickname:** ${user.nickname}\n`;
+    if(user.nickname) {
+      nick = `\n• **Nickname:** ${user.nickname}`;
     };
 
-    var roleList = "`";
-    let roles = user.roles;
-    roles.forEach((role) => { roleList = roleList + role.name + "`, `"; });
-    roleList = roleList.substring(0, roleList.length - 4);
-    roleList += "`";
-
-    guildString = `\n **Roles:** ${roleList}\n**Guild Join Date:** ${user.joinedAt}`
+    if(user.user.id == message.guild.ownerID) {
+      badges = "<:owner:685703193694306331>\n"
+    }
     
-    tag = user.user.tag;
+    createdTimestamp = user.user.createdTimestamp;
+    var date = new Date(createdTimestamp * 1000);
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "o" + date.getSeconds();
+    console.log(date)
+
+    user.roles.cache.forEach((role) => {
+      roles = roles + role.name + "`, `"
+    });
+
+    roles = roles.substr(0, roles.length -4);
+
+    guild = `\n• **Roles:** \`${roles}\`\n• **Server join date:** ${user.joinedAt}`;
+
     id = user.user.id;
+    tag = user.user.tag;
+    colour = user.displayHexColor;
+    avurl = user.user.avatarURL({format: "png", dynamic: true});
     createdAt = user.user.createdAt;
-    colour = user.displayHexColor
-    avatarURL = user.user.avatarURL
   } else {
-    user = message.author;
-
-    tag = user.tag;
     id = user.id;
-    createdAt = user.createdAt;
+    tag = user.tag;
     colour = ["#ff9d68", "#ff97cb", "#d789ff", "#74FFFF"].random();
-    avatarURL = user.avatarURL;
+    avurl = user.avatarURL({format: "png", dynamic: true});
+    createdAt = user.createdAt;
   };
 
-  let isBot = user.bot;
-
-  if (isBot === true) {
-    isBot = "Yes";
-  } else {
-    isBot = "No";
+  if(user.presence.status == "online") {
+    status = `online <:status_online:685462758023626762>`
   };
 
-  if (!user.presence.game) {
-    gameString = "";
-  } else {
-    gameString = `\n**Playing:** ${user.presence.game}`;
+  if(user.presence.status == "idle") {
+    status = `idle <:status_idle:685462771529154561>`
   };
 
-  embed = new (require("discord.js")).RichEmbed();
-  embed.setTitle(tag)
-  embed.setDescription(
-    `${nickString}**ID:** ${id}\n**Bot:** ${isBot}\n**Status:** ${user.presence.status}${gameString}${guildString}\n**Discord Join Date:** ${createdAt}`
-  );
+  if(user.presence.status == "dnd") {
+    status = `do not disturb <:status_dnd:685462782963220495>`
+  };
+
+  if(user.presence.status == "offline") {
+    status = `offline <:status_offline:685462758229016633>`
+  };
+
+  if(user.presence.activities[0]) {
+    presence = "\n• **Presence:** ";
+    if(user.presence.activities[0].type == "PLAYING") {
+      presence += `Playing ${user.presence.activities[0].name}`;
+    };
+
+    if(user.presence.activities[0].type == "STREAMING") {
+      presence += `Streaming ${user.presence.activities[0].name}`;
+    };
+
+    if(user.presence.activities[0].type == "CUSTOM_STATUS") {
+      presence += `${user.presence.activities[0].state}`;
+    };
+  };
+
+  embed = new Discord.MessageEmbed();
+  embed.setTitle(tag);
+  embed.setThumbnail(avurl);
+  embed.setDescription(`${badges}• **ID:** ${id}${nick}\n• **Status:** ${status}${presence}${guild}\n• **Account created:** ${createdAt}`)
   embed.setColor(colour);
-  embed.setThumbnail(avatarURL);
   message.channel.send(embed);
 };
 

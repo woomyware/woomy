@@ -22,17 +22,14 @@ exports.run = (client, message, args) => {
 	}
   
   let result = (new Function( 'return ' + exercise )());
-  if (exercise === "9+10" || exercise === "9 + 10") {
-    result = "21"
-  }
 
-  message.channel.send(`\`RESULTS:\`\n\`\`\`${result}\`\`\``);
+  message.channel.send(`\`RESULT:\`\n\`\`\`${result}\`\`\``);
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["calculate"],
+  aliases: ["calculate", "calc"],
   permLevel: "User",
   requiredPerms: []
 };

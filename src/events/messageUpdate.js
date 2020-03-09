@@ -8,14 +8,14 @@ module.exports = (client, omsg, nmsg) => {
   ));
 
   if (settings.chatlogsChannel !== "off") {
-    const channel = nmsg.guild.channels.find(
+    const channel = nmsg.guild.channels.cache.find(
       channel => channel.name === settings.chatlogsChannel
     );
 
     if (channel) {
-      let embed = new Discord.RichEmbed();
+      let embed = new Discord.MessageEmbed();
       embed.setColor("#fff937");
-      embed.setAuthor("Message Edited!", nmsg.member.user.avatarURL);
+      embed.setAuthor("Message Edited!", nmsg.member.user.avatarURL({dynamic: true}));
       if (omsg.content == "") {
         omsg.content = "**[IMAGE]**"
       } else if (nmsg.content == "") {
@@ -29,7 +29,7 @@ module.exports = (client, omsg, nmsg) => {
         return;
       }
       
-      embed.setDescription(`❯ Author: ${nmsg.member} (${nmsg.member.user.id})\n❯ Channel: ${nmsg.channel}\n❯ Old message: ${omsg.content}\n❯ New message: ${nmsg.content}`)
+      embed.setDescription(`• Author: ${nmsg.member} (${nmsg.member.user.id})\n• Channel: ${nmsg.channel}\n• Old message: ${omsg.content}\n• New message: ${nmsg.content}`)
       try {
         channel.send({ embed });
       } catch (err) {

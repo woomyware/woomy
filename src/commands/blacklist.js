@@ -45,7 +45,7 @@ exports.run = async (client, message, [action, ...member]) => {
       };
 
       let admin = message.guild.member(message.author)
-      if (user.highestRole.position >= admin.highestRole.position && admin.user.id !== message.guild.ownerID) {
+      if (user.roles.highest.position >= admin.roles.highest.position && admin.user.id !== message.guild.ownerID) {
         return message.channel.send(
           `<:error:466995152976871434> You can't blacklist people higher ranked than yourself!`
         );

@@ -8,8 +8,8 @@ exports.run = (client, message) => {
     .duration(client.uptime)
     .format(" D [days], H [hrs], m [mins], s [secs]");
   
-  var mud = client.users.get(client.config.owners[0]).tag;
-  var flgx = client.users.get(client.config.owners[1]).tag;
+  var mud = client.users.cache.get(client.config.owners[0]).tag;
+  var flgx = client.users.cache.get(client.config.owners[1]).tag;
   var build;
   var prefix;
 
@@ -25,21 +25,18 @@ exports.run = (client, message) => {
     build = "production"
   }
 
-  embed = new Discord.RichEmbed();
+  embed = new Discord.MessageEmbed();
     embed.setTitle(`Woomy`);
     embed.setColor(client.embedColour(message));
-    embed.setDescription(
-      `Woomy is a multipurpose bot developed by ${mud} and ${flgx}. You can suggest new features by joining my support server, 
-      or using \`${prefix}feedback\``
+    embed.setThumbnail(client.user.avatarURL({format: "png", dynamic: true}))
+    embed.addField(
+      "General:", `• users: \`${client.users.cache.size}\`\n• channels: \`${client.channels.cache.size}\`\n• servers: \`${client.guilds.cache.size}\`\n• commands: \`${client.commands.size}\`\n• uptime: \`${duration}\``,true
       );
     embed.addField(
-      "General", `users: \`${client.users.size}\`\nchannels: \`${client.channels.size}\`\nservers: \`${client.guilds.size}\`\ncommands: \`${client.commands.size}\`\nuptime: \`${duration}\``,true
+      `Technical:`, `• RAM Usage: \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB\`\n• OS: \`${require("os").type}\`\n• bot version: \`${client.version.number} (${build})\`\n• discord.js version: \`v${version}\`\n• node.js version: \`${process.version}\``,true
       );
     embed.addField(
-      `Technical`, `RAM Usage: \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB\`\nOS: \`${require("os").type}\`\nbot version: \`${client.update.version} (${build})\`\ndiscord.js version: \`v${version}\`\nnode.js version: \`${process.version}\``,true
-      );
-    embed.addField(
-      "Links", "[Support](https://discord.gg/HCF8mdv) | [GitHub](https://github.com/mudkipscience/woomy) | [db.org](https://discordbots.org/bot/435961704145485835/vote) | [BFD](https://botsfordiscord.com/bots/435961704145485835/vote) | [top.gg](https://discordbotlist.com/bots/435961704145485835) | [discord.js](https://discord.js.org/#/) | [guidebot](https://github.com/AnIdiotsGuide/guidebot/)"
+      "Links:", "[Support](https://discord.gg/HCF8mdv) | [GitHub](https://github.com/mudkipscience/woomy) | [db.org](https://discordbots.org/bot/435961704145485835/vote) | [BFD](https://botsfordiscord.com/bots/435961704145485835/vote) | [top.gg](https://discordbotlist.com/bots/435961704145485835) | [discord.js](https://discord.js.org/#/) | [guidebot](https://github.com/AnIdiotsGuide/guidebot/)"
       );
       
   message.channel.send(embed);

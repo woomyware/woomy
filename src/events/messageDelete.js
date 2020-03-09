@@ -6,7 +6,7 @@ module.exports = (client, message) => {
   const settings = (message.settings = client.getSettings(message.guild.id));
 
   if (settings.chatlogsChannel !== "off") {
-    const channel = message.guild.channels.find(
+    const channel = message.guild.channels.cache.find(
       channel => channel.name === settings.chatlogsChannel
     )
     
@@ -21,9 +21,9 @@ module.exports = (client, message) => {
   }
   
     if (channel) {
-      let embed = new Discord.RichEmbed();
+      let embed = new Discord.MessageEmbed();
       embed.setColor("#f93a2f");
-      embed.setAuthor("Message deleted!", message.member.user.avatarURL);
+      embed.setAuthor("Message deleted!", message.member.user.avatarURL({dynamic: true}));
       if (msg == "") {
         msg = "**An image was deleted, but is not shown for privacy reasons.**"
       } else {

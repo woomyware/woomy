@@ -22,11 +22,11 @@ module.exports = async (client, message) => {
 
     perms = message.channel.permissionsFor(client.user);
 
-    var modRole = message.guild.roles.get(settings.modRole);
-    var adminRole = message.guild.roles.get(settings.adminRole);
-    var autorole = message.guild.roles.get(settings.autorole);
-    var mutedRole = message.guild.roles.get(settings.mutedRole);
-    var welcomeChannel = message.guild.channels.get(settings.welcomeChannel);
+    var modRole = message.guild.roles.cache.get(settings.modRole);
+    var adminRole = message.guild.roles.cache.get(settings.adminRole);
+    var autorole = message.guild.roles.cache.get(settings.autorole);
+    var mutedRole = message.guild.roles.cache.get(settings.mutedRole);
+    var welcomeChannel = message.guild.channels.cache.get(settings.welcomeChannel);
 
     if(!welcomeChannel && settings.welcomeChannel != "off" || !adminRole && settings.adminRole != "None set" || !modRole && settings.modRole != "None set" || !mutedRole && settings.mutedRole != "None set" || !autorole && settings.autorole != "off") { 
 
@@ -37,7 +37,7 @@ module.exports = async (client, message) => {
       var welcomeReset = false;
 
       if(!adminRole && settings.adminRole != "None set") {
-        var role = message.guild.roles.find(r => r.name === settings.adminRole);
+        var role = message.guild.roles.cache.find(r => r.name === settings.adminRole);
         if(!role) {
           adminReset = true;
           client.settings.set(message.guild.id, client.config.defaultSettings.adminRole, "adminRole");
@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
       };
       
       if(!mutedRole && settings.mutedRole != "None set") {
-        var role = message.guild.roles.find(r => r.name === settings.mutedRole);
+        var role = message.guild.roles.cache.find(r => r.name === settings.mutedRole);
         if(!role) {
           mutedReset = true;
           client.settings.set(message.guild.id, client.config.defaultSettings.mutedRole, "mutedRole");
@@ -57,7 +57,7 @@ module.exports = async (client, message) => {
       };
     
       if(!modRole && settings.modRole != "None set") {
-        var role = message.guild.roles.find(r => r.name === settings.modRole);
+        var role = message.guild.roles.cache.find(r => r.name === settings.modRole);
         if(!role) {
           modReset = true;
           client.settings.set(message.guild.id, client.config.defaultSettings.modRole, "modRole");
@@ -67,7 +67,7 @@ module.exports = async (client, message) => {
       };
 
       if(!autorole && settings.autorole != "off") {
-        var role = message.guild.roles.find(r => r.name === settings.autorole);
+        var role = message.guild.roles.cache.find(r => r.name === settings.autorole);
         if(!role) {
           autoReset = true;
           client.settings.set(message.guild.id, client.config.defaultSettings.autorole, "autorole");
@@ -77,7 +77,7 @@ module.exports = async (client, message) => {
       };
 
       if(!welcomeChannel && settings.welcomeChannel != "off") {
-        var channel = message.guild.channels.find(c => c.name === settings.welcomeChannel);
+        var channel = message.guild.channels.cache.find(c => c.name === settings.welcomeChannel);
         if(!channel) {
           welcomeReset = true;
           client.settings.set(message.guild.id, client.config.defaultSettings.welcomeChannel, "welcomeChannel");
@@ -119,7 +119,7 @@ module.exports = async (client, message) => {
     };
 
     if (!message.member) {
-      await message.guild.fetchMember(message.author);
+      await message.guild.members.fetch(message.author);
     };
 
     if(message.settings.blacklisted != "ARRAY" && settings.blacklisted.length > 0) {
@@ -144,10 +144,10 @@ module.exports = async (client, message) => {
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
 
   if (!cmd) return;
-  
+
   if (commandRanRecently.has(message.author.id)) {
     return message.channel.send(
-        `<:wait:467115775849922570> You are being ratelimited. Please try again in 2 seconds.`
+        `⏱️ You are being ratelimited. Please try again in 2 seconds.`
       )
       .then(m => m.delete(2000));
   };
@@ -219,7 +219,7 @@ module.exports = async (client, message) => {
   commandRanRecently.add(message.author.id);
   setTimeout(() => {
     commandRanRecently.delete(message.author.id);
-  }, 2000);
+  }, {timeout: 2000});
 
   client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`);
   

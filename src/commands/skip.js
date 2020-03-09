@@ -6,7 +6,7 @@ exports.run = (client, message, args, level) => {
     "<:error:466995152976871434> Nothing is playing."
     );
 
-  let vc = message.guild.members.get(client.user.id).voiceChannel;
+  let vc = message.guild.members.cache.get(client.user.id).voiceChannel;
 
   if(vc != message.member.voiceChannel) return message.channel.send(
     '<:error:466995152976871434> You need to be in my voice channel to use this command!'

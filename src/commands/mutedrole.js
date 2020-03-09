@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     client.settings.set(message.guild.id, {});
   }
 
-  var mutedRole = message.guild.roles.get(settings.mutedRole)
+  var mutedRole = message.guild.roles.cache.get(settings.mutedRole)
 
   if (!args[0]) {
     if(!mutedRole) {
@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
     const joinedValue = args.join(" ");
     if (joinedValue.length < 1) {
       return message.channel.send(
-        `<:error:466995152976871434> You didn't specify a role. Usage: \`${client.commands.get(`mutedRole`).help.usage}\``
+        `<:error:466995152976871434> You didn't specify a role. Usage: \`${client.commands.get(`mutedrole`).help.usage}\``
         );
     };
     
@@ -31,17 +31,16 @@ exports.run = async (client, message, args) => {
         );
     };
 
-    let roleExists = message.guild.roles.find(r => r.name === args.join(" "));
-    if (!roleExists) {
-        return message.channel.send(
-        "<:error:466995152976871434> The specified role does not exist."
-        );
-		}
+    let role = client.findRole(joinedValue, message);
 
-    client.settings.set(message.guild.id, roleExists.id, "mutedRole");
+    if (!role) {
+      return message.channel.send(`<:error:466995152976871434> That role doesn't seem to exist. Try again!`);
+    };
+
+    client.settings.set(message.guild.id, role.id, "mutedRole");
     
     message.channel.send(
-      `<:success:466995111885144095> The muted role has been set to \`${joinedValue}\`
+      `<:success:466995111885144095> The muted role has been set to \`${role.name}\`
       `);
   };
 };

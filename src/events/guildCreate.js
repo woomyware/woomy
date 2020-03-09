@@ -1,17 +1,15 @@
 const Discord = require("discord.js");
-const chalk = require("chalk");
 module.exports = (client, guild) => {
+	client.logger.log(`Guild joined.`, "info");
 	
 	client.settings.ensure(guild.id, client.config.defaultSettings);
 
-	if(client.devmode === true) return;
-	channel = client.channels.get("458896120639127552");
-	
-	let embed = new Discord.RichEmbed();
+	if(client.devmode == false) {
+		channel = client.channels.cache.get("458896120639127552");
+		embed = new Discord.MessageEmbed();
 		embed.setColor("#F38159");
-		embed.setAuthor("Joined a new server:")
-		embed.setDescription(`‏‏‎❯ Name: \`${guild.name}\`\n‏‏‎❯ Size: \`${guild.members.size}\``)
-		embed.setFooter(`I'm now in ${client.guilds.size} servers!`)
-	channel.send(embed);
+		embed.setDescription(`Joined a new server with \`${guild.members.cache.size}\` members! I'm now in \`${client.guilds.cache.size}\` servers.`)
+		channel.send(embed)
+	};
 };
 

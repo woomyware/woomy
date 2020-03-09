@@ -18,48 +18,49 @@ exports.run = async (client, message, [member, ...role2add], query) => {
       );
     user = users[0];
   }
-  let role = role2add.join(" ");
+  let joinedValue = role2add.join(" ");
 
-  let gRole = message.guild.roles.find(r => r.name === role);
+  let gRole = client.findRole(joinedValue, message);
+
   if (!gRole) {
     return message.channel.send(`<:error:466995152976871434> That role doesn't seem to exist. Try again!`);
-  }
+  };
 
   let moderator = message.guild.member(message.author)
-  if (gRole.position >= moderator.highestRole.position) {
+  if (gRole.position >= moderator.roles.highest.position) {
     return message.channel.send(
       "<:error:466995152976871434> You cannot give roles higher than your own!"
     );
   }
 
-  var bot =  message.guild.members.get(client.user.id)
-  if (gRole.position >= bot.highestRole.position) {
+  var bot =  message.guild.members.cache.get(client.user.id)
+  if (gRole.position >= bot.roles.highest.position) {
     return message.channel.send(
       `<:error:466995152976871434> I cannot give roles higher than my own!`
     );
   }
 
-  if (user.roles.has(gRole.id)) {
+  if (user.roles.cache.has(gRole.id)) {
     return message.channel.send(
       "<:error:466995152976871434> They already have that role!"
     );
   }
   
-  await user.addRole(gRole.id);
+  await user.roles.add(gRole.id);
   message.channel.send(
     `<:success:466995111885144095> Gave \`${user.user.tag}\` the \`${gRole.name}\` role.`
   );
 
   if (client.getSettings(message.guild.id).modlogsChannel !== "off") {
-    const channel = message.guild.channels.find(
+    const channel = message.guild.channels.cache.find(
       channel => channel.name === client.getSettings(message.guild.id).modlogsChannel
     );
   
     if (channel) {
-    let embed = new Discord.RichEmbed();
+    let embed = new Discord.MessageEmbed();
       embed.setColor("#00c09a");
-      embed.setAuthor("Role given:", user.user.avatarURL);
-      embed.setDescription(`‏‏‎❯ User: ${user} (${user.user.id})\n‏‏‎❯ Mod: ${message.author} (${message.author.id})\n‏‏‎❯ Role: ${gRole}`)
+      embed.setAuthor("Role given:", user.user.avatarURL({format: "png", dynamic: true}));
+      embed.setDescription(`‏‏‎• User: ${user} (${user.user.id})\n‏‏‎• Mod: ${message.author} (${message.author.id})\n‏‏‎• Role: ${gRole}`)
       try {
         channel.send({ embed });
       } catch (err) {

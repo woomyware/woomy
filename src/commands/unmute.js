@@ -21,53 +21,50 @@ exports.run = async (client, message, args, level) => {
   if (user.user.id === client.user.id) {
     return message.channel.send("lol no")
   }
-  if (user.user.id === message.guild.owner.id) {
-    return message.channel.send("<:error:466995152976871434> You can't unmute the owner!")
-  }
 
   let moderator = message.guild.member(message.author)
-  if (message.settings.mutedRole.position >= moderator.highestRole.position && level < 2) {
+  if (message.settings.mutedRole.position >= moderator.roles.highest.position && level < 2) {
     return message.channel.send(
       "<:error:466995152976871434> The muted role is positioned above the moderator role! Please move the muted role below the moderator role."
       );
   }
-  if (user.highestRole.position >= moderator.highestRole.position && moderator.user.id !== message.guild.ownerID) {
+  if (user.roles.highest.position >= moderator.roles.highest.position && moderator.user.id !== message.guild.ownerID) {
     return message.channel.send(
       `<:error:466995152976871434> You can't unmute people who have a higher role than you!`
     );
   };
   let bot = message.guild.member(client.user)
-  if (user.highestRole.position >= bot.highestRole.position) {
+  if (user.roles.highest.position >= bot.roles.highest.position) {
     return message.channel.send(
       `<:error:466995152976871434> I can't unmute people who have a higher role than me!`
     );
   }
 
-  let role = message.guild.roles.get(settings.mutedRole)
+  let role = message.guild.roles.cache.get(settings.mutedRole)
   if(!role) {
     return message.channel.send(
       "<:error:466995152976871434> Mute role not found! Please set one using `~settings edit mutedRole <role>`"
       );
   }
 
-  if (!user.roles.has(role.id)) {
+  if (!user.roles.cache.has(role.id)) {
     return message.channel.send("<:error:466995152976871434> They aren't muted!")
   }
 
-  await user.removeRole(role.id);
+  await user.roles.remove(role.id);
   message.channel.send(`<:success:466995111885144095> Unmuted \`${user.user.tag}\``)
 
   
   if (settings.modlogsChannel !== "off") {
-    const channel = message.guild.channels.find(
+    const channel = message.guild.channels.cache.find(
       channel => channel.name === settings.modlogsChannel
     );
 
     if (channel) {
-      let embed = new Discord.RichEmbed();
+      let embed = new Discord.MessageEmbed();
       embed.setColor("#7a2f8f");
-      embed.setAuthor("User unmuted!", user.user.avatarURL);
-      embed.setDescription(`❯ User: ${user} (${user.user.id})\n❯ Mod: ${message.author} (${message.author.id})`)
+      embed.setAuthor("User unmuted!", user.user.avatarURL({format: "png", dynamic: true}));
+      embed.setDescription(`• User: ${user} (${user.user.id})\n• Mod: ${message.author} (${message.author.id})`)
       try {
         channel.send({ embed });
       } catch (err) {

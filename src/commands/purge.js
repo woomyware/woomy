@@ -1,4 +1,4 @@
-exports.run = (client, message, args, level) => {
+exports.run = async (client, message, args, level) => {
   const settings = message.settings;
 
   if(message.channel.name === settings.chatlogsChannel) {
@@ -13,36 +13,35 @@ exports.run = (client, message, args, level) => {
     return message.channel.send("<:error:466995152976871434> Can only purge a maximum of 100 messages!")
   }
 
-    if (!amount) return message.channel.send(
-      '<:error:466995152976871434> You didn\'t tell me how many messages to purge. Usage: \`' + client.commands.get(`purge`).help.usage + "`"
-      );
-    
-    message.delete().catch(O_o => {});
+  if (!amount) return message.channel.send(
+    '<:error:466995152976871434> You didn\'t tell me how many messages to purge. Usage: \`' + client.commands.get(`purge`).help.usage + "`"
+  );
 
-    message.channel.fetchMessages({
-      limit: amount,
-    }).then((messages) => {
-      message.channel.bulkDelete(messages, true).catch(console.error);
-      message.channel.send(`<:success:466995111885144095> Purged ${amount} messages!`).then(m => m.delete(5000));
-    });
+  await message.delete().catch(O_o => {});
 
-    if (settings.modlogsChannel !== "off") {
-      const channel = message.guild.channels.find(
-        channel => channel.name === settings.modlogsChannel
-      );
+  message.channel.messages.fetch({
+    limit: amount,
+  }).then((messages) => {
+    message.channel.bulkDelete(messages, true).catch(console.error);
+    message.channel.send(`<:success:466995111885144095> Purged ${amount} messages!`).then(m => m.delete({timeout: 5000}));
+  });
+
+  if (settings.modlogsChannel !== "off") {
+    const channel = message.guild.channels.cache.find(
+      channel => channel.name === settings.modlogsChannel
+    );
     
-      if (channel) {
-      let embed = new Discord.RichEmbed();
-        embed.setColor("#a62019");
-        embed.setAuthor(`${amount} messages purged!`, message.author.avatarURL);
-        embed.setDescription(`❯ Mod: ${message.author} (${message.author.id})`)
-        try {
-          channel.send({ embed });
-        } catch (err) {
-          // probably no permissions to send messages/embeds there
-        };
+    if (channel) {
+      let embed = new Discord.MessageEmbed();
+      embed.setColor("#a62019");
+      embed.setAuthor(`${amount} messages purged!`, message.author.avatarURL({format: "png", dynamic: true}));
+      embed.setDescription(`• Channel: ${message.channel.name} (${message.channel.id})\n• Mod: ${message.author} (${message.author.id})\n• Amount: \`${amount}\``)
+      try {
+        channel.send({ embed });
+      } catch (err) {
       };
     };
+  };
 };
 
 exports.conf = {

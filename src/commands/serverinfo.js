@@ -1,40 +1,84 @@
 exports.run = (client, message) => {
 
-  let guild = message.guild
-  
-  var roleCount = 0;
-  let roles = guild.roles
-  roles.forEach((role) => { roleCount = roleCount + 1; });
+  var guild = message.guild
+  var badges = "";
+  var members = `${guild.memberCount} (${guild.memberCount-guild.members.cache.filter(member => member.user.bot).size} users | ${guild.members.cache.filter(member => member.user.bot).size} bots)`;
 
-  var chanCount = 0;
-  let channels = guild.channels
-  channels.forEach((channel) => { chanCount = chanCount + 1; });
+  var roles = 0;
+  guild.roles.cache.forEach((role) => {
+    roles = roles + 1; 
+  });
 
-  var emojiList = "";
-  let emojis = guild.emojis;
-  emojis.forEach((emoji) => { emojiList = emojiList + emoji; });
-  eListOutput = `\n**Emojis:** ${emojiList}`;
-  if(emojiList === "") eListOutput = "";
+  var channels = 0;
+  var categories = 0;
+  var text = 0;
+  var voice = 0;
 
-  let vlvl = guild.verificationLevel;
-  if(vlvl === 0) vlvl = "None";
-  if(vlvl === 1) vlvl = "Low";
-  if(vlvl === 2) vlvl = "Medium";
-  if(vlvl === 3) vlvl = "(╯°□°）╯︵ ┻━┻"
-  if(vlvl === 4) vlvl = "┻━┻彡 ヽ(ಠ益ಠ)ノ彡┻━┻"
+  guild.channels.cache.forEach((channel) => {
+    if(channel.type == "category") {
+      categories = categories + 1;
+    } else {
+      if(channel.type == "text") {
+        text = text + 1;
+      };
 
-  content = `**ID:** ${guild.id}\n**Owner:** ${guild.owner}\n**Region:** ${guild.region}\n**Verification Level:** ${vlvl}\n**Members:** ${guild.memberCount}\n**Roles:** ${roleCount}\n**Channels:** ${chanCount}\n**Created:** ${guild.createdAt}${eListOutput}`;
-  if (content.length > 2048) {
-    eListOutput = "";
+      if(channel.type == "voice") {
+        voice = voice + 1;
+      };
 
-    content = `**ID:** ${guild.id}\n**Owner:** ${guild.owner}\n**Region:** ${guild.region}\n**Verification Level:** ${vlvl}\n**Members:** ${guild.memberCount}\n**Roles:** ${roleCount}\n**Channels:** ${chanCount}\n**Created:** ${guild.createdAt}`;
+      channels = channels + 1;
+    };
+  });
+
+  var channelString = `${channels} (${text} text | ${voice} voice | ${categories} categories)`
+
+  if(guild.premiumTier > 0) {
+    badges = badges += "<:boosted:685704824175853624> "
   }
 
-  let embed = new Discord.RichEmbed()
+  if(guild.partnered == true) {
+    badges = badges += "<:partnered:685704834779054107> "
+  }
+
+  if(guild.verified == true) {
+    badges = badges += "<:verified:685704812435734569>"
+  }
+
+  if(badges.length > 0) {
+    badges = badges += "\n"
+  }
+
+  var boosts;
+  if(guild.premiumTier == 1) {
+    boosts = `${guild.premiumSubscriptionCount} (level 1)`
+  } else if(guild.premiumTier == 2) {
+    boosts = `${guild.premiumSubscriptionCount} (level 2)`
+  } else if(guild.premiumTier == 3) {
+    boosts = `${guild.premiumSubscriptionCount} (level 3)`
+  } else {
+    boosts = guild.premiumSubscriptionCount;
+  };
+
+  var emojis = 0;
+  var static = 0;
+  var animated = 0;
+
+  guild.emojis.cache.forEach((emoji) => {
+    if(emoji.animated == true) {
+      animated = animated + 1;
+    } else {
+      static = static + 1;
+    };
+    emojis = emojis + 1;
+  });
+
+  emojiString = `${emojis} (${static} static | ${animated} animated)`
+
+  let embed = new Discord.MessageEmbed()
   .setColor(message.guild.member(client.user).displayHexColor)
-  .setAuthor(guild.name)
-  .setDescription(content)
-  .setThumbnail(message.guild.iconURL);
+  .setTitle(guild.name)
+  .setDescription(`${badges}• **ID:** ${guild.id}\n• **Owner:** ${guild.owner}\n• **Region:** ${guild.region.toProperCase()}\n• **Boosts:** ${boosts}\n• **Members:** ${members}\n• **Channels:** ${channelString}\n• **Roles:** ${roles}\n• **Emojis:** ${emojiString}\n• **Creation date:** ${guild.createdAt}`)
+  .setThumbnail(message.guild.iconURL({format: "png", dynamic: true}));
 
   message.channel.send(embed);
 };

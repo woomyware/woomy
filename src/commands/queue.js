@@ -60,11 +60,11 @@ exports.run = (client, message, args) => {
       return false;
     }
 
-    var embed = new Discord.RichEmbed();
+    var embed = new Discord.MessageEmbed();
     embed.setTitle(`Queue for: ${message.guild.name}`);
     embed.setColor(client.embedColour(message));
   
-    var elapsedTime = client.music.getGuild(message.guild.id).dispatcher.time / 1000
+    var elapsedTime = client.music.getGuild(message.guild.id).dispatcher.streamTime / 1000
     var totalDuration = queue[0].duration - elapsedTime;
 
     let timeRemaining = "";

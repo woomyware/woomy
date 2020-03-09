@@ -1,5 +1,4 @@
 exports.run = async (client, message) => {
-
   const settings = message.settings;
   
   if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, {});

@@ -8,7 +8,7 @@ exports.run = async (client, message, args, level) => {
 
   var raidToggle;
   var embColour;
-  var mutedRole = message.guild.roles.get(settings.mutedRole)
+  var mutedRole = message.guild.roles.cache.get(settings.mutedRole)
 
   if(!mutedRole) {
     return message.channel.send(
@@ -36,15 +36,15 @@ exports.run = async (client, message, args, level) => {
   };
 };
   if (settings.modlogsChannel !== "off") {
-    const channel = message.guild.channels.find(
+    const channel = message.guild.channels.cache.find(
       channel => channel.name === settings.modlogsChannel
     );
 
     if (channel) {
-      let embed = new Discord.RichEmbed();
+      let embed = new Discord.MessageEmbed();
       embed.setColor(embColour);
-      embed.setAuthor(raidToggle, message.author.avatarURL);
-      embed.setDescription(`Mod: ${message.author} (${message.author.id})`)
+      embed.setAuthor(raidToggle, message.author.avatarURL({dynamic: true}));
+      embed.setDescription(`• Mod: ${message.author} (${message.author.id})`)
       try {
         channel.send({ embed });
       } catch (err) {

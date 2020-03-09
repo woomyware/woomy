@@ -6,13 +6,13 @@ module.exports = client => {
   
   client.lockActivity = false;
 
-  client.logger.log(`Connected to Discord as ${client.user.tag} | v${client.update.version}`, "ready");
+  client.logger.log(`Connected to Discord as ${client.user.tag} | v${client.version.number}`, 'ready');
 
   let channel;
   let channel1;
 
-  try { channel = client.guilds.get('410990517841690625').channels.get('570963998342643732'); } catch(err) {};
-  try { channel1 = client.guilds.get('410990517841690625').channels.get('570963481189154822'); } catch(err) {};
+  try { channel = client.guilds.cache.get('410990517841690625').channels.cache.get('570963998342643732'); } catch(err) {};
+  try { channel1 = client.guilds.cache.get('410990517841690625').channels.cache.get('570963481189154822'); } catch(err) {};
 
   if(client.devmode == true) {
     client.logger.warn("Running in development mode.")
@@ -25,8 +25,9 @@ module.exports = client => {
 
   let randomActivity = activityArray.random();
   
-  client.user.setActivity(`${prefix + randomActivity} | v${client.update.version}`, {type: "PLAYING"});
+  client.user.setActivity(`${prefix + randomActivity} | v${client.version.number}`, {type: "PLAYING"});
   setInterval(() => {
     randomActivity = activityArray.random();
-    if(client.lockActivity == false) client.user.setActivity(`${prefix + randomActivity} | v${client.update.version}`, {type: "PLAYING"})}, 30000);
+    if(client.lockActivity == false) client.user.setActivity(`${prefix + randomActivity} | v${client.version.number}`, {type: "PLAYING"});
+  }, 30000);
 };

@@ -4,7 +4,7 @@ exports.run = async (client, message) => {
   let guild = client.music.getGuild(message.guild.id);
 
     if(guild.queue.length < 1 || !guild.playing || !guild.dispatcher) return message.channel.send("<:error:466995152976871434> Nothing is playing.");
-    if(!message.member.voiceChannel) return message.channel.send('<:error:466995152976871434> You need to be in voice channel to use this command!');
+    if(!message.member.voice.channel) return message.channel.send('<:error:466995152976871434> You need to be in voice channel to use this command!');
 
     guild.playing = false;
     guild.paused = false;

@@ -6,11 +6,7 @@ exports.run = async (client, message, args) => {
     client.settings.set(message.guild.id, {});
   }
 
-  if(!message.channel.permissionsFor(client.user).has("MANAGE_ROLES")) {
-    return message.channel.send("<:error:466995152976871434> This command requires the `manage roles` permission to work.")
-  }
-
-  var autorole = message.guild.roles.get(settings.autorole)
+  var autorole = message.guild.roles.cache.get(settings.autorole)
 
   if (!args[0]) {
     if(!autorole) {
@@ -21,7 +17,15 @@ exports.run = async (client, message, args) => {
     message.channel.send(`Users recieve this role upon joining: \`${autorole.name}\``)
     }
 
+  } else if(args.join(" ").toLowerCase() == "off") {
+    if(settings.autorole == "off") {
+      return message.channel.send("<:error:466995152976871434> Autoroling has not been enabled.")
+    }
+
+    client.settings.set(message.guild.id, "off", "autorole");
+    return message.channel.send("<:success:466995111885144095> Autoroling has been disabled.")
   } else {
+    
     const joinedValue = args.join(" ");
     if (joinedValue.length < 1) {
       return message.channel.send(
@@ -35,17 +39,16 @@ exports.run = async (client, message, args) => {
         );
     };
 
-    let roleExists = message.guild.roles.find(r => r.name === args.join(" "));
-    if (!roleExists) {
-        return message.channel.send(
-        "<:error:466995152976871434> The specified role does not exist."
-        );
-		}
+    role = client.findRole(joinedValue, message);
 
-    client.settings.set(message.guild.id, roleExists.id, "autorole");
+    if (!role) {
+      return message.channel.send(`<:error:466995152976871434> That role doesn't seem to exist. Try again!`);
+    };
+
+    client.settings.set(message.guild.id, role.id, "autorole");
     
     message.channel.send(
-      `<:success:466995111885144095> The autorole has been set to \`${joinedValue}\`
+      `<:success:466995111885144095> The autorole has been set to \`${role.name}\`
       `);
   };
 };
@@ -55,7 +58,7 @@ exports.conf = {
   guildOnly: true,
   aliases: [],
   permLevel: "Administrator",
-  requiredPerms: []
+  requiredPerms: ["MANAGE_ROLES"]
 };
 
 exports.help = {

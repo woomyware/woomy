@@ -1,5 +1,5 @@
 exports.run = (client, message) => {
-  message.channel.send(client.update.changelog)
+  message.channel.send(client.version.changelog)
 };
 
 exports.conf = {

@@ -2,17 +2,18 @@ const Discord = require("discord.js")
 exports.run = async (client, message) =>{
   message.channel.send("Woomy!")
 
-  const voiceChannel = message.member.voiceChannel;
+  const voiceChannel = message.member.voice.channel;
+  
   if (!voiceChannel) return;
-  const permissions = voiceChannel.permissionsFor(message.client.user);
-  if (!permissions.has('CONNECT')) return;
-  if (!permissions.has('SPEAK')) return;
-  if (client.music.getGuild(message.guild.id).playing == true) return;
+  if (!voiceChannel.permissionsFor(message.client.user).has('CONNECT')) return;
+  if (!voiceChannel.permissionsFor(message.client.user).has('SPEAK')) return;
+
+  if (client.music.getGuild(message.guild.id).playing == true || !client.music.getGuild(message.guild.id).queue[0]) return;
 
   voiceChannel.join()
   .then(connection => {
-      const dispatcher = connection.playFile(`/home/container/media/sounds/WOOMY.MP3`);
-      dispatcher.on("end", end => {voiceChannel.leave()});
+      const dispatcher = connection.play(`/home/container/resources/audio/WOOMY.MP3`);
+      dispatcher.on("finish", end => {voiceChannel.leave()});
   })  
 };
 

@@ -3,9 +3,9 @@ exports.run = async (client, message, args) => {
   const settings = message.settings;
   if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, {});
 
-  modChan = message.guild.channels.find(channel => channel.name === settings.modlogsChannel) || "__Disabled__";
-  chatChan = message.guild.channels.find(channel => channel.name === settings.chatlogsChannel) || "__Disabled__"
-  greetChan = message.guild.channels.get(settings.welcomeChannel) || "__Disabled__";
+  modChan = message.guild.channels.cache.find(channel => channel.name === settings.modlogsChannel) || "__Disabled__";
+  chatChan = message.guild.channels.cache.find(channel => channel.name === settings.chatlogsChannel) || "__Disabled__"
+  greetChan = message.guild.channels.cache.get(settings.welcomeChannel) || "__Disabled__";
   prefix = settings.prefix;
 
   var raidMode;
@@ -23,10 +23,10 @@ exports.run = async (client, message, args) => {
     raidMode += "`"
   }
 
-  var modRole = message.guild.roles.get(settings.modRole);
-  var adminRole = message.guild.roles.get(settings.adminRole);
-  var autorole = message.guild.roles.get(settings.autorole);
-  var mutedRole = message.guild.roles.get(settings.mutedRole);
+  var modRole = message.guild.roles.cache.get(settings.modRole);
+  var adminRole = message.guild.roles.cache.get(settings.adminRole);
+  var autorole = message.guild.roles.cache.get(settings.autorole);
+  var mutedRole = message.guild.roles.cache.get(settings.mutedRole);
   var blacklist = "";
 
   if(settings.modRole == "off" || !modRole) {
@@ -70,18 +70,17 @@ exports.run = async (client, message, args) => {
   } else {
     if(settings.blacklisted.length > 0) {
       settings.blacklisted.forEach(function(user) {
-        blacklist += "`" + (client.users.get(user).tag || user.tag) + "`, "
+        blacklist += "`" + (client.users.cache.get(user).tag || user.tag) + "`, "
       });
       blacklist = blacklist.substring(0, blacklist.length - 2);
     };
   };
 
-    embed = new Discord.RichEmbed()
-    embed.setAuthor("Settings for: " + message.guild.name, message.guild.iconURL)
+    embed = new Discord.MessageEmbed()
+    embed.setAuthor("Settings for: " + message.guild.name, message.guild.iconURL({dynamic: true}))
     embed.setColor(message.guild.member(client.user).displayHexColor)
     embed.setDescription("You can edit these settings using the commands in the 'configure' section of the help command.")
-    embed.addField("General:", `Prefix: \`${prefix}\`\nChat logging: ${chatChan}\nMod logging: ${modChan}\nRaid mode: ${raidMode}\nJoin/leave channel: ${greetChan}\nWelcome message: ${welcomeMessage}\nLeave message: ${leaveMessage}`, true)
-    embed.addField("Roles:", `Moderator: ${modRole}\nAdministrator: ${adminRole}\nMuted: ${mutedRole}\nBlacklisted: ${blacklist}\nAutorole: ${autorole}`, true);
+    embed.addFields({ name: "General:", value: `Prefix: \`${prefix}\`\nChat logging: ${chatChan}\nMod logging: ${modChan}\nRaid mode: ${raidMode}\nJoin/leave channel: ${greetChan}\nWelcome message: ${welcomeMessage}\nLeave message: ${leaveMessage}`, inline: true}, {name: "Roles:", value: `Moderator: ${modRole}\nAdministrator: ${adminRole}\nMuted: ${mutedRole}\nBlacklisted: ${blacklist}\nAutorole: ${autorole}`, inline: true})
     message.channel.send(embed)
 
 };

@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     client.settings.set(message.guild.id, {});
   }
 
-  var adminRole = message.guild.roles.get(settings.adminRole)
+  var adminRole = message.guild.roles.cache.get(settings.adminRole)
 
   if (!args[0]) {
     if(!adminRole) {
@@ -31,17 +31,16 @@ exports.run = async (client, message, args) => {
         );
     };
 
-    let roleExists = message.guild.roles.find(r => r.name === args.join(" "));
-    if (!roleExists) {
-        return message.channel.send(
-        "<:error:466995152976871434> The specified role does not exist."
-        );
-		}
+    let role = client.findRole(joinedValue, message);
 
-    client.settings.set(message.guild.id, roleExists.id, "adminRole");
+    if (!role) {
+      return message.channel.send(`<:error:466995152976871434> That role doesn't seem to exist. Try again!`);
+    };
+
+    client.settings.set(message.guild.id, role.id, "adminRole");
     
     message.channel.send(
-      `<:success:466995111885144095> The admin role has been set to \`${joinedValue}\`
+      `<:success:466995111885144095> The admin role has been set to \`${role.name}\`
       `);
   };
 };

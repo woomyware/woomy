@@ -1,5 +1,5 @@
 exports.run = (client, message, args, level) => {
-  embed = new Discord.RichEmbed();
+  embed = new Discord.MessageEmbed();
   embed.setColor(client.embedColour(message));
 
   var ran = false;
@@ -141,7 +141,7 @@ exports.run = (client, message, args, level) => {
 
     embed.setTitle(prefix + command.help.name);
     embed.setDescription(
-      `❯ **Description:** ${command.help.description}\n❯ **Usage:** ${prefix + command.help.usage}\n❯ **Permission Level:** ${cmd.conf.permLevel} \n❯ **Guild Only:** ${cmd.conf.guildOnly}\n❯ **Aliases:** ${aliases}\n❯ **Required perms:** ${requiredPerms}`
+      `• **Description:** ${command.help.description}\n• **Usage:** ${prefix + command.help.usage}\n• **Permission Level:** ${cmd.conf.permLevel} \n• **Guild Only:** ${cmd.conf.guildOnly}\n• **Aliases:** ${aliases}\n• **Required perms:** ${requiredPerms}`
       );
     embed.setFooter("Arguments in [] are required, <> are optional.");
     
