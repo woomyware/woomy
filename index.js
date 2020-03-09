@@ -9,35 +9,35 @@ const client = new Discord.Client();
 try {
 client.config = require('./config');
 } catch (err) {
-	console.log('Unable to load config.js \n', err);
+	console.log('Could not load config.js. \n', err);
 	process.exit();
 }
 
 try{
 client.version = require('./version.json');
 } catch (err) {
-	console.log('Unable to load the version file. \n', err);
+	console.log('Could not load version.json. \n', err);
 	process.exit();
 }
 
 try{
 client.logger = require('./src/modules/Logger');
 } catch (err) {
-	console.log('Unable to load the logger. \n', err);
+	console.log('Could not load Logger.js. \n', err);
 	process.exit();
 }
 
 try{
 require("./src/modules/functions")(client);
 } catch (err) {
-	console.log('Unable to load the functions. \n', err);
+	console.log('Could not load functions.js. \n', err);
 	process.exit();
 }
 
 try{
 client.logger.setClient(client);
 } catch (err) {
-	console.log('Unable to initiate the logger. \n', err);
+	console.log('Logger failed to initialize. \n', err);
 	process.exit(1);
 }
 
@@ -51,34 +51,33 @@ if(process.env['USER'] != 'container') {
 try{
 client.commands = new Enmap();
 } catch (err) {
-	console.log('Failed to create the commands database. \n', err);
+	console.log('Failed to create the commands map. \n', err);
 	process.exit();
 }
 
 try{
 client.aliases = new Enmap();
 } catch (err) {
-	console.log('Unable to create the aliases database. \n', err);
+	console.log('Failed to create the aliases map. \n', err);
 	process.exit();
 }
 
 try{
 client.settings = new Enmap({name: 'settings'});
 } catch (err) {
-	console.log('Unable to make the settings database. \n', err);
+	console.log('Failed to initialize the settings database. \n', err);
 	process.exit();
 }
 
 try{
 client.blacklist = new Enmap({name: 'blacklist'});
 } catch (err) {
-	console.log('Unable to create the blacklist database. \n', err);
+	console.log('Failed to initialize the blacklist database. \n', err);
 	process.exit(1);
 }
 
 try{
 const init = async () => {
-  try{
   const cmdFiles = await readdir("./src/commands/");
   client.logger.info(`Loading ${cmdFiles.length} commands.`);
   cmdFiles.forEach(file => {
@@ -90,12 +89,7 @@ const init = async () => {
       console.log(response);
     };
   });
-} catch (err) {
-	console.log('Unable to load Woomys commands. \n', err);
-	process.exit(1);
-}
 
-  try{
   const evtFiles = await readdir("./src/events/");
   client.logger.info(`Loading ${evtFiles.length} events.`);
   evtFiles.forEach(file => {
@@ -106,10 +100,6 @@ const init = async () => {
     const event = require(`./src/events/${file}`);
     client.on(eventName, event.bind(null, client));
   });
-} catch (err) {
-	console.log('Unable to load Woomy events. \n', err);
-	process.exit();
-}
 
   try{
   client.levelCache = {};
@@ -118,7 +108,7 @@ const init = async () => {
     client.levelCache[thisLevel.name] = thisLevel.level;
   };
 } catch (err) {
-	console.log('Unable to enable the levelCache. \n', err);
+	console.log('Level cache failed to initialize. \n', err);
 	process.exit();
 }
 
@@ -135,6 +125,6 @@ const init = async () => {
 };
 init();
 } catch (err) {
-	console.log('Failed to initiate Woomy. \n', err);
+	console.log('Initialization failed. \n', err);
 	process.exit(1);
 }
