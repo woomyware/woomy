@@ -6,28 +6,26 @@ const chalk = require('chalk');
 const DBL = require("dblapi.js");
 const client = new Discord.Client();
 
-client.config = require('../config');
-client.version = require('../version.json');
-client.logger = require('./modules/Logger');
-require("./modules/functions")(client);
+client.config = require('./config');
+client.version = require('./version.json');
+client.logger = require('./src/modules/Logger');
+require("./src/modules/functions")(client);
 client.logger.setClient(client);
 
 if(process.env['USER'] != 'container') {
   client.devmode = true;
-  client.settings = new Enmap({name: 'settings', dataDir: '../data'});
-  client.blacklist = new Enmap({name: 'blacklist', dataDir: '../data'});
 } else {
   client.devmode = false;
   const dblapi = new DBL(client.config.dblkey, client);
-  client.settings = new Enmap({name: 'settings'});
-  client.blacklist = new Enmap({name: 'blacklist'});
 }
 
 client.commands = new Enmap();
 client.aliases = new Enmap();
+client.settings = new Enmap({name: 'settings'});
+client.blacklist = new Enmap({name: 'blacklist'});
 
 const init = async () => {
-  const cmdFiles = await readdir("./commands/");
+  const cmdFiles = await readdir("./src/commands/");
   client.logger.info(`Loading ${cmdFiles.length} commands.`);
   cmdFiles.forEach(file => {
     if (!file.endsWith(".js")) {
@@ -39,14 +37,14 @@ const init = async () => {
     };
   });
 
-  const evtFiles = await readdir("./events/");
+  const evtFiles = await readdir("./src/events/");
   client.logger.info(`Loading ${evtFiles.length} events.`);
   evtFiles.forEach(file => {
     if (!file.endsWith(".js")) {
       return;
     };
     const eventName = file.split(".")[0];
-    const event = require(`./events/${file}`);
+    const event = require(`./src/events/${file}`);
     client.on(eventName, event.bind(null, client));
   });
 
