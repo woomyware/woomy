@@ -59,7 +59,7 @@ exports.run = async (client, message, [member, ...role2add], query) => {
     if (channel) {
     let embed = new Discord.MessageEmbed();
       embed.setColor("#00c09a");
-      embed.setAuthor("Role given:", user.user.avatarURL({format: "png", dynamic: true}));
+      embed.setAuthor("Role given:", user.user.avatarURL({format: "png", dynamic: true, size: 2048}));
       embed.setDescription(`‏‏‎• User: ${user} (${user.user.id})\n‏‏‎• Mod: ${message.author} (${message.author.id})\n‏‏‎• Role: ${gRole}`)
       try {
         channel.send({ embed });

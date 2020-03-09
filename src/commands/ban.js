@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
     if (channel) {
     let embed = new Discord.MessageEmbed();
       embed.setColor("#BC0057");
-      embed.setAuthor("User banned!", user.user.avatarURL({format: "png", dynamic: true}));
+      embed.setAuthor("User banned!", user.user.avatarURL({format: "png", dynamic: true, size: 2048}));
       embed.setDescription(
         `• User: ${user.user.tag} (${user.user.id})\n• Mod: ${message.author} (${message.author.id})\n• Reason: ${reason}`
       );

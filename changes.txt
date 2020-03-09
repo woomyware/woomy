@@ -1,0 +1,2 @@
+Links to avatars now lead to the original file size
+Bots now get a bot badge in the userinfo command
