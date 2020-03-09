@@ -19,7 +19,7 @@ module.exports = client => {
     prefix = client.config.defaultSettings.devprefix;
   } else {
     prefix = client.config.defaultSettings.prefix;
-    channel.send(`\`${timestamp}\`: Ready event fired! Connected to ${client.users.size} users in ${client.guilds.size} guilds.`);
+    channel.send(`\`${timestamp}\`: Ready event fired! Connected to ${client.users.cache.size} users in ${client.guilds.cache.size} guilds.`);
     channel1.send(`\`${timestamp}\`: **Ready event fired**`);
   }
 
