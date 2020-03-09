@@ -12,20 +12,19 @@ client.logger = require('./modules/Logger');
 require("./modules/functions")(client);
 client.logger.setClient(client);
 
+if(process.env['USER'] != 'container') {
+  client.devmode = true;
+  client.settings = new Enmap({name: 'settings', dataDir: '../data'});
+  client.blacklist = new Enmap({name: 'blacklist', dataDir: '../data'});
+} else {
+  client.devmode = false;
+  const dblapi = new DBL(client.config.dblkey, client);
+  client.settings = new Enmap({name: 'settings'});
+  client.blacklist = new Enmap({name: 'blacklist'});
+}
+
 client.commands = new Enmap();
 client.aliases = new Enmap();
-client.settings = new Enmap({name: 'settings', dataDir: '../data'});
-client.blacklist = new Enmap({name: 'blacklist', dataDir: '../data'});
-
-client.devmode = false;
-
-if(process.env['USER'] != 'container') {
-  client.devmode = true;  
-};
-
-if(client.devmode === false) {
-  const dblapi = new DBL(client.config.dblkey, client);
-};
 
 const init = async () => {
   const cmdFiles = await readdir("./commands/");
