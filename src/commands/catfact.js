@@ -17,7 +17,7 @@ exports.conf = {
   
   exports.help = {
     name: "catfact",
-    category: "User",
+    category: "Fun",
     description: "Sends a fun fact about a cat.",
     usage: "catfact/kittenfact"
   };
