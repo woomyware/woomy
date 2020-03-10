@@ -3,7 +3,7 @@ const request = require("request");
 exports.run = async (bot, message, args) => {
   request({ uri: "https://catfact.ninja/facts", json: true }, (error, response, body) => {
     if (error) throw new Error(error);
-    message.channel.send(`**Did you know?**\n ${body.facts[0]}`);
+    message.channel.send(`**Did you know?**\n ${body.data[0].facts}`);
   });
 };
 
@@ -17,7 +17,7 @@ exports.conf = {
   
   exports.help = {
     name: "catfact",
-    category: "User",
+    category: "Fun",
     description: "Sends a fun fact about a cat.",
     usage: "catfact/kittenfact"
   };
