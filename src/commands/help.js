@@ -4,6 +4,7 @@ exports.run = (client, message, args, level) => {
 
   var ran = false;
   var output = "";
+  var commands = 0;
   var prefix;
   var currentCategory;
 
@@ -14,7 +15,7 @@ exports.run = (client, message, args, level) => {
   };
 
   if(!args[0]) {
-    embed.setTitle("Command list");
+    embed.setTitle(`Commands [${client.commands.size}]`);
     embed.setDescription(`⁣For more information on a specific command use \`${prefix}help <command>\`\nFor the full command list use \`${prefix}help all\`\n`);
 
     const myCommands = message.guild ? client.commands.filter(
@@ -37,16 +38,18 @@ exports.run = (client, message, args, level) => {
       const cat = c.help.category.toProperCase();
       if (currentCategory !== cat) {
         if(ran == true) {
-          embed.addField(currentCategory + ":", output.slice(0, -6))
+          embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2))
           output = "";
+          commands = 0;
         }
         currentCategory = cat;
         ran = true
       }
-    output += `\`${prefix}${c.help.name}\`**,** `;
+    output += `\`${prefix}${c.help.name}\`, `;
+    commands = commands + 1;
     });
 
-    embed.addField(currentCategory + ":", output.slice(0, -6));
+    embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2));
 
     embed.addField(
       "Invite me",
@@ -84,16 +87,18 @@ exports.run = (client, message, args, level) => {
       const cat = c.help.category.toProperCase();
       if (currentCategory !== cat) {
         if(ran == true) {
-          embed.addField(currentCategory + ":", output.slice(0, -6))
+          embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2))
           output = "";
+          commands = 0;
         }
         currentCategory = cat;
         ran = true
       }
-    output += `\`${prefix}${c.help.name}\`**,** `;
+    output += `\`${prefix}${c.help.name}\`, `;
+    commands = commands + 1;
     });
 
-    embed.addField(currentCategory + ":", output.slice(0, -6));
+    embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2));
 
     embed.addField(
       "Invite me",
