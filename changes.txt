@@ -1,2 +1,6 @@
 Links to avatars now lead to the original file size
 Bots now get a bot badge in the userinfo command
+Added dogfact and catfact command (terry)
+index.js now has better logging of when things fail to load/initialize (terry)
+added `dice`, rolls a 6 sided die (terry)
+Added two new events, disconnect.js and reconnection.js. Should log when the bot loses connection/reconnects to discord (terry)
