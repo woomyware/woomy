@@ -40,7 +40,15 @@ exports.run = (client, message, args) => {
     };
 
     if(user.user.id == message.guild.ownerID) {
-      badges = "<:owner:685703193694306331>\n"
+      badges += "<:owner:685703193694306331>"
+    }
+
+    if(user.user.bot) {
+      badges += "<:bot:686489601678114859>"
+    }
+
+    if(badges.length > 0) {
+      badges += "\n"
     }
     
     createdTimestamp = user.user.createdTimestamp;
@@ -61,13 +69,13 @@ exports.run = (client, message, args) => {
     id = user.user.id;
     tag = user.user.tag;
     colour = user.displayHexColor;
-    avurl = user.user.avatarURL({format: "png", dynamic: true});
+    avurl = user.user.avatarURL({format: "png", dynamic: true, size: 2048});
     createdAt = user.user.createdAt;
   } else {
     id = user.id;
     tag = user.tag;
     colour = ["#ff9d68", "#ff97cb", "#d789ff", "#74FFFF"].random();
-    avurl = user.avatarURL({format: "png", dynamic: true});
+    avurl = user.avatarURL({format: "png", dynamic: true, size: 2048});
     createdAt = user.createdAt;
   };
 

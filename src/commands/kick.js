@@ -58,7 +58,7 @@ if (settings.modlogsChannel !== "off") {
     if (channel) {
     let embed = new Discord.MessageEmbed();
     embed.setColor("#fd0061");
-    embed.setAuthor("User kicked!", user.user.avatarURL({format: "png", dynamic: true}));
+    embed.setAuthor("User kicked!", user.user.avatarURL({format: "png", dynamic: true, size: 2048}));
     embed.setDescription(
       `• User: ${user.user.tag} (${user.user.id})\n• Mod: ${message.author} (${message.author.id})\n• Reason: ${reason}`
       );

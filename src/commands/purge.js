@@ -34,7 +34,7 @@ exports.run = async (client, message, args, level) => {
     if (channel) {
       let embed = new Discord.MessageEmbed();
       embed.setColor("#a62019");
-      embed.setAuthor(`${amount} messages purged!`, message.author.avatarURL({format: "png", dynamic: true}));
+      embed.setAuthor(`${amount} messages purged!`, message.author.avatarURL({format: "png", dynamic: true, size: 2048}));
       embed.setDescription(`• Channel: ${message.channel.name} (${message.channel.id})\n• Mod: ${message.author} (${message.author.id})\n• Amount: \`${amount}\``)
       try {
         channel.send({ embed });

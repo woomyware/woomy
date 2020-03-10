@@ -78,7 +78,7 @@ exports.run = (client, message) => {
   .setColor(message.guild.member(client.user).displayHexColor)
   .setTitle(guild.name)
   .setDescription(`${badges}• **ID:** ${guild.id}\n• **Owner:** ${guild.owner}\n• **Region:** ${guild.region.toProperCase()}\n• **Boosts:** ${boosts}\n• **Members:** ${members}\n• **Channels:** ${channelString}\n• **Roles:** ${roles}\n• **Emojis:** ${emojiString}\n• **Creation date:** ${guild.createdAt}`)
-  .setThumbnail(message.guild.iconURL({format: "png", dynamic: true}));
+  .setThumbnail(message.guild.iconURL({format: "png", dynamic: true, size: 2048}));
 
   message.channel.send(embed);
 };
