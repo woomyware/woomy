@@ -1,4 +1,4 @@
 {
-    "number": "1.1.0",
+    "number": "1.2.0",
     "changelog": "**1.1.0 CHANGELOG:**\n> • Added `~softban`, bans and unbans a user to clear messages\n> • Added `~emoji`, enlarges custom emojis\n> • Added `~inspirobot`, generates an inspirational quote\n> • `~serverinfo` has been changed to be more consistent, and also now displays boosts and if the server is partnered and stuff\n> • `~userinfo` has been changed to be more consistent, also added some stuff\n> • `~about` has been changed, added a thumbnail and removed the description\n> • `~colour` has been changed, it can now generate colours from text\n> • `~hackban` no longer has its own embed\n> • `~eval` now logs to hastebin if output is too large\n> • role names are no longer case sensitive\n> • `~echo` renamed `~say`\n> • Users with the ADMINISTRATOR permission now automatically recieve woomy admin\n> • Fixed `~flip`, `~purge`, `~bohemian_rhapsody` and `~creeper`\n> • Guild join/leave messages no longer include the guild name\n> • Some emojis have been changed\n> • Woomy now supports discord.js v12\n> • Files have been restructured\n> • Logger now logs error stack\n> • Restart now exits with code 0"
 }

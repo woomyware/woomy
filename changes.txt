@@ -1,2 +1,10 @@
+Added a yodish command (terry)
 Links to avatars now lead to the original file size
 Bots now get a bot badge in the userinfo command
+Added dogfact and catfact command (terry)
+index.js now has better logging of when things fail to load/initialize (terry)
+added `dice`, rolls a 6 sided die (terry)
+Help command changed, the amount of commands in each category and overall is now displayed
+added `inspire` as an alias for inspirobot
+ship command
+added find by mention to functions

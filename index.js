@@ -9,35 +9,35 @@ const client = new Discord.Client();
 try {
 client.config = require('./config');
 } catch (err) {
-	console.log('Could not load config.js. \n', err);
+	console.log('Could not load config.js: \n', err);
 	process.exit();
 }
 
 try{
 client.version = require('./version.json');
 } catch (err) {
-	console.log('Could not load version.json. \n', err);
+	console.log('Could not load version.json: \n', err);
 	process.exit();
 }
 
 try{
 client.logger = require('./src/modules/Logger');
 } catch (err) {
-	console.log('Could not load Logger.js. \n', err);
+	console.log('Could not load Logger.js: \n', err);
 	process.exit();
 }
 
 try{
 require("./src/modules/functions")(client);
 } catch (err) {
-	console.log('Could not load functions.js. \n', err);
+	console.log('Could not load functions.js: \n', err);
 	process.exit();
 }
 
 try{
 client.logger.setClient(client);
 } catch (err) {
-	console.log('Logger failed to initialize. \n', err);
+	console.log('Logger failed to initialize: \n', err);
 	process.exit(1);
 }
 
@@ -45,34 +45,36 @@ if(process.env['USER'] != 'container') {
   client.devmode = true;
 } else {
   client.devmode = false;
-  const dblapi = new DBL(client.config.dblkey, client);
+  if(client.config.dblkey.length == 0) {
+    const dblapi = new DBL(client.config.dblkey, client);
+  }
 }
 
 try{
 client.commands = new Enmap();
 } catch (err) {
-	console.log('Failed to create the commands map. \n', err);
+	console.log('Failed to create the commands database: \n', err);
 	process.exit();
 }
 
 try{
 client.aliases = new Enmap();
 } catch (err) {
-	console.log('Failed to create the aliases map. \n', err);
+	console.log('Failed to create the aliases database: \n', err);
 	process.exit();
 }
 
 try{
 client.settings = new Enmap({name: 'settings'});
 } catch (err) {
-	console.log('Failed to initialize the settings database. \n', err);
+	console.log('Failed to initialize the settings database: \n', err);
 	process.exit();
 }
 
 try{
 client.blacklist = new Enmap({name: 'blacklist'});
 } catch (err) {
-	console.log('Failed to initialize the blacklist database. \n', err);
+	console.log('Failed to initialize the blacklist database: \n', err);
 	process.exit(1);
 }
 
@@ -108,7 +110,7 @@ const init = async () => {
     client.levelCache[thisLevel.name] = thisLevel.level;
   };
 } catch (err) {
-	console.log('Level cache failed to initialize. \n', err);
+	console.log('Level cache failed to initialize: \n', err);
 	process.exit();
 }
 
@@ -119,12 +121,12 @@ const init = async () => {
     client.login(client.config.token);
   };
 } catch (err) {
-	console.log('Unable to login to Discord. \n', err);
+	console.log('Could not login to Discord: \n', err);
 	process.exit(1);
 }
 };
 init();
 } catch (err) {
-	console.log('Initialization failed. \n', err);
+	console.log('Initialization failed: \n', err);
 	process.exit(1);
 }
