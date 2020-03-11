@@ -50,13 +50,6 @@ exports.run = (client, message, args) => {
     if(badges.length > 0) {
       badges += "\n"
     }
-    
-    createdTimestamp = user.user.createdTimestamp;
-    var date = new Date(createdTimestamp * 1000);
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "o" + date.getSeconds();
-    console.log(date)
 
     user.roles.cache.forEach((role) => {
       roles = roles + role.name + "`, `"
