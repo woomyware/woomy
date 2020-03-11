@@ -4,3 +4,6 @@ Added dogfact and catfact command (terry)
 index.js now has better logging of when things fail to load/initialize (terry)
 added `dice`, rolls a 6 sided die (terry)
 Help command changed, the amount of commands in each category and overall is now displayed
+added `inspire` as an alias for inspirobot
+ship command
+added find by mention to functions
