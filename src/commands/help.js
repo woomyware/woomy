@@ -68,7 +68,7 @@ exports.run = (client, message, args, level) => {
   };
 
   if(args[0].toLowerCase() == "all") {
-    embed.setTitle("Command list");
+    embed.setTitle(`Commands [${client.commands.size}]`);
     embed.setDescription(`⁣For more information on a specific command use \`${prefix}help <command>\`\nFor the full command list use \`${prefix}help all\`\n`);
 
     const myCommands = client.commands
