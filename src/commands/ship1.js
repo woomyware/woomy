@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
   //NOT FINISHED
   
   if(!args[0] || !args[1]) {
-    return message.channel.send(`<:error:466995152976871434> Please include two users`)
+    return message.channel.send(`<:error:466995152976871434> Please include two to five users`)
   }
   message.channel.startTyping();
 
@@ -45,14 +45,7 @@ exports.run = async (client, message, args) => {
   var first = user.username.slice(0, user.username.length / 2)
   var second = user2.username.slice(secondLength, user2.username.length / 2)
 
-  try {
-    var attachment = new Discord.MessageAttachment(`https://api.alexflipnote.dev/ship?user=${user.avatarURL({format: "png"})}&user2=${user2.avatarURL({format: "png"})}`)
-    message.channel.send(`Your ship name is **${first+second}!**`, attachment)
-    message.channel.stopTyping();
-  } catch(err) {
-    message.channel.send(`<:error:466995152976871434> API error: ${err}`);
-    message.channel.stopTyping();
-  };
+  message.channel.send(`Your ship name is **${shipname}!**`)
 };
 
 exports.conf = {
@@ -64,7 +57,7 @@ exports.conf = {
 };
 
 exports.help = {
-  name: "ship",
+  name: "ship1",
   category: "Fun",
   description: "Ship two people together <3",
   usage: "ship name name2"

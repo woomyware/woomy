@@ -1,20 +1,22 @@
 
 const request = require('request')
 exports.run = async (client, message, args) => {
-    const speech = args.join(' ');
-    if (!args[0]) {
-        return message.channel.send(`<:error:466995152976871434> Please include text for me to convert to yodish. Yes.`)
-      }
-    try {
-    const { text } = request({ uri: `http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`, json: true }, (error, response, body) => {
-    message.channel.send(JSON.parse(text).yodish)
-    });
- } catch(err) {
-        message.channel.send(`<:error:466995152976871434> API error: ${err}`);
-        message.channel.stopTyping();
- }
+  const speech = args.join(' ');
+  if (!speech) {
+    return message.channel.send(`<:error:466995152976871434> Please include text for me to convert to yodish. Yes.`)
+  };
 
-}
+  message.channel.startTyping();
+  try{
+    request({ uri: `http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`, json: true }, (error, response, body) => {
+      message.channel.send(body.yodish);
+      message.channel.stopTyping();
+    });
+  } catch(err) {
+    message.channel.send(`<:error:466995152976871434> API error: ${err}`);
+    message.channel.stopTyping();
+  };
+};
 
 exports.conf = {
     enabled: true,
