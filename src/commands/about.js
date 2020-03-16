@@ -45,7 +45,7 @@ exports.run = (client, message) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["stats"],
+  aliases: ["stats", "botinfo"],
   permLevel: "User",
   requiredPerms: []
 };
