@@ -23,7 +23,7 @@ exports.run = async (client, message) => {
 	embed.setDescription(`**[${song.title}](https://www.youtube.com/watch?v=${song.id})**`)
 	embed.addField("Channel:", song.author, true)
   embed.addField("Time:", timestamp, true)
-  embed.setFooter("Requested by " + song.requestedBy.tag, song.requestedBy.avatarURL({format: "png", dynamic: true}))
+  embed.setFooter("Requested by " + song.requestedBy.tag, song.requestedBy.avatarURL({format: "png", dynamic: true, size: 2048}))
 
 	message.channel.send(embed)
 };

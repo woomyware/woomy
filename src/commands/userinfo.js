@@ -61,13 +61,13 @@ exports.run = (client, message, args) => {
     id = user.user.id;
     tag = user.user.tag;
     colour = user.displayHexColor;
-    avurl = user.user.avatarURL({format: "png", dynamic: true});
+    avurl = user.user.avatarURL({format: "png", dynamic: true, size: 2048});
     createdAt = user.user.createdAt;
   } else {
     id = user.id;
     tag = user.tag;
     colour = ["#ff9d68", "#ff97cb", "#d789ff", "#74FFFF"].random();
-    avurl = user.avatarURL({format: "png", dynamic: true});
+    avurl = user.avatarURL({format: "png", dynamic: true, size: 2048});
     createdAt = user.createdAt;
   };
 

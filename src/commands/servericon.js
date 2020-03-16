@@ -1,5 +1,5 @@
 exports.run = (client, message) => {
-  message.channel.send(`**${message.guild}'s** icon is:\n${message.guild.iconURL({format: "png", dynamic: true})}`)
+  message.channel.send(`**${message.guild}'s** icon is:\n${message.guild.iconURL({format: "png", dynamic: true, size: 2048})}`)
 };
 
 exports.conf = {
