@@ -134,9 +134,7 @@ module.exports = async (client, message) => {
   //const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
   const myMention = `<@&${client.user.id}>`;
   const myMention2 = `<@!${client.user.id}>`;
-
-  console.log(message.content);
-
+  
   if (message.content.startsWith(myMention) || message.content.startsWith(myMention2)) {
     if(message.content.length > myMention.length + 1 && (message.content.substr(0, myMention.length + 1) == myMention + ' ' || message.content.substr(0, myMention2.length + 1) == myMention2 + ' ')) {
       prefix = message.content.substr(0, myMention.length) + ' ';
@@ -144,7 +142,7 @@ module.exports = async (client, message) => {
       return message.channel.send(`Current prefix: \`${prefix}\``);
     };
   };
-  
+
   if (message.content.indexOf(prefix) !== 0) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
