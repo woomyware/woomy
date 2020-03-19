@@ -23,12 +23,12 @@ exports.run = async (client, message, args) => {
       return message.channel.send(
         "<:error:466995152976871434> That user doesn't seem to exist. Try again!"
       );
-    user = users[0];
+    user = users[0].user;
   };
 
   if (!user2) {
     let users;
-    users = client.searchForMembers(message.guild, args[0]);
+    users = client.searchForMembers(message.guild, args[1]);
     if (users.length > 1)
       return message.channel.send(
         "<:error:466995152976871434> Found multiple users! Please be more specific or mention the user instead."
@@ -37,13 +37,13 @@ exports.run = async (client, message, args) => {
       return message.channel.send(
         "<:error:466995152976871434> That user doesn't seem to exist. Try again!"
       );
-    user2 = users[0];
+    user2 = users[0].user;
   };
   
   var secondLength = Math.floor(user2.username.length / 2);
 
-  var first = user.username.slice(0, user.username.length / 2)
-  var second = user2.username.slice(secondLength, user2.username.length / 2)
+  var first = user.username.slice(0, secondLength - 1)
+  var second = user2.username.slice(secondLength)
 
   try {
     var attachment = new Discord.MessageAttachment(`https://api.alexflipnote.dev/ship?user=${user.avatarURL({format: "png"})}&user2=${user2.avatarURL({format: "png"})}`)
