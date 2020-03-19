@@ -3,7 +3,7 @@ exports.run = (client, message, args, level) => {
   embed.setColor(client.embedColour(message));
 
   var ran = false;
-  var output = "";
+  var output = "```";
   var commands = 0;
   var prefix;
   var currentCategory;
@@ -38,18 +38,22 @@ exports.run = (client, message, args, level) => {
       const cat = c.help.category.toProperCase();
       if (currentCategory !== cat) {
         if(ran == true) {
-          embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2))
-          output = "";
+          output = output.slice(0, -2) + "```";
+          embed.addField(currentCategory + ` [${commands}]`, output)
+          output = "```";
           commands = 0;
         }
         currentCategory = cat;
         ran = true
       }
-    output += `\`${prefix}${c.help.name}\`, `;
+    output += `${prefix}${c.help.name}, `;
     commands = commands + 1;
     });
 
-    embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2));
+    output = output.slice(0, -2);
+    output = output + "```"
+
+    embed.addField(currentCategory + ` [${commands}]`, output);
 
     embed.addField(
       "Invite me",
@@ -87,18 +91,20 @@ exports.run = (client, message, args, level) => {
       const cat = c.help.category.toProperCase();
       if (currentCategory !== cat) {
         if(ran == true) {
-          embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2))
-          output = "";
+          output = output.slice(0, -2) + "```";
+          embed.addField(currentCategory + ` [${commands}]`, output)
+          output = "```";
           commands = 0;
         }
         currentCategory = cat;
         ran = true
       }
-    output += `\`${prefix}${c.help.name}\`, `;
+    output += `${prefix}${c.help.name}, `;
     commands = commands + 1;
     });
 
-    embed.addField(currentCategory + ` [${commands}]`, output.slice(0, -2));
+    output = output.slice(0, -2) + "```";
+    embed.addField(currentCategory + ` [${commands}]`, output);
 
     embed.addField(
       "Invite me",
