@@ -13,7 +13,7 @@ exports.run = async (client, message, args, error) => {
   message.channel.startTyping();
 	
   weather.find({search: args.join(" "), degreeType: 'C'}, function(err, result) {
-		if(err) client.logger.log(`weather.js error: ${JSON.stringify(error)}`, "error")
+		if(err) return client.logger.log(`weather.js error: ${JSON.stringify(error)}`, "error")
     if(result.length < 2 || !result) {
       message.channel.stopTyping();
       return message.channel.send("<:error:466995152976871434> City not found!");
