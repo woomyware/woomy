@@ -1,18 +1,8 @@
 const Discord = require("discord.js");
 const coolPeople = require('../../resources/other/coolpeople.json')
 exports.run = (client, message, args) => {
-  var user;
-  var guild;
-  var nick = "";
-  var roles = "";
-  var presence = "";
-  var badges = "";
-  var status;
-  var createdAt;
-  var avurl;
-  var tag;
-  var id;
-  var bot;
+  var user, guild, status, createdAt, avurl, tag, id;
+  var nick, roles, presence, badges = "";
   var coolPerson = false;
   var friendos = coolPeople.coolPeople;
 

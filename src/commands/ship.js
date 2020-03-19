@@ -39,11 +39,9 @@ exports.run = async (client, message, args) => {
       );
     user2 = users[0];
   };
-  
-  var secondLength = Math.floor(user2.username.length / 2);
 
   var first = user.username.slice(0, user.username.length / 2)
-  var second = user2.username.slice(secondLength, user2.username.length / 2)
+  var second = user2.username.slice(Math.floor(user2.username.length / 2), user2.username.length)
 
   try {
     var attachment = new Discord.MessageAttachment(`https://api.alexflipnote.dev/ship?user=${user.avatarURL({format: "png"})}&user2=${user2.avatarURL({format: "png"})}`)
