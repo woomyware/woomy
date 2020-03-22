@@ -1,51 +1,42 @@
-const request = require('request')
 exports.run = async (client, message, args) => {
 
-
-  //NOT FINISHED
+  var hearts = [
+    "❤️",
+    "🧡",
+    "💛",
+    "💚",
+    "💙",
+    "💜"
+  ];
   
   if(!args[0] || !args[1]) {
-    return message.channel.send(`<:error:466995152976871434> Please include two users`)
+    return message.channel.send(`<:error:466995152976871434> Please include at least two names.`)
   }
-  message.channel.startTyping();
 
-  let users = [];
+  let names = [];
   let totalLength = 0;
 
   for(let i = 0; i < args.length; i++) {
     let arg = args[i];
-
-    let user = client.getUserFromMention(arg);
-
-    if(!user) {
-      let usersFound;
-      usersFound = client.searchForMembers(message.guild, arg);
-      if (usersFound.length > 1)
-        return message.channel.send(
-          "<:error:466995152976871434> Found multiple users! Please be more specific or mention the user instead."
-        );
-      else if (usersFound.length == 0)
-        return message.channel.send(
-          "<:error:466995152976871434> That user doesn't seem to exist. Try again!"
-        );
-      user = usersFound[0].user;
-    }
-
-    users.push(user);
-    totalLength += user.username.length;
+    let name = client.getUserFromMention(arg).username;
+    if(!name) {
+      name = arg;
+    };  
+    names.push(name);
+    totalLength += arg.length;
   }
 
-  let lengthPerUser = Math.floor(totalLength / users.length);
+  let lengthPerName = Math.floor(totalLength / names.length);
 
   let finalName = '';
 
   let last = -1;
 
-  for(let i = 0; i < users.length; i++) {
-    let user = users[i];
-    let l = Math.min(lengthPerUser, user.username.length);
+  for(let i = 0; i < names.length; i++) {
+    let name = names[i];
+    let l = Math.min(lengthPerName, name.length);
 
-    let p = user.username.substr(last + 1, last + l);
+    let p = name.substr(last + 1, last + l);
 
     console.log(p);
 
@@ -55,18 +46,11 @@ exports.run = async (client, message, args) => {
   };
 
   console.log(totalLength);
-  console.log(users.length);
-  console.log(lengthPerUser);
+  console.log(names.length);
+  console.log(lengthPerName);
   console.log(finalName);
 
-  try {
-    //var attachment = new Discord.MessageAttachment(`https://api.alexflipnote.dev/ship?user=${user.avatarURL({format: "png"})}&user2=${user2.avatarURL({format: "png"})}`)
-    message.channel.send(`Your ship name is **${finalName}!**`)
-    message.channel.stopTyping();
-  } catch(err) {
-    message.channel.send(`<:error:466995152976871434> API error: ${err}`);
-    message.channel.stopTyping();
-  };
+  message.channel.send(`**Ship generator:**\n${hearts.random()} Ship name: \`${finalName}\`\n${hearts.random()} Compatibility rating:`)
 };
 
 exports.conf = {

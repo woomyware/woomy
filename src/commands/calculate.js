@@ -29,14 +29,14 @@ exports.run = (client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["calculate", "calc"],
+  aliases: ["calc", "math"],
   permLevel: "User",
   requiredPerms: []
 };
 
 exports.help = {
-  name: "math",
+  name: "calculate",
   category: "Utility",
   description: "Solves basic mathematical equations.",
-  usage: "math [equation]"
+  usage: "calculate [equation]"
 };

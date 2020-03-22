@@ -8,7 +8,7 @@
     "better-sqlite3": "^5.4.1",
     "chalk": "^3.0.0",
     "dblapi.js": "^2.3.1",
-    "discord.js": "^12.0.1",
+    "discord.js": "^12.0.2",
     "enmap": "^5.2.4",
     "garfield": "^1.1.2",
     "get-youtube-id": "^1.0.1",

@@ -8,3 +8,6 @@ Help command changed, the amount of commands in each category and overall is now
 added `inspire` as an alias for inspirobot
 ship command
 added find by mention to functions
+you can now @mention the bot to run commands
+added identity command, has definitions of gender identities and stuff
+renamed math calculate  

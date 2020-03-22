@@ -1,18 +1,18 @@
-const identities = require ("../../resources/other/identities.json");
+const sexualities = require ("../../resources/other/sexualities.json");
 exports.run = async (client, message, args) => { 
   var output = "";
   if(!args[0]) {
-    for (var key of Object.keys(identities)) {
+    for (var key of Object.keys(sexualities)) {
       output += `${key}, `  
     };
-    return message.channel.send(`__**Identities**__\n${output.slice(0, -2)}`);
+    return message.channel.send(`__**sexualities**__\n${output.slice(0, -2)}`);
   } else {  
     if(args.join(" ").toLowerCase() == "attack helicopter" || args.join(" ").toLowerCase() == "apache attack helicopter" || args.join(" ").toLowerCase() == "apache") {
       return message.channel.send({
         files: [new Discord.MessageAttachment("./resources/images/attackhelicopter.jpg")]
       });
     }
-    output = identities[args.join(" ").toLowerCase()];
+    output = sexualities[args.join(" ").toLowerCase()];
     if(!output) {
       return message.channel.send("<:error:466995152976871434> No results for that query.");
     };
@@ -23,14 +23,14 @@ exports.run = async (client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["identities"],
+  aliases: ["sexualities"],
   permLevel: "User",
   requiredPerms: []
 }; 
 
 exports.help = {
-  name: "identity",
+  name: "sexuality",
   category: "Fun",
-  description: "Gives you information about the specified identity.",
-  usage: "identity [identity]"
+  description: "Gives you information about the specified sexuality.",
+  usage: "sexuality [sexuality]"
 };
