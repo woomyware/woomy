@@ -3,11 +3,15 @@ Links to avatars now lead to the original file size
 Bots now get a bot badge in the userinfo command
 Added dogfact and catfact command (terry)
 index.js now has better logging of when things fail to load/initialize (terry)
-added `dice`, rolls a 6 sided die (terry)
+added `dice`, rolls a sided die (terry)
 Help command changed, the amount of commands in each category and overall is now displayed and formatting changed
 added `inspire` as an alias for inspirobot
 ship command
 added find by mention to functions
 you can now @mention the bot to run commands
 added identity command, has definitions of gender identities and stuff
+added pronouns command, tells you how to use pronouns
+added sexuality command, has definitions of sexualities
 renamed math calculate  
+fixed woomy in dms
+roleinfo now displays what permissions a role has and also the role colour in the thumbnail

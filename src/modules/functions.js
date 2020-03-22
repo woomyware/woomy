@@ -340,6 +340,12 @@ module.exports = client => {
     };
   };
 
+  // FIND RANDOM INT BETWEEN TWO INTEGERS
+  client.intBetween = function(min, max){
+    return Math.round((Math.random() * (max - min))+min);
+  };
+
+
   // <String>.toPropercase() returns a proper-cased string
   Object.defineProperty(String.prototype, "toProperCase", {
     value: function() {

@@ -22,6 +22,6 @@ exports.run = async (bot, message, args) => {
     name: "dice",
     category: "Fun",
     description: "Rolls a dice.",
-    usage: "dice"
+    usage: "dice **OR** dice <number>"
   };
   
