@@ -48,6 +48,6 @@ exports.help = {
   name: "ship",
   category: "Fun",
   description: "Ship two people together <3",
-  usage: "ship name name2"
+  usage: "ship [name/user] [name/user]"
 };
 
