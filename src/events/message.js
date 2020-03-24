@@ -152,7 +152,7 @@ module.exports = async (client, message) => {
       .then(m => m.delete(2000));
   };
 
-  if (!perms.has('SEND_MESSAGES')) {
+  if (message.guild && !perms.has('SEND_MESSAGES')) {
     return message.author.send(`<:error:466995152976871434> I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`);
   };
 
