@@ -18,7 +18,7 @@ module.exports = client => {
 
     if(client.config.consoleLogs.length > 0) {
       try {
-        channel1 = client.guilds.cache.get(client.config.consoleLogs)
+        channel1 = guild.channels.cache.get(client.config.consoleLogs)
       } catch(err) {
         client.logger.error("Could not find consoleLogs channel (is the ID valid?):\n" + err);
         process.exit(1);
@@ -35,15 +35,13 @@ module.exports = client => {
     };
   };
 
-
-
-  if(client.devmode == true) {
+  if(client.devmode !== true) {
     client.logger.warn("Running in development mode.")
     prefix = client.config.defaultSettings.devprefix;
   } else {
     prefix = client.config.defaultSettings.prefix;
-    if(channel1) {
-      channel1.send(`Bot started at \`${timestamp}\``);
+    if(channel) {
+      channel.send(`Bot started at \`${timestamp}\``);
     };
   };
 
