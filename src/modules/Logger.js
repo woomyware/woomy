@@ -12,7 +12,7 @@ exports.log = (content, type = "log") => {
 
   var logToServer = false;
 
-  if(client.devmode === false && channel && guild.available) {
+  if(client.devmode === false && channel && client.guilds.cache.get(client.config.loggingServer).available) {
     logToServer = true;
   };
 
