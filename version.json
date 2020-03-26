@@ -1,4 +1,4 @@
 {
-    "number": "1.2.0",
+    "number": "1.2.1",
     "changelog": "**1.2.0 CHANGELOG:**\n> • Added action commands! (`cuddle`, `feed`, `hug`, `kiss`, `pat`, `poke`, `slap`, `smug`, `tickle`)\n> • Added `fact`\n> • Added `catfact`\n> • Added `dogfact`\n> • Added `yoda`\n> • Added `dice`\n> • Added `spoilerise`\n> • Added `zalgo`\n> • Added `dog`\n> • Added `cat`\n> • Added `lizard`\n> • Added `neko`\n> • Added `nekogif`\n> • Added `kemonomimi`\n> • Added `foxgirl`\n> • Added `identity`\n> • Added `pronouns`\n> • Added `sexuality`\n> • Added `ship`\n> • Renamed `flip to `coinflip` (flip remains as an alias)\n> • Renamed `math` to `calculate` (math is an alias)\n> • @Woomy is now a prefix\n> • Added the `inspire` alias to `inspirobot`\n> • Help now displays the amount of commands in each category\n> • Bots now get a badge in `userinfo`\n> • `roleinfo` now displays what permissions a role has\n> • small changes to `weather`\n> • Woomy now has clear logging of issues that prevent her from starting\n> • request npm module has been swapped out for node-fetch\n**NOTES:**\n> Thank you to Terryiscool160 for creating multiple commands used in this update"
 }
