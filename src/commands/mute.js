@@ -85,7 +85,7 @@ exports.run = async (client, message, [args, ...reason], level) => {
     if (channel) {
       let embed = new Discord.MessageEmbed();
       embed.setColor("#a652bb");
-      embed.setAuthor("User muted!", user.user.avatarURL({format: "png", dynamic: true}));
+      embed.setAuthor("User muted!", user.user.avatarURL({format: "png", dynamic: true, size: 2048}));
       embed.setDescription(
         `• User: ${user} (${user.user.id})\n• Mod: ${message.author} (${message.author.id})\n• Reason: ${muteReason}`
       );
