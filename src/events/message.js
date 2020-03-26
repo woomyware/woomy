@@ -1,4 +1,4 @@
-const commandRanRecently = new Set();
+const cooldown = new Set();
 module.exports = async (client, message) => {
   if (message.author.bot) return;
   
@@ -151,11 +151,12 @@ module.exports = async (client, message) => {
 
   if (!cmd) return;
 
-  if (commandRanRecently.has(message.author.id)) {
+  if (cooldown.has(message.author.id)) {
     return message.channel.send(
-        `⏱️ You are being ratelimited. Please try again in 2 seconds.`
-      )
-      .then(m => m.delete(2000));
+      `⏱️ You are being ratelimited. Please try again in 2 seconds.`
+    ).then(msg => {
+      msg.delete({timeout: 2000});
+    });
   };
 
   if (message.guild && !perms.has('SEND_MESSAGES')) {
@@ -222,10 +223,11 @@ module.exports = async (client, message) => {
     message.flags.push(args.shift().slice(1));
   };
   
-  commandRanRecently.add(message.author.id);
+  cooldown.add(message.author.id);
+
   setTimeout(() => {
-    commandRanRecently.delete(message.author.id);
-  }, {timeout: 2000});
+    cooldown.delete(message.author.id);
+  }, 2000);
 
   client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`);
   
