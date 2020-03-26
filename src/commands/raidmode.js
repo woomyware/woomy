@@ -43,7 +43,7 @@ exports.run = async (client, message, args, level) => {
     if (channel) {
       let embed = new Discord.MessageEmbed();
       embed.setColor(embColour);
-      embed.setAuthor(raidToggle, message.author.avatarURL({dynamic: true}));
+      embed.setAuthor(raidToggle, message.author.avatarURL({format: "png", dynamic: true, size: 2048}));
       embed.setDescription(`• Mod: ${message.author} (${message.author.id})`)
       try {
         channel.send({ embed });

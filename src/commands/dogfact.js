@@ -1,13 +1,12 @@
-const request = require("request");
-
+const fetch = require("node-fetch");
 exports.run = async (bot, message, args) => {
   message.channel.startTyping();
   try{
-    request({ uri: "https://dog-api.kinduff.com/api/facts", json: true }, (error, response, body) => {
-      message.channel.send(`**Did you know?**\n ${body.facts[0]}`);
-    });
+    fetch('https://dog-api.kinduff.com/api/facts')
+      .then(res => res.json())
+      .then(json => message.channel.send(`__**Did you know?**__\n ${json.facts[0]}`));
   } catch(err) {
-    message.channel.send(`<:error:466995152976871434> API error: ${err}`);
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
   };
   message.channel.stopTyping();
 };

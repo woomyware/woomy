@@ -11,7 +11,6 @@ exports.run = async (client, message, args) => {
     format = ".gif"
   };
   
-  console.log(string.length)
   if(string.length > 18) {
     ID = string.slice(string.length - 18);
   } else {

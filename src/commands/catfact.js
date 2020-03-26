@@ -1,14 +1,12 @@
-const request = require("request");
-
+const fetch = require("node-fetch")
 exports.run = async (bot, message, args) => {
   message.channel.startTyping();
   try{
-    request({ uri: "https://catfact.ninja/facts", json: true }, (error, response, body) => {
-      message.channel.send(`**Did you know?**\n ${body.data[0].fact}`);
-      message.channel.startTyping();
-    });
+    fetch('https://catfact.ninja/facts')
+      .then(res => res.json())
+      .then(json => message.channel.send(`__**Did you know?**__\n${json.data[0].fact}`))
   } catch(err) {
-    message.channel.send(`<:error:466995152976871434> API error: ${err}`);
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
   };
   message.channel.stopTyping();
 };

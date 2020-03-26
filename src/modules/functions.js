@@ -1,7 +1,7 @@
 const ytdl = require('ytdl-core-discord');
 const youtubeInfo = require('youtube-info');
 const getYoutubeId = require('get-youtube-id');
-const request = require('request');
+const fetch = require('node-fetch');
 
 module.exports = client => {
   // Permission level function
@@ -160,14 +160,17 @@ module.exports = client => {
   {
       return new Promise(function(resolve, reject)
       {
-          request("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + client.config.ytkey, function(error, response, body)
-          {
-              if(error) throw error;
-
-              var json = JSON.parse(body);
+        try{
+          fetch("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + client.config.ytkey)
+            .then(res => res.json())
+            .then(json => {
               if(!json.items) { reject(); return; }
               resolve(json.items[0]);
-          });
+            });
+          } catch (err) {
+            client.logger.error("Music search err: ", err);
+            throw err;
+          };
       });
   }
 
@@ -339,6 +342,12 @@ module.exports = client => {
       return msg.guild.member(client.user).displayHexColor;
     };
   };
+
+  // FIND RANDOM INT BETWEEN TWO INTEGERS
+  client.intBetween = function(min, max){
+    return Math.round((Math.random() * (max - min))+min);
+  };
+
 
   // <String>.toPropercase() returns a proper-cased string
   Object.defineProperty(String.prototype, "toProperCase", {

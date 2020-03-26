@@ -1,23 +1,39 @@
-const request = require('request')
 exports.run = async (client, message, args) => {
-  message.channel.startTyping();
 
-  var user = client.getUserFromMention(args[0])
-  var user2 = client.getUserFromMention(args[1])
+  var name, name1;
+  var rating = Math.floor(Math.random() * 100) + 1;
+  var hearts = [
+    "❤️",
+    "🧡",
+    "💛",
+    "💚",
+    "💙",
+    "💜"
+  ];
   
-  var secondLength = Math.floor(user2.username.length / 2);
+  if(args.length < 2) {
+    return message.channel.send(`<:error:466995152976871434> Please include two names/users.`)
+  }
 
-  var first = user.username.substr(0, user.username.length / 2)
-  var second = user2.username.substr(secondLength, user2.username.length / 2)
-
-  try {
-    var attachment = new Discord.MessageAttachment(`https://api.alexflipnote.dev/ship?user=${user.avatarURL({format: "png"})}&user2=${user2.avatarURL({format: "png"})}`)
-    message.channel.send(`Your ship name is **${first+second}!**`, attachment)
-    message.channel.stopTyping();
-  } catch(err) {
-    message.channel.send(`<:error:466995152976871434> API error: ${err}`);
-    message.channel.stopTyping();
+  if(message.guild && message.mentions.members && message.mentions.members.size > 0) {
+      name = message.mentions.members.first().displayName;
   };
+
+  if(message.guild && message.mentions.members && message.mentions.members.size > 1) {
+    name1 = message.mentions.members.last().displayName;
+  };
+
+  if(!name) {
+    name = args[0];
+  };
+
+  if(!name1) {
+    name1 = args[1];
+  };
+
+  shipName = name.substr(0, client.intBetween(1,name.length))+name1.substr(client.intBetween(0,name1.length));
+
+  message.channel.send(`__**Ship Generator:**__\n${hearts.random()} Ship Name: \`${shipName}\`\n${hearts.random()} Compatibility rating: \`${rating}%\``)
 };
 
 exports.conf = {
@@ -32,6 +48,6 @@ exports.help = {
   name: "ship",
   category: "Fun",
   description: "Ship two people together <3",
-  usage: "ship name name2"
+  usage: "ship [name/user] [name/user]"
 };
 

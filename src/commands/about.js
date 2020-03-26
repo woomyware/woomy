@@ -26,9 +26,9 @@ exports.run = (client, message) => {
   }
 
   embed = new Discord.MessageEmbed();
-    embed.setTitle(`Woomy`);
     embed.setColor(client.embedColour(message));
     embed.setThumbnail(client.user.avatarURL({format: "png", dynamic: true, size: 2048}))
+    embed.setTitle("About Woomy")
     embed.addField(
       "General:", `• users: \`${client.users.cache.size}\`\n• channels: \`${client.channels.cache.size}\`\n• servers: \`${client.guilds.cache.size}\`\n• commands: \`${client.commands.size}\`\n• uptime: \`${duration}\``,true
       );
@@ -45,7 +45,7 @@ exports.run = (client, message) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["stats"],
+  aliases: ["stats", "botinfo"],
   permLevel: "User",
   requiredPerms: []
 };
