@@ -2,7 +2,7 @@ const API = require('nekos.life');
 const {sfw} = new API();
 exports.run = async (client, message, args) => {
   if(!args[0]) {
-    return message.channel.send(`<:error:466995152976871434> You didn't say who you wanted to slap! Usage: \`${client.commands.get(`kiss`).help.usage}\``)
+    return message.channel.send(`<:error:466995152976871434> You didn't say who you wanted to slap! Usage: \`${client.commands.get(`slap`).help.usage}\``)
   };
 
   var people = "";
