@@ -2,6 +2,12 @@ const config = {
   // ID's
   "owners": [], // Adding your ID here will give you access to dangerous commands like eval. Please be careful with who you add here! Eval can be used to modify the host machine.
 
+    // Host options
+    "devmodeEnabled": false, // true or false
+    "loggingServer": "", // server ID, or blank to disable
+    "startupLogs": "", // Channel ID, or blank to disable
+    "consoleLogs": "", // Channel ID, or blank to disable
+
   // Tokens
   "token": "", // Your bot's token.
   "devtoken": "", // (optional) another token, meant for a bot used for development

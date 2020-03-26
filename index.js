@@ -15,18 +15,21 @@ try {
   console.log('Failed to load config.js:', err);
   process.exit();
 };
+
 try{
   client.version = require('./version.json');
 } catch (err) {
   console.log('Failed to load version.json:', err);
   process.exit();
 };
+
 try{
   client.logger = require('./src/modules/Logger');
 } catch (err) {
   console.log('Failed to load Logger.js:', err);
   process.exit();
 };
+
 client.logger.setClient(client);
 
 try{
@@ -36,7 +39,7 @@ try{
   process.exit();
 };
 
-if(process.env['USER'] != 'container') {
+if(client.config.devmodeEnabled == true && process.env['USER'] != 'container') {
   client.devmode = true;
 } else {
   client.devmode = false;

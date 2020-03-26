@@ -1,10 +1,4 @@
 exports.run = async (client, message, args) => {
-  if(client.devmode === true) {
-    return message.channel.send(
-      "<:error:466995152976871434> This command has been disabled because Woomy is in development mode."
-      );
-  };
-
   const settings = message.settings;
 
   if (!client.settings.has(message.guild.id)) client.settings.set(message.guild.id, {});
