@@ -35,7 +35,7 @@ module.exports = client => {
     };
   };
 
-  if(client.devmode !== true) {
+  if(client.devmode == true) {
     client.logger.warn("Running in development mode.")
     prefix = client.config.defaultSettings.devprefix;
   } else {
