@@ -8,11 +8,15 @@ module.exports = client => {
 
   client.logger.log(`Connected to Discord as ${client.user.tag} | v${client.version.number}`, 'ready');
 
-  let channel;
-  let channel1;
+  let channel, channel1;
 
-  try { channel = client.guilds.cache.get('410990517841690625').channels.cache.get('570963998342643732'); } catch(err) {};
-  try { channel1 = client.guilds.cache.get('410990517841690625').channels.cache.get('570963481189154822'); } catch(err) {};
+  try { 
+    channel = client.guilds.cache.get('410990517841690625').channels.cache.get('570963998342643732'); 
+  } catch(err) {};
+  
+  try { 
+    channel1 = client.guilds.cache.get('410990517841690625').channels.cache.get('570963481189154822'); 
+  } catch(err) {};
 
   if(client.devmode == true) {
     client.logger.warn("Running in development mode.")
@@ -21,13 +25,16 @@ module.exports = client => {
     prefix = client.config.defaultSettings.prefix;
     channel.send(`\`${timestamp}\`: Ready event fired! Connected to ${client.users.cache.size} users in ${client.guilds.cache.size} guilds.`);
     channel1.send(`\`${timestamp}\`: **Ready event fired**`);
-  }
+  };
 
   let randomActivity = activityArray.random();
   
   client.user.setActivity(`${prefix + randomActivity} | v${client.version.number}`, {type: "PLAYING"});
+
   setInterval(() => {
     randomActivity = activityArray.random();
-    if(client.lockActivity == false) client.user.setActivity(`${prefix + randomActivity} | v${client.version.number}`, {type: "PLAYING"});
+    if(client.lockActivity == false) {
+      client.user.setActivity(`${prefix + randomActivity} | v${client.version.number}`, {type: "PLAYING"});
+    };
   }, 30000);
 };

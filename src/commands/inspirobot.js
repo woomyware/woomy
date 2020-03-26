@@ -1,26 +1,21 @@
-const request = require('request')
+const fetch = require("node-fetch")
 exports.run = async (client, message) => {
   message.channel.startTyping();
-  request({
-    url: "http://inspirobot.me/api?generate=true"
-  },
-  function(error, res, body) {
-    if(body.length > 0) {
-      message.channel.send({
-        files: [new Discord.MessageAttachment(body)]
-      });
-      message.channel.stopTyping();
-    } else {
-      message.channel.send('<:error:466995152976871434> API error, please retry.')
-      message.channel.stopTyping();
-    };
-  });
+  try {
+    fetch('http://inspirobot.me/api?generate=true')
+      .then(res => res.text())
+      .then(body => message.channel.send({files: [new Discord.MessageAttachment(body)]}));
+    message.channel.stopTyping();
+  } catch (err) {
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`)
+    message.channel.stopTyping();
+  };
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ["inspire"],
   permLevel: "User",
   requiredPerms: []
 };

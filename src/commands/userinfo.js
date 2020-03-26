@@ -1,18 +1,10 @@
 const Discord = require("discord.js");
-
+const coolPeople = require('../../resources/other/coolpeople.json')
 exports.run = (client, message, args) => {
-  var user;
-  var guild;
-  var nick = "";
-  var roles = "";
-  var presence = "";
-  var badges = "";
-  var status;
-  var createdAt;
-  var avurl;
-  var tag;
-  var id;
-  var bot;
+  var user, guild, status, createdAt, avurl, tag, id;
+  var nick, roles, presence, badges = "";
+  var coolPerson = false;
+  var friendos = coolPeople.coolPeople;
 
   if(message.guild) {
     user = message.mentions.members.first();
@@ -39,16 +31,27 @@ exports.run = (client, message, args) => {
       nick = `\n• **Nickname:** ${user.nickname}`;
     };
 
-    if(user.user.id == message.guild.ownerID) {
-      badges = "<:owner:685703193694306331>\n"
+    for (var i = 0; i < friendos.length; i++) {
+      if (user.user.id == friendos[i])
+      coolPerson = true;
+    };
+
+    if(coolPerson == true) {
+      badges += "🌟"
     }
-    
-    createdTimestamp = user.user.createdTimestamp;
-    var date = new Date(createdTimestamp * 1000);
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "o" + date.getSeconds();
-    console.log(date)
+
+    if(user.user.id == message.guild.ownerID) {
+      badges += "<:owner:685703193694306331>"
+    }
+
+    if(user.user.bot) {
+      badges += "<:bot:686489601678114859>"
+    }
+  
+
+    if(badges.length > 0) {
+      badges += "\n"
+    }
 
     user.roles.cache.forEach((role) => {
       roles = roles + role.name + "`, `"
