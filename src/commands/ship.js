@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
     name1 = args[1];
   };
 
-  shipName = name.substring(0, client.intBetween(1,name.length))+name1.substring(client.intBetween(0,name1.length));
+  shipName = name.substr(0, client.intBetween(1,name.length))+name1.substr(client.intBetween(0,name1.length));
 
   message.channel.send(`__**Ship Generator:**__\n${hearts.random()} Ship Name: \`${shipName}\`\n${hearts.random()} Compatibility rating: \`${rating}%\``)
 };

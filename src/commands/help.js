@@ -3,7 +3,7 @@ exports.run = (client, message, args, level) => {
   embed.setColor(client.embedColour(message));
 
   var ran = false;
-  var output = "```";
+  var output = "";
   var commands = 0;
   var prefix;
   var currentCategory;
@@ -15,7 +15,7 @@ exports.run = (client, message, args, level) => {
   };
 
   if(!args[0]) {
-    embed.setTitle(`Commands [${client.commands.size}]`);
+    embed.setTitle(`Command list`);
     embed.setDescription(`⁣For more information on a specific command use \`${prefix}help <command>\`\nFor the full command list use \`${prefix}help all\`\n`);
 
     const myCommands = message.guild ? client.commands.filter(
@@ -35,23 +35,19 @@ exports.run = (client, message, args, level) => {
     );
 
     sorted.forEach( c => {
-      const cat = c.help.category.toProperCase();
+      const cat = c.help.category;
       if (currentCategory !== cat) {
         if(ran == true) {
-          output = output.slice(0, -2) + "```";
           embed.addField(currentCategory + ` [${commands}]`, output)
-          output = "```";
+          output = "";
           commands = 0;
         }
         currentCategory = cat;
         ran = true
       }
-    output += `${prefix}${c.help.name}, `;
+    output += `\`${c.help.name}\` `;
     commands = commands + 1;
     });
-
-    output = output.slice(0, -2);
-    output = output + "```"
 
     embed.addField(currentCategory + ` [${commands}]`, output);
 
@@ -72,7 +68,7 @@ exports.run = (client, message, args, level) => {
   };
 
   if(args[0].toLowerCase() == "all") {
-    embed.setTitle(`Commands [${client.commands.size}]`);
+    embed.setTitle(`Command list`);
     embed.setDescription(`⁣For more information on a specific command use \`${prefix}help <command>\`\nFor the full command list use \`${prefix}help all\`\n`);
 
     const myCommands = client.commands
@@ -88,22 +84,21 @@ exports.run = (client, message, args, level) => {
     );
 
     sorted.forEach( c => {
-      const cat = c.help.category.toProperCase();
+      const cat = c.help.category;
       if (currentCategory !== cat) {
         if(ran == true) {
-          output = output.slice(0, -2) + "```";
           embed.addField(currentCategory + ` [${commands}]`, output)
-          output = "```";
+          output = "";
           commands = 0;
         }
         currentCategory = cat;
         ran = true
       }
-    output += `${prefix}${c.help.name}, `;
+    output += `\`${c.help.name}\` `;
     commands = commands + 1;
     });
 
-    output = output.slice(0, -2) + "```";
+
     embed.addField(currentCategory + ` [${commands}]`, output);
 
     embed.addField(

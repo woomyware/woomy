@@ -52,7 +52,6 @@ exports.run = async (client, message, args, level) => {
   var embed = new Discord.MessageEmbed();
   embed.setColor(role.color);
   embed.setTitle(role.name);
-  embed.setThumbnail("https://api.alexflipnote.xyz/colour/image/" + role.hexColor.replace("#", ""));
   embed.setDescription(
     `• **ID:** ${role.id}\n• **Hex:** ${role.hexColor}\n• **Members:** ${role.members.size}\n• **Position:** ${role.position}\n• **Hoisted:** ${role.hoist}`
   );

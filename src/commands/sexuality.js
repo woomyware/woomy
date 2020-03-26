@@ -5,7 +5,7 @@ exports.run = async (client, message, args) => {
     for (var key of Object.keys(sexualities)) {
       output += `${key}, `  
     };
-    return message.channel.send(`__**sexualities**__\n${output.slice(0, -2)}`);
+    return message.channel.send(`__**Sexualities:**__\n${output.slice(0, -2)}`);
   } else {  
     if(args.join(" ").toLowerCase() == "attack helicopter" || args.join(" ").toLowerCase() == "apache attack helicopter" || args.join(" ").toLowerCase() == "apache") {
       return message.channel.send({
@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
     if(!output) {
       return message.channel.send("<:error:466995152976871434> No results for that query.");
     };
-    return message.channel.send(`__**${output.name}**__\n${output.description}`);
+    return message.channel.send(`__**${output.name.toProperCase()}:**__\n${output.description}`);
   };
 };
 

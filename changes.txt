@@ -15,3 +15,25 @@ added sexuality command, has definitions of sexualities
 renamed math calculate  
 fixed woomy in dms
 roleinfo now displays what permissions a role has and also the role colour in the thumbnail
+request has been replaced with node-fetch
+added neko
+added fact
+added nekogif
+added dog
+added cat 
+added hug
+added kiss
+added pat
+added poke
+added slap
+added tickle
+added cuddle
+added feed
+added smug
+added lizard
+added kemonomimi
+added spoilerise
+added zalgo
+renamed flip coinflip
+small changes to weather
+recategorised some commands

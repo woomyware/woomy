@@ -22,7 +22,7 @@ exports.conf = {
 
 exports.help = {
   name: "feedback",
-  category: "Miscellaneous",
+  category: "Utility",
   description: "Send feedback to my developer.",
   usage: "feedback [message]"
 };

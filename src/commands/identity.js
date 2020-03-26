@@ -16,7 +16,7 @@ exports.run = async (client, message, args) => {
     if(!output) {
       return message.channel.send("<:error:466995152976871434> No results for that query.");
     };
-    return message.channel.send(`__**${output.name}**__\n${output.description}`);
+    return message.channel.send(`__**${output.name.toProperCase()}**__\n${output.description}`);
   };
 };
 

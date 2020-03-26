@@ -34,7 +34,7 @@ exports.run = (client, message, args) => {
 
     if(emojified.length > 2000) {
       return message.channel.send("<:error:466995152976871434> The emojified message exceeds 2000 characters.")
-    }
+    };
       
     message.channel.send(emojified);
 };
