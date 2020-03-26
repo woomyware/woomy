@@ -153,9 +153,10 @@ module.exports = async (client, message) => {
 
   if (cooldown.has(message.author.id)) {
     return message.channel.send(
-        `⏱️ You are being ratelimited. Please try again in 2 seconds.`
-      )
-      .then(m => m.delete(5000));
+      `⏱️ You are being ratelimited. Please try again in 2 seconds.`
+    ).then(msg => {
+      msg.delete({timeout: 2000});
+    });
   };
 
   if (message.guild && !perms.has('SEND_MESSAGES')) {
