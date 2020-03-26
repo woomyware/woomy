@@ -5,11 +5,10 @@ exports.run = async (bot, message, args) => {
     fetch('https://dog-api.kinduff.com/api/facts')
       .then(res => res.json())
       .then(json => message.channel.send(`__**Did you know?**__\n ${json.facts[0]}`));
-    message.channel.stopTyping();
   } catch(err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
-    message.channel.stopTyping();
   };
+  message.channel.stopTyping();
 };
 
 exports.conf = {

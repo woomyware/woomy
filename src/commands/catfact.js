@@ -7,8 +7,8 @@ exports.run = async (bot, message, args) => {
       .then(json => message.channel.send(`__**Did you know?**__\n${json.data[0].fact}`))
   } catch(err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
-    message.channel.stopTyping();
   };
+  message.channel.stopTyping();
 };
 
 exports.conf = {
