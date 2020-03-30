@@ -26,17 +26,24 @@ require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
-client.commands = new Discord.Collection()
-client.aliases = new Discord.Collection()
+//client.commands = new Discord.Collection()
+//client.aliases = new Discord.Collection()
+
+// Command cache containing every prefix + command combination without arguments ( ~ping )
+client.commandCache = {};
 
 // Initialization function
 const init = async () => {
+  // Load modules
+
   // Register events
   fs.readdir('./events', (err, files) => {
     files.forEach(file => {
       client.on(file.substr(0, file.length - 3), require('./events/' + file))
     });
   });
+
+  // Load commands
 
   // Login into Discord
   client.login(process.env.TOKEN);
