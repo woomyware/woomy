@@ -79,6 +79,15 @@ module.exports = client => {
           id = item.id.videoId
       }
 
+      // music "playing", nothing in queue
+      if((client.music.getGuild(message.guild.id).playing || client.music.getGuild(message.guild.id).dispatcher) && client.music.getGuild(message.guild.id).queue.length == 0) {
+        client.music.getGuild(message.guild.id).playing = false;
+        client.music.getGuild(message.guild.id).dispatcher = null;
+      // music not playing, something is in queue
+      } else if(!client.music.getGuild(message.guild.id).playing && !client.music.getGuild(message.guild.id).dispatcher && client.music.getGuild(message.guild.id).queue.length > 0) {
+        client.music.getGuild(message.guild.id).queue = [];
+      };
+
       if(client.music.getGuild(message.guild.id).queue.length == 0 || bypassQueue)
       {
           let meta = await client.music.getMeta(id)
