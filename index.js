@@ -13,8 +13,7 @@ const colors = require('colors')
 const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
-require('./modules/functions')(client)
-
+// Logger
 client.logger = require('tracer').colorConsole({
   format: [
     '{{timestamp}} <{{title}}> {{message}}',
@@ -36,6 +35,12 @@ client.logger = require('tracer').colorConsole({
   }]
 })
 
+// Load modules
+require('./modules/functions')(client)
+require('./modules/music')(client)
+require('./modules/botlists')(client)
+
+// Checks to make sure config.js and .env exist
 if (fs.existsSync('./.env') === false) {
   client.logger.fatal('The .env file is missing! Please create a .env file.')
   process.exit()
@@ -49,7 +54,7 @@ if (fs.existsSync('./config.js') === false) {
 require('dotenv').config()
 client.config = require('./config')
 
-// Command/alias cache
+// Collections that 
 client.commands = new Discord.Collection()
 client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
