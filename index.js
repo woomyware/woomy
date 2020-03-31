@@ -13,8 +13,10 @@ const colors = require('colors')
 const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
+// Load functions module
 require('./modules/functions')(client)
 
+// Logger
 client.logger = require('tracer').colorConsole({
   format: [
     '{{timestamp}} <{{title}}> {{message}}',
@@ -36,6 +38,7 @@ client.logger = require('tracer').colorConsole({
   }]
 })
 
+// Load environment variables / config
 if (fs.existsSync('./.env') === false) {
   client.logger.fatal('The .env file is missing! Please create a .env file.')
   process.exit()
@@ -56,8 +59,6 @@ client.aliases = new Discord.Collection()
 
 // Initialization function
 const init = async () => {
-  // Load modules
-
   // Load events
   fs.readdir('./events', (err, files) => {
     if (err) {}
