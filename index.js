@@ -7,7 +7,7 @@ if (Number(process.version.slice(1).split('.')[0]) < 12) {
   process.exit()
 }
 
-// Load environment variables / config
+// Libraries
 const fs = require('fs')
 const colors = require('colors')
 const Discord = require('discord.js')
@@ -64,7 +64,9 @@ const init = async () => {
   // Load events
   fs.readdir('./events', (err, files) => {
     if (err) {
-      client.logger.error('Failed to get files in events directory! ' + err);
+      client.logger.fatal('Failed to get files in events directory! ' + err);
+
+      process.exit();
 
       return;
     };
@@ -82,7 +84,9 @@ const init = async () => {
   // Load commands
   fs.readdir('./commands', (err, files) => {
     if (err) {
-      client.logger.error('Failed to get files in commands directory! ' + err);
+      client.logger.fatal('Failed to get files in commands directory! ' + err);
+
+      process.exit();
 
       return;
     };
