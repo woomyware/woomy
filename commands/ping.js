@@ -4,7 +4,7 @@ exports.conf = {
   aliases: [],
   permLevel: 'User',
   requiredPerms: [],
-  cooldown: 2000
+  cooldown: 5000
 }
 
 exports.help = {
@@ -15,8 +15,8 @@ exports.help = {
 }
 
 exports.run = async (client, message) => {
-  const msg = await message.channel.send('⏱️ Please wait...')
+  const msg = await message.channel.send('Pinging...')
   msg.edit(
-    `:ping_pong: Pong! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms, API Latency is ${Math.round(client.ws.ping)}ms`
+    `Pong! \`${msg.createdTimestamp - message.createdTimestamp}ms\` (💗\`${Math.round(client.ws.ping)}ms\`)`
   )
 }

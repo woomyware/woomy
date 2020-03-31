@@ -16,23 +16,20 @@ const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 // Logger
 client.logger = require('tracer').colorConsole({
   format: [
-    '{{timestamp}} <{{title}}> {{message}}',
+    '{{timestamp}} [{{title}}] {{file}}: {{message}}',
     {
-      error: '{{timestamp}} <{{title}}> ({{file}}) {{message}}',
-      fatal: '{{timestamp}} <{{title}}> ({{file}}) {{message}}'
+      log: `{{timestamp}} ${'[{{title}}]'.white} {{file}}: {{message}}`,
+      debug: `{{timestamp}} ${'[{{title}}]'.magenta} {{file}}: {{message}}`,
+      info: `{{timestamp}} ${'[{{title}}]'.cyan} {{file}}: {{message}}`,
+      ready: `{{timestamp}} ${'[{{title}}]'.green} {{file}}: {{message}}`,
+      warn: `{{timestamp}} ${'[{{title}}]'.yellow} {{file}}: {{message}}`,
+      error: `{{timestamp}} ${'[{{title}}]'.red} {{file}}: {{message}}`,
+      fatal: `{{timestamp}} ${'[{{title}}]'.red.bold} {{file}}: {{message}}`
     }
   ],
-  dateformat: 'dd-mm-yyyy HH:MM:ss',
+  dateformat: 'yyyy-mm-dd HH:MM:ss',
   methods: ['log', 'debug', 'info', 'ready', 'warn', 'error', 'fatal'],
-  filters: [{
-    log: colors.white,
-    debug: colors.magenta,
-    info: colors.cyan,
-    ready: colors.green,
-    warn: colors.yellow,
-    error: colors.red,
-    fatal: [colors.red, colors.bold]
-  }]
+  filters: [colors.white]
 })
 
 // Load modules
@@ -54,7 +51,7 @@ if (fs.existsSync('./config.js') === false) {
 require('dotenv').config()
 client.config = require('./config')
 
-// Collections that 
+// Collections that
 client.commands = new Discord.Collection()
 client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
@@ -64,11 +61,8 @@ const init = async () => {
   // Load events
   fs.readdir('./events', (err, files) => {
     if (err) {
-      client.logger.fatal('Failed to get files in events directory! ' + err);
-
-      process.exit();
-
-      return;
+      client.logger.fatal('Failed to get files in events directory: ' + err)
+      process.exit()
     };
 
     client.logger.info(`Loading ${files.length} events.`)
@@ -84,11 +78,9 @@ const init = async () => {
   // Load commands
   fs.readdir('./commands', (err, files) => {
     if (err) {
-      client.logger.fatal('Failed to get files in commands directory! ' + err);
+      client.logger.fatal('Failed to get files in commands directory: ' + err)
 
-      process.exit();
-
-      return;
+      process.exit()
     };
 
     client.logger.info(`Loading ${files.length} commands.`)

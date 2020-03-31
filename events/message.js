@@ -34,13 +34,20 @@ module.exports = async (client, message) => {
     return message.channel.send('You don\'t have permission to run this command!')
   }
 
-  const delay = () => {
-    setTimeout(() => {
-      client.cooldown.get(cmd).delete(message.author.id);
-      message.channel.send(`${message.member} cooldown has expired for ${command} command.`)
-    }, commands.get(command) * 1000);
-}
+  // Cooldown
+  if (client.cooldown.get(cmd.help.name).has(message.author.id)) {
+    const init = client.cooldown.get(command).get(message.author.id)
+    const curr = new Date()
+    const diff = Math.round((curr - init) / 1000)
+    const time = cmd.conf.cooldown / 1000
+    return message.reply(`this command is on cooldown! You'll be able to use it again in ${time - diff} seconds.`)
+  } else {
+    client.cooldown.get(cmd.help.name).set(message.author.id, new Date())
 
+    setTimeout(() => {
+      client.cooldown.get(cmd.help.name).delete(message.author.id)
+    }, client.commands.get(cmd.help.name).conf.cooldown)
+  }
 
   message.author.permLevel = level
 
