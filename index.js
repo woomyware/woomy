@@ -61,11 +61,14 @@ client.aliases = new Discord.Collection()
 
 // Initialization function
 const init = async () => {
-  // Load modules
-
   // Load events
   fs.readdir('./events', (err, files) => {
-    if (err) {}
+    if (err) {
+      client.logger.error('Failed to get files in events directory! ' + err);
+
+      return;
+    };
+
     client.logger.info(`Loading ${files.length} events.`)
     files.forEach(file => {
       if (!file.endsWith('.js')) {
@@ -78,7 +81,12 @@ const init = async () => {
 
   // Load commands
   fs.readdir('./commands', (err, files) => {
-    if (err) {}
+    if (err) {
+      client.logger.error('Failed to get files in commands directory! ' + err);
+
+      return;
+    };
+
     client.logger.info(`Loading ${files.length} commands.`)
     files.forEach(file => {
       if (!file.endsWith('.js')) {
