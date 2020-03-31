@@ -51,6 +51,14 @@ if (fs.existsSync('./config.js') === false) {
 require('dotenv').config()
 client.config = require('./config')
 
+if (process.env.DEV_MODE === 'true') {
+  client.devmode = true
+  client.logger.warn('Running in development mode.')
+} else {
+  client.devmode = false
+  // load botlist stuff here eventually
+}
+
 // Collections that
 client.commands = new Discord.Collection()
 client.cooldown = new Discord.Collection()
@@ -104,6 +112,12 @@ const init = async () => {
 
   // Login into Discord
   client.login(process.env.TOKEN)
+
+  if(client.devmode === true) {
+    client.login(process.env.DEVTOKEN)
+  } else {
+    client.login(process.env.TOKEN)
+  }
 }
 
 init()
