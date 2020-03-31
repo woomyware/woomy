@@ -1,10 +1,7 @@
-
-const Discord = require('discord.js')
-const cooldown = new Discord.Collection()
 module.exports = async (client, message) => {
   if (message.author.bot) return
 
-  var prefix = '~'
+  var prefix = '!'
 
   const myMention = `<@&${client.user.id}>`
   const myMention2 = `<@!${client.user.id}>`
@@ -36,6 +33,14 @@ module.exports = async (client, message) => {
   if (level < client.levelCache[cmd.conf.permLevel]) {
     return message.channel.send('You don\'t have permission to run this command!')
   }
+
+  const delay = () => {
+    setTimeout(() => {
+      client.cooldown.get(cmd).delete(message.author.id);
+      message.channel.send(`${message.member} cooldown has expired for ${command} command.`)
+    }, commands.get(command) * 1000);
+}
+
 
   message.author.permLevel = level
 

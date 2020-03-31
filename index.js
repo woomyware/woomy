@@ -17,7 +17,11 @@ require('./modules/functions')(client)
 
 client.logger = require('tracer').colorConsole({
   format: [
-    '{{timestamp}} <{{title}}> ({{file}}) {{message}}'
+    '{{timestamp}} <{{title}}> {{message}}',
+    {
+      error: '{{timestamp}} <{{title}}> ({{file}}) {{message}}',
+      fatal: '{{timestamp}} <{{title}}> ({{file}}) {{message}}'
+    }
   ],
   dateformat: 'dd-mm-yyyy HH:MM:ss',
   methods: ['log', 'debug', 'info', 'ready', 'warn', 'error', 'fatal'],
@@ -47,6 +51,7 @@ client.config = require('./config')
 
 // Command/alias cache
 client.commands = new Discord.Collection()
+client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
 // Initialization function
