@@ -1,40 +1,40 @@
-module.exports = client => {
-  client.music = {guilds: {}}
+const ytdl = require('ytdl-core-discord')
+const youtubeInfo = require('youtube-info')
+const getYoutubeId = require('get-youtube-id')
+const fetch = require('node-fetch')
 
-  client.music.isYoutubeLink = function(input) {
+module.exports = client => {
+  client.music = { guilds: {} }
+
+  client.music.isYoutubeLink = function (input) {
     return input.startsWith('https://www.youtube.com/') || input.startsWith('http://www.youtube.com/') || input.startsWith('https://youtube.com/') || input.startsWith('http://youtube.com/') || input.startsWith('https://youtu.be/') || input.startsWith('http://youtu.be/') || input.startsWith('http://m.youtube.com/') || input.startsWith('https://m.youtube.com/')
   }
 
-  client.music.search = async function(query)
-  {
-      return new Promise(function(resolve, reject)
-      {
-        try{
-          fetch("https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=" + encodeURIComponent(query) + "&key=" + process.env.YTKEY)
-            .then(res => res.json())
-            .then(json => {
-              if(!json.items) { reject() return }
-              resolve(json.items[0])
-            })
-          } catch (err) {
-            client.logger.error("Music search err: ", err)
-            throw err
-          }
-      })
+  client.music.search = async function (query) {
+    return new Promise(function (resolve, reject) {
+      try {
+        fetch('https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=' + encodeURIComponent(query) + '&key=' + process.env.YTKEY)
+          .then(res => res.json())
+          .then(json => {
+            if (!json.items) { reject() }
+            resolve(json.items[0])
+          })
+      } catch (err) {
+        client.logger.error('Music search err: ', err)
+        throw err
+      }
+    })
   }
 
-  client.music.getGuild = function(id)
-  {
-      if(client.music.guilds[id]) return client.music.guilds[id]
-  
-      return client.music.guilds[id] =
-      {
-          queue: [],
-          playing: false,
-          paused: false,
-          dispatcher: null,
-          skippers: []
-      }
+  client.music.getGuild = function (id) {
+    if (client.music.guilds[id]) return client.music.guilds[id]
+    return client.music.guilds[id] = {
+      queue: [],
+      playing: false,
+      paused: false,
+      dispatcher: null,
+      skippers: []
+    }
   }
   
   client.music.getMeta = async function(id)
@@ -141,30 +141,30 @@ module.exports = client => {
           message.channel.send(`<:success:466995111885144095> Added to queue: **${song.title}**`)
       }
   }
-  
+
   // MUSIC - TIMESTAMP
-  client.createTimestamp = function(duration){
-    hrs = ~~(duration / 60 / 60),
-    min = ~~(duration / 60) % 60,
-    sec = ~~(duration - min * 60)
+  client.createTimestamp = function (duration) {
+    var hrs = ~~(duration / 60 / 60)
+    var min = ~~(duration / 60) % 60
+    var sec = ~~(duration - min * 60)
   
-    if(String(hrs).length < 2) {
-      hrs = "0" + String(hrs) + ":"
+    if (String(hrs).length < 2) {
+      hrs = '0' + String(hrs) + ':'
     }
   
-    if(String(min).length < 2) {
-      min = "0" + String(min)
+    if (String(min).length < 2) {
+      min = '0' + String(min)
     }
   
-    if(String(sec).length < 2) {
-      sec = "0" + String(sec)
+    if (String(sec).length < 2) {
+      sec = '0' + String(sec)
     }
 
-    if(hrs == "00:") {
-      hrs = ""
+    if (hrs === '00:') {
+      hrs = ''
     }
-  
-    var time = hrs + min + ":" + sec
+
+    var time = hrs + min + ':' + sec
     return time
   }
 }

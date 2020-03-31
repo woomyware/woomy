@@ -1,3 +1,3 @@
 module.exports = (client) => {
-  console.log('Discord client ready!')
+  client.logger.log.ready('Discord client ready!')
 }

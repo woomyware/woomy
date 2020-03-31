@@ -12,18 +12,21 @@ const fs = require('fs')
 const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
+require('./modules/functions')(client)
+client.logger = require('./modules/logger')
+
 if (fs.existsSync('./.env') === false) {
-  console.log('.env file not found!')
+  client.logger.log.error('The .env file is missing! Please create a .env file.')
   process.exit()
 }
 
 if (fs.existsSync('./config.js') === false) {
-  console.log('config file not found!')
+  client.logger.log.error('The config.js file is missing! Please create a config.js file.')
   process.exit()
 }
 
 require('dotenv').config()
-client.config = require('config')
+client.config = require('./config')
 
 // Command/alias cache
 client.commands = new Discord.Collection()
@@ -35,19 +38,23 @@ const init = async () => {
 
   // Load events
   fs.readdir('./events', (err, files) => {
-    if (err) {}// Prepare variableseturn err
+    if (err) {}
+    client.logger.log.info(`Loading ${files.length} events.`)
     files.forEach(file => {
-      client.on(file.substr(0, file.length - 3), require('./events/' + file))
+      const event = require(`./events/${file}`)
+      client.on(file.substr(0, file.length - 3), event.bind(null, client))
     })
   })
 
   // Load commands
 
   // Level cache
+  client.levelCache = {}
   for (let i = 0; i < client.config.permLevels.length; i++) {
-    const currentlevel = client.config.permLevels[i]
-    client.levelCache[currentlevel.name] = currentlevel.level
+    const thisLevel = client.config.permLevels[i]
+    client.levelCache[thisLevel.name] = thisLevel.level
   }
+
   // Login into Discord
   client.login(process.env.TOKEN)
 }
