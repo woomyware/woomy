@@ -1,3 +1,3 @@
 module.exports = (client) => {
-  client.logger.log.ready('Discord client ready!')
+  client.logger.ready('Connected to Discord as ' + client.user.tag)
 }

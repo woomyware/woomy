@@ -4,8 +4,7 @@ const config = {
 
   // Default settings for individual users
   defaultUserSettings: {
-    prefixes: ['~'],
-    systemNotice: true
+    prefixes: ['~']
   },
 
   // Default per-guild settings
