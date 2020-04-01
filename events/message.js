@@ -30,6 +30,13 @@ module.exports = async (client, message) => {
     return message.channel.send('This command is unavailable via private message. Please run this command in a guild.')
   }
 
+  // Dev perm level is separate so dev's don't get owner perms where they shouldn't have them
+  if (cmd.conf.permLevel === 'Developer') {
+    if (!message.client.config.owners.includes(message.author.id)) {
+      return message.channel.send('You don\'t have permission to run this command!')
+    }
+  }
+
   if (level < client.levelCache[cmd.conf.permLevel]) {
     return message.channel.send('You don\'t have permission to run this command!')
   }
@@ -51,6 +58,7 @@ module.exports = async (client, message) => {
 
   message.author.permLevel = level
 
+  // Might use this
   message.flags = []
   while (args[0] && args[0][0] === '-') {
     message.flags.push(args.shift().slice(1))

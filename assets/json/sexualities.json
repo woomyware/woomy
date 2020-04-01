@@ -1,0 +1,102 @@
+{
+  "aesthetic attraction": {
+      "name": "aesthetic attraction",
+      "description": "Getting pleasure from the appearance of a specific individual like you would from watching beautiful scenery."
+  },
+  "platonic attraction": {
+      "name": "platonic attraction",
+      "description": "A desire to have a platonic relationship or friendship with a specific individual."
+  },
+  "romantic attraction": {
+      "name": "romantic attraction",
+      "description": "A desire to have a romantic relationship with a specific individual."
+  },
+  "sensual attraction": {
+      "name": "sensual attraction",
+      "description": "A desire for physical intimacy with a specific individual. Cuddling, hand holding, etc."
+  },
+  "sexual attraction": {
+      "name": "sexual attraction",
+      "description": "A desire for sexual contact with a specific individual."
+  },
+  "abrosexual": {
+      "name": "abrosexual",
+      "description": "Someone whose sexuality changes frequently. They experience different sexualities over time."
+  },
+  "androgynosexual": {
+      "name": "androgynosexual",
+      "description": "Someone who is attracted to both men and women, particularly those who are androgynous in appearance."
+  },
+  "androsexual": {
+      "name": "androsexual",
+      "description": "Someone who is attracted to men and/or masculine people."
+  },
+  "aromantic": {
+      "name": "aromantic",
+      "description": "Someone who does not experience romantic attraction. They do not have to also be asexual however as they may still experience other types of attraction."
+  },
+  "asexual": {
+      "name": "asexual",
+      "description": "Someone who feels little to no sexual attraction to anyone."
+  },
+  "bisexual": {
+      "name": "bisexual",
+      "description": "Someone who is attracted to more than one gender."
+  },
+  "ceterosexual": {
+      "name": "ceterosexual",
+      "description": "Someone who is attracted to non-binary people."
+  },
+  "demisexual": {
+      "name": "demisexual",
+      "description": "Someone who doesn't experience sexual/romantic attraction towards someone until they form an emotional connection."
+  },
+  "finsexual": {
+      "name": "finsexual",
+      "description": "Someone who is attracted to women and/or feminine people."
+  },
+  "gay": {
+      "name": "gay",
+      "description": "Someone who is homosexual (attracted to ones own gender)"
+  },
+  "gynosexual": {
+      "name": "gynosexual",
+      "description": "Someone who as attracted to women and/or feminity."
+  },
+  "grey-romantic": {
+      "name": "grey-romantic",
+      "description": "Someone with a romantic orentiation that is somewhere between aromantic and romantic."
+  },
+  "heterosexual": {
+      "name": "heterosexual",
+      "description": "Someone who is attracted to people of the opposite gender."
+  },
+  "homosexual": {
+      "name": "homosexual",
+      "description": "Someone attracted to people of ones own gender."
+  },
+  "lesbian": {
+      "name": "lesbian",
+      "description": "A woman who is attracted to other women."
+  },
+  "omnisexual": {
+      "name": "omnisexual",
+      "description": "Someone who is attracted to all genders."
+  },
+  "pansexual": {
+      "name": "pansexual",
+      "description": "Someone who is attracted towards people regardless of their gender identity."
+  },
+  "pomosexual": {
+      "name": "pomosexual",
+      "description": "Someone who does not fit into any sexual orientation label."
+  },
+  "polysexual": {
+      "name": "polysexual",
+      "description": "Someone who is attracted to some, but not all genders."
+  },
+  "straight": {
+      "name": "straight",
+      "description": "Someone who is heterosexual (attracted to people of the opposite gender)"
+  }
+}

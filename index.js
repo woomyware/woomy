@@ -18,24 +18,19 @@ client.logger = require('tracer').colorConsole({
   format: [
     '{{timestamp}} [{{title}}] {{file}}: {{message}}',
     {
-      log: `{{timestamp}} ${'[{{title}}]'.white} {{file}}: {{message}}`,
-      debug: `{{timestamp}} ${'[{{title}}]'.magenta} {{file}}: {{message}}`,
-      info: `{{timestamp}} ${'[{{title}}]'.cyan} {{file}}: {{message}}`,
-      ready: `{{timestamp}} ${'[{{title}}]'.green} {{file}}: {{message}}`,
-      warn: `{{timestamp}} ${'[{{title}}]'.yellow} {{file}}: {{message}}`,
-      error: `{{timestamp}} ${'[{{title}}]'.red} {{file}}: {{message}}`,
-      fatal: `{{timestamp}} ${'[{{title}}]'.red.bold} {{file}}: {{message}}`
+      debug: `{{timestamp}} ${'<{{title}}>'.magenta} {{file}}:{{line}} {{message}}`,
+      log: `{{timestamp}} ${'<{{title}}>'.white} {{file}}:{{line}} {{message}}`,
+      info: `{{timestamp}} ${'<{{title}}>'.cyan} {{file}}:{{line}} {{message}}`,
+      ready: `{{timestamp}} ${'<{{title}}>'.green} {{file}}:{{line}} {{message}}`,
+      warn: `{{timestamp}} ${'<{{title}}>'.yellow} {{file}}:{{line}} {{message}}`,
+      error: `{{timestamp}} ${'<{{title}}>'.red} {{file}}:{{line}} {{message}}`,
+      fatal: `{{timestamp}} ${'<{{title}}>'.red.bold} {{file}}:{{line}} {{message}}`
     }
   ],
-  dateformat: 'yyyy-mm-dd HH:MM:ss',
+  dateformat: 'yyyy-mm-dd"T"HH:MM:ss',
   methods: ['log', 'debug', 'info', 'ready', 'warn', 'error', 'fatal'],
   filters: [colors.white]
 })
-
-// Load modules
-require('./modules/functions')(client)
-require('./modules/music')(client)
-require('./modules/botlists')(client)
 
 // Checks to make sure config.js and .env exist
 if (fs.existsSync('./.env') === false) {
@@ -48,49 +43,32 @@ if (fs.existsSync('./config.js') === false) {
   process.exit()
 }
 
-require('dotenv').config()
 client.config = require('./config')
+require('dotenv').config()
+require('./modules/functions')(client)
+require('./modules/music')(client)
+require('./modules/botlists')(client)
 
-if (process.env.DEV_MODE === 'true') {
+if (process.env.DEV_MODE) {
   client.devmode = true
   client.logger.warn('Running in development mode.')
 } else {
   client.devmode = false
-  // load botlist stuff here eventually
 }
 
-// Collections that
+client.levelCache = {}
 client.commands = new Discord.Collection()
 client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
 // Initialization function
 const init = async () => {
-  // Load events
-  fs.readdir('./events', (err, files) => {
-    if (err) {
-      client.logger.fatal('Failed to get files in events directory: ' + err)
-      process.exit()
-    };
-
-    client.logger.info(`Loading ${files.length} events.`)
-    files.forEach(file => {
-      if (!file.endsWith('.js')) {
-        return
-      }
-      const event = require(`./events/${file}`)
-      client.on(file.substr(0, file.length - 3), event.bind(null, client))
-    })
-  })
-
-  // Load commands
+  // Command handler
   fs.readdir('./commands', (err, files) => {
     if (err) {
       client.logger.fatal('Failed to get files in commands directory: ' + err)
-
       process.exit()
     };
-
     client.logger.info(`Loading ${files.length} commands.`)
     files.forEach(file => {
       if (!file.endsWith('.js')) {
@@ -103,17 +81,30 @@ const init = async () => {
     })
   })
 
-  // Level cache
-  client.levelCache = {}
+  // Event handler
+  fs.readdir('./events', (err, files) => {
+    if (err) {
+      client.logger.fatal('Failed to get files in events directory: ' + err)
+      process.exit()
+    };
+    client.logger.info(`Loading ${files.length} events.`)
+    files.forEach(file => {
+      if (!file.endsWith('.js')) {
+        return
+      }
+      const event = require(`./events/${file}`)
+      client.on(file.substr(0, file.length - 3), event.bind(null, client))
+    })
+  })
+
+  // Cache client permissions
   for (let i = 0; i < client.config.permLevels.length; i++) {
     const thisLevel = client.config.permLevels[i]
     client.levelCache[thisLevel.name] = thisLevel.level
   }
 
-  // Login into Discord
-  client.login(process.env.TOKEN)
-
-  if(client.devmode === true) {
+  // Log into Discord
+  if (client.devmode === true) {
     client.login(process.env.DEVTOKEN)
   } else {
     client.login(process.env.TOKEN)
