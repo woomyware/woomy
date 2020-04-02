@@ -56,26 +56,6 @@ module.exports = client => {
     return false
   }
 
-  client.getUser = async function (search) {
-    let user = null
-    if (!search || typeof search !== 'string') return
-    // Try ID search
-    if (search.match(/^<@!?(\d+)>$/)) {
-      const id = search.match(/^<@!?(\d+)>$/)[1]
-      user = this.users.fetch(id).catch(() => {})
-      if (user) return user
-    }
-    // Try username search
-    if (search.match(/^!?(\w+)#(\d+)$/)) {
-      const username = search.match(/^!?(\w+)#(\d+)$/)[0]
-      const discriminator = search.match(/^!?(\w+)#(\d+)$/)[1]
-      user = this.users.find((u) => u.username === username && u.discriminator === discriminator)
-      if (user) return user
-    }
-    user = await this.users.fetch(search).catch(() => {})
-    return user
-  }
-
   client.getMembers = function (guild, query) {
     if (!query) return
     query = query.toLowerCase()
@@ -100,6 +80,19 @@ module.exports = client => {
       }
     })
     return a
+  }
+
+  client.findUser = function (query) {
+    if (!query || typeof query !== "string") return
+    query = query.toLowerCase()
+
+    let user
+
+    if (query.match(/^<@!?(\d+)>$/)) {
+      let id = query.match(/^<@!?(\d+)>$/)[1]
+      user = this.users.fetch(id).catch((err) => {})
+      if(user) return user
+    }
   }
 
   client.getUsers = function (guild, query) {
