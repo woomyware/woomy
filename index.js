@@ -10,6 +10,7 @@ if (Number(process.version.slice(1).split('.')[0]) < 12) {
 // Libraries
 const fs = require('fs')
 const colors = require('colors')
+const isDocker = require('is-docker')
 const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
@@ -49,7 +50,8 @@ require('./modules/functions')(client)
 require('./modules/music')(client)
 require('./modules/botlists')(client)
 
-if (process.env.DEV_MODE) {
+// Logs into Discord as WoomyDev if a docker container is not detected. Delete this if self-hosting.
+if (isDocker() === true) {
   client.devmode = true
   client.logger.warn('Running in development mode.')
 } else {
@@ -68,7 +70,7 @@ const init = async () => {
     if (err) {
       client.logger.fatal('Failed to get files in commands directory: ' + err)
       process.exit()
-    };
+    }
     client.logger.info(`Loading ${files.length} commands.`)
     files.forEach(file => {
       if (!file.endsWith('.js')) {
@@ -86,7 +88,7 @@ const init = async () => {
     if (err) {
       client.logger.fatal('Failed to get files in events directory: ' + err)
       process.exit()
-    };
+    }
     client.logger.info(`Loading ${files.length} events.`)
     files.forEach(file => {
       if (!file.endsWith('.js')) {
