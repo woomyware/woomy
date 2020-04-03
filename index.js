@@ -17,15 +17,15 @@ const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 // Logger
 client.logger = require('tracer').colorConsole({
   format: [
-    '{{timestamp}} [{{title}}] {{file}}: {{message}}',
+    '{{timestamp}} | {{title}} | {{file}}:{{line}} | {{message}}',
     {
-      debug: `{{timestamp}} ${'<{{title}}>'.magenta} {{file}}:{{line}} {{message}}`,
-      log: `{{timestamp}} ${'<{{title}}>'.white} {{file}}:{{line}} {{message}}`,
-      info: `{{timestamp}} ${'<{{title}}>'.cyan} {{file}}:{{line}} {{message}}`,
-      ready: `{{timestamp}} ${'<{{title}}>'.green} {{file}}:{{line}} {{message}}`,
-      warn: `{{timestamp}} ${'<{{title}}>'.yellow} {{file}}:{{line}} {{message}}`,
-      error: `{{timestamp}} ${'<{{title}}>'.red} {{file}}:{{line}} {{message}}`,
-      fatal: `{{timestamp}} ${'<{{title}}>'.red.bold} {{file}}:{{line}} {{message}}`
+      debug: `{{timestamp}} | ${'{{title}}'.magenta} | {{file}}:{{line}} | {{message}}`,
+      log: `{{timestamp}} | ${'{{title}}'.white} | {{file}}:{{line}} | {{message}}`,
+      info: `{{timestamp}} | ${'{{title}}'.cyan} | {{file}}:{{line}} | {{message}}`,
+      ready: `{{timestamp}} | ${'{{title}}'.green} | {{file}}:{{line}} | {{message}}`,
+      warn: `{{timestamp}} | ${'{{title}}'.yellow} | {{file}}:{{line}} | {{message}}`,
+      error: `{{timestamp}} | ${'{{title}}'.red} | {{file}}:{{line}} | {{message}}`,
+      fatal: `{{timestamp}} | ${'{{title}}'.red.bold} | {{file}}:{{line}} | {{message}}`
     }
   ],
   dateformat: 'yyyy-mm-dd"T"HH:MM:ss',
@@ -33,19 +33,13 @@ client.logger = require('tracer').colorConsole({
   filters: [colors.white]
 })
 
-// Checks to make sure config.js and .env exist
-if (fs.existsSync('./.env') === false) {
-  client.logger.fatal('The .env file is missing! Please create a .env file.')
-  process.exit()
-}
-
+// Check to make sure config exists
 if (fs.existsSync('./config.js') === false) {
   client.logger.fatal('The config.js file is missing! Please create a config.js file.')
   process.exit()
 }
 
 client.config = require('./config')
-require('dotenv').config()
 require('./modules/functions')(client)
 require('./modules/music')(client)
 require('./modules/botlists')(client)
@@ -106,10 +100,10 @@ const init = async () => {
   }
 
   // Log into Discord
-  if (client.devmode === true) {
-    client.login(process.env.DEVTOKEN)
+  if (client.devmode !== true) {
+    client.login(client.config.token)
   } else {
-    client.login(process.env.TOKEN)
+    client.login(client.config.token_dev)
   }
 }
 
