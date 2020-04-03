@@ -14,7 +14,6 @@ const isDocker = require('is-docker')
 const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
-// Logger
 client.logger = require('tracer').colorConsole({
   format: [
     '{{timestamp}} | {{title}} | {{file}} | {{message}}',
@@ -39,12 +38,23 @@ if (fs.existsSync('./config.js') === false) {
   process.exit()
 }
 
+client.levelCache = {}
+client.commands = new Discord.Collection()
+client.cooldown = new Discord.Collection()
+client.aliases = new Discord.Collection()
+
 client.config = require('./config')
+client.mongoose = require('./modules/mongoose')
 require('./modules/functions')(client)
 require('./modules/music')(client)
-require('./modules/botlists')(client)
+require('./modules/commands')(client)
+require('./modules/events')(client)
 
-// Logs into Discord as WoomyDev if a docker container is not detected. Delete this if self-hosting.
+for (let i = 0; i < client.config.permLevels.length; i++) {
+  const thisLevel = client.config.permLevels[i]
+  client.levelCache[thisLevel.name] = thisLevel.level
+}
+
 if (isDocker() === true) {
   client.devmode = true
   client.logger.warn('Running in development mode.')
@@ -52,59 +62,11 @@ if (isDocker() === true) {
   client.devmode = false
 }
 
-client.levelCache = {}
-client.commands = new Discord.Collection()
-client.cooldown = new Discord.Collection()
-client.aliases = new Discord.Collection()
+console.log(client.mongoose)
+client.mongoose.init()
 
-// Initialization function
-const init = async () => {
-  // Command handler
-  fs.readdir('./commands', (err, files) => {
-    if (err) {
-      client.logger.fatal('Failed to get files in commands directory: ' + err)
-      process.exit()
-    }
-    client.logger.info(`Loading ${files.length} commands.`)
-    files.forEach(file => {
-      if (!file.endsWith('.js')) {
-        return
-      }
-      const response = client.loadCommand(file)
-      if (response) {
-        client.logger.error(response)
-      }
-    })
-  })
-
-  // Event handler
-  fs.readdir('./events', (err, files) => {
-    if (err) {
-      client.logger.fatal('Failed to get files in events directory: ' + err)
-      process.exit()
-    }
-    client.logger.info(`Loading ${files.length} events.`)
-    files.forEach(file => {
-      if (!file.endsWith('.js')) {
-        return
-      }
-      const event = require(`./events/${file}`)
-      client.on(file.substr(0, file.length - 3), event.bind(null, client))
-    })
-  })
-
-  // Cache client permissions
-  for (let i = 0; i < client.config.permLevels.length; i++) {
-    const thisLevel = client.config.permLevels[i]
-    client.levelCache[thisLevel.name] = thisLevel.level
-  }
-
-  // Log into Discord
-  if (client.devmode !== true) {
-    client.login(client.config.token)
-  } else {
-    client.login(client.config.token_dev)
-  }
+if (client.devmode !== true) {
+  client.login(client.config.token)
+} else {
+  client.login(client.config.token_dev)
 }
-
-init()

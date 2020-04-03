@@ -104,8 +104,10 @@ module.exports = client => {
     return Math.round((Math.random() * (max - min)) + min)
   }
 
+  // Get random array object
+  // eslint-disable-next-line no-extend-native
   Object.defineProperty(Array.prototype, 'random', {
-    value: function() {
+    value: function () {
       return this[Math.floor(Math.random() * this.length)]
     }
   })
@@ -172,7 +174,7 @@ module.exports = client => {
     return role
   }
 
-  // Both of these functions catch errors and log them
+  // Both of these functions catch errors and log them (maybe we could use sentry?)
   process.on('uncaughtException', (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './')
     client.logger.fatal(`Uncaught Exception: ${errorMsg}`)
