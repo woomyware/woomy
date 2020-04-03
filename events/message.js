@@ -32,7 +32,7 @@ module.exports = async (client, message) => {
 
   // Dev perm level is separate so dev's don't get owner perms where they shouldn't have them
   if (cmd.conf.permLevel === 'Developer') {
-    if (!message.client.config.owners.includes(message.author.id)) {
+    if (!client.config.devs.includes(message.author.id)) {
       return message.channel.send('You don\'t have permission to run this command!')
     }
   }

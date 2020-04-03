@@ -17,15 +17,15 @@ const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 // Logger
 client.logger = require('tracer').colorConsole({
   format: [
-    '{{timestamp}} | {{title}} | {{file}}:{{line}} | {{message}}',
+    '{{timestamp}} | {{title}} | {{file}} | {{message}}',
     {
-      debug: `{{timestamp}} | ${'{{title}}'.magenta} | {{file}}:{{line}} | {{message}}`,
-      log: `{{timestamp}} | ${'{{title}}'.white} | {{file}}:{{line}} | {{message}}`,
-      info: `{{timestamp}} | ${'{{title}}'.cyan} | {{file}}:{{line}} | {{message}}`,
-      ready: `{{timestamp}} | ${'{{title}}'.green} | {{file}}:{{line}} | {{message}}`,
-      warn: `{{timestamp}} | ${'{{title}}'.yellow} | {{file}}:{{line}} | {{message}}`,
-      error: `{{timestamp}} | ${'{{title}}'.red} | {{file}}:{{line}} | {{message}}`,
-      fatal: `{{timestamp}} | ${'{{title}}'.red.bold} | {{file}}:{{line}} | {{message}}`
+      debug: `{{timestamp}} | ${'{{title}}'.magenta} | {{file}} | {{message}}`,
+      log: `{{timestamp}} | ${'{{title}}'.white} | {{file}} | {{message}}`,
+      info: `{{timestamp}} | ${'{{title}}'.cyan} | {{file}} | {{message}}`,
+      ready: `{{timestamp}} | ${'{{title}}'.green} | {{file}} | {{message}}`,
+      warn: `{{timestamp}} | ${'{{title}}'.yellow} | {{file}} | {{message}}`,
+      error: `{{timestamp}} | ${'{{title}}'.red} | {{file}} | {{message}}`,
+      fatal: `{{timestamp}} | ${'{{title}}'.red.bold} | {{file}} | {{message}}`
     }
   ],
   dateformat: 'yyyy-mm-dd"T"HH:MM:ss',

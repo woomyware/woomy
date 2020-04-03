@@ -40,7 +40,7 @@ module.exports = client => {
     } else if (client.aliases.has(commandName)) {
       command = client.commands.get(client.aliases.get(commandName))
     }
-    if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`
+    if (!command) return `The command \`${commandName}\` doesn't seem to exist, nor is it an alias. Try again!`
 
     if (command.shutdown) {
       await command.shutdown(client)
@@ -54,6 +54,21 @@ module.exports = client => {
       }
     }
     return false
+  }
+
+  client.clean = async (client, text) => {
+    if (text && text.constructor.name === 'Promise') {
+      text = await text
+    }
+    if (typeof text !== 'string') {
+      text = require('util').inspect(text, { depth: 1 })
+    }
+    text = text
+      .replace(/`/g, '`' + String.fromCharCode(8203))
+      .replace(/@/g, '@' + String.fromCharCode(8203))
+      .replace(client.token, 'mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0')
+
+    return text
   }
 
   client.getMembers = function (guild, query) {
@@ -82,43 +97,30 @@ module.exports = client => {
     return a
   }
 
-  client.findUser = function (query) {
-    if (!query || typeof query !== "string") return
-    query = query.toLowerCase()
+  client.getMembers = function (guild, query) {
+    if (!query || typeof query !== 'string') return
 
-    let user
+    const members = []
 
-    if (query.match(/^<@!?(\d+)>$/)) {
-      let id = query.match(/^<@!?(\d+)>$/)[1]
-      user = this.users.fetch(id).catch((err) => {})
-      if(user) return user
-    }
-  }
-
-  client.getUsers = function (guild, query) {
-    if (!query) return
-    query = query.toLowerCase()
-
-    var a = []
-    var b
-
-    // MAKE IT SO IT CAN TAKE AN ID
-
-    try {
-      b = guild.members.cache.find(x => x.displayName.toLowerCase() === query)
-      if (!b) guild.members.cache.find(x => x.user.username.toLowerCase() === query)
-    } catch (err) {}
-    if (b) a.push(b)
-    guild.members.cache.forEach(member => {
-      if (
-        (member.displayName.toLowerCase().startsWith(query) ||
-          member.user.tag.toLowerCase().startsWith(query)) &&
-        member.id !== (b && b.id)
-      ) {
-        a.push(member)
+    // Try ID search
+    if (!isNaN(query) === true) {
+      members.push(guild.members.cache.get(query))
+      if (members[0]) {
+        return members[0]
       }
-    })
-    return a
+    }
+
+    // Try username search
+    try {
+      guild.members.cache.forEach(m => {
+        if (m.displayName.toLowerCase().startsWith(query) || m.user.tag.toLowerCase.startsWith(query)) {
+          members.push(m)
+          console.log(m)
+        }
+      })
+
+      return members
+    } catch (err) {}
   }
 
   // Both of these functions catch errors and log them
