@@ -1,3 +1,6 @@
+const mongoose = require('mongoose')
+const Guild = require('../models/guild')
+
 module.exports = client => {
   // Permission level function
   client.permlevel = message => {
@@ -14,6 +17,49 @@ module.exports = client => {
       }
     }
     return permlvl
+  }
+
+  // Get settings
+  client.getGuild = async (guild) => {
+    const data = await Guild.findOne({ guildID: guild.id })
+    if (data) {
+      return data
+    } else {
+      throw new Error('No entry for this guild was found in the database!')
+    }
+  }
+
+  // Update settings
+  client.updateGuild = async (guild, settings) => {
+    const data = await client.getGuild(guild)
+    for (const key in settings) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (settings.hasOwnProperty(key)) {
+        if (data[key] !== settings[key]) {
+          data[key] = settings[key]
+        } else {
+          return
+        }
+      }
+      client.logger.debug(`Updated settings for ${data.guildName}: ${Object.keys(settings)}`)
+    }
+  }
+
+  // Create new entry for new guild
+  client.createGuild = async (settings) => {
+    const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, settings)
+    const newGuild = await new Guild(merged)
+    return newGuild.save().then(g => {
+      client.logger.debug(`Created settings for guild ${g.guildName}`)
+    })
+  }
+
+  // Delete guild data
+  client.deleteGuild = async (guild) => {
+    const data = await client.getGuild(guild)
+    if (data) {
+      data.deleteOne({ guildID: guild.id })
+    }
   }
 
   // Loads commands
@@ -99,9 +145,9 @@ module.exports = client => {
     }
   }
 
-  // FIND RANDOM INT BETWEEN TWO INTEGERS
+  // Returns a random number between min and max
   client.intBetween = function (min, max) {
-    return Math.round((Math.random() * (max - min)) + min)
+    return Math.floor((Math.random() * (max - min)) + min)
   }
 
   // Get random array object

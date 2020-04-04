@@ -2,7 +2,7 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: ['plevel', 'permlevel'],
-  permLevel: 'User',
+  permLevel: 'Administrator',
   requiredPerms: [],
   cooldown: 2000
 }

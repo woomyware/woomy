@@ -44,29 +44,68 @@ client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
 client.config = require('./config')
-client.mongoose = require('./modules/mongoose')
-require('./modules/functions')(client)
-require('./modules/music')(client)
-require('./modules/commands')(client)
-require('./modules/events')(client)
+client.db = require('./util/mongoose')
+require('./util/functions')(client)
+require('./util/music')(client)
 
-for (let i = 0; i < client.config.permLevels.length; i++) {
-  const thisLevel = client.config.permLevels[i]
-  client.levelCache[thisLevel.name] = thisLevel.level
+// Initialization function
+const init = async () => {
+  // Command handler
+  fs.readdir('./commands', (err, files) => {
+    if (err) {
+      client.logger.fatal('Failed to get files in commands directory: ' + err)
+      process.exit()
+    }
+    client.logger.info(`Loading ${files.length} commands.`)
+    files.forEach(file => {
+      if (!file.endsWith('.js')) {
+        return
+      }
+      const response = client.loadCommand(file)
+      if (response) {
+        client.logger.error(response)
+      }
+    })
+  })
+
+  // Event handler
+  fs.readdir('./events', (err, files) => {
+    if (err) {
+      client.logger.fatal('Failed to get files in events directory: ' + err)
+      process.exit()
+    }
+    client.logger.info(`Loading ${files.length} events.`)
+    files.forEach(file => {
+      if (!file.endsWith('.js')) {
+        return
+      }
+      const event = require(`./events/${file}`)
+      client.on(file.substr(0, file.length - 3), event.bind(null, client))
+    })
+  })
+
+  // Cache client permissions
+  for (let i = 0; i < client.config.permLevels.length; i++) {
+    const thisLevel = client.config.permLevels[i]
+    client.levelCache[thisLevel.name] = thisLevel.level
+  }
+
+  if (isDocker() === true) {
+    client.devmode = true
+    client.logger.warn('Running in development mode.')
+  } else {
+    client.devmode = false
+  }
+
+  // Initialise DB
+  await client.db.init(client)
+
+  // Login to Discord
+  if (client.devmode !== true) {
+    client.login(client.config.token)
+  } else {
+    client.login(client.config.token_dev)
+  }
 }
 
-if (isDocker() === true) {
-  client.devmode = true
-  client.logger.warn('Running in development mode.')
-} else {
-  client.devmode = false
-}
-
-console.log(client.mongoose)
-client.mongoose.init()
-
-if (client.devmode !== true) {
-  client.login(client.config.token)
-} else {
-  client.login(client.config.token_dev)
-}
+init()

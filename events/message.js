@@ -1,7 +1,23 @@
 module.exports = async (client, message) => {
   if (message.author.bot) return
 
-  var prefix = '!'
+  try {
+    await client.getGuild(message.guild)
+  } catch (err) {
+    try {
+      const newGuild = {
+        guildID: message.guild.id,
+        guildName: message.guild.name
+      }
+      await client.createGuild(newGuild)
+    } catch (err) {
+      client.logger.error('Failed to create DB entry for existing guild: ' + err)
+    }
+  }
+
+  const settings = await client.getGuild(message.guild)
+
+  let prefix = settings.prefix
 
   const myMention = `<@&${client.user.id}>`
   const myMention2 = `<@!${client.user.id}>`
@@ -33,12 +49,21 @@ module.exports = async (client, message) => {
   // Dev perm level is separate so dev's don't get owner perms where they shouldn't have them
   if (cmd.conf.permLevel === 'Developer') {
     if (!client.config.devs.includes(message.author.id)) {
-      return message.channel.send('You don\'t have permission to run this command!')
+      if (settings.systemNotice === true) {
+        return message.channel.send('You don\'t have permission to run this command!')
+      } else {
+        return
+      }
     }
   }
 
+  console.log(settings.systemNotice)
   if (level < client.levelCache[cmd.conf.permLevel]) {
-    return message.channel.send('You don\'t have permission to run this command!')
+    if (settings.systemNotice === true) {
+      return message.channel.send('You don\'t have permission to run this command!')
+    } else {
+      return
+    }
   }
 
   // Cooldown
@@ -65,5 +90,5 @@ module.exports = async (client, message) => {
   }
 
   client.logger.log(`Command ran: ${cmd.help.name}`)
-  cmd.run(client, message, args, level)
+  cmd.run(client, message, args, level, settings)
 }
