@@ -6,8 +6,7 @@ module.exports = async (client, message) => {
   } catch (err) {
     try {
       const newGuild = {
-        guildID: message.guild.id,
-        guildName: message.guild.name
+        guildID: message.guild.id
       }
       await client.createGuild(newGuild)
     } catch (err) {
@@ -37,7 +36,7 @@ module.exports = async (client, message) => {
 
   if (message.guild && !message.member) await message.guild.fetchMember(message.author)
 
-  const level = client.permlevel(message)
+  const level = client.permlevel(message, settings)
 
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command))
   if (!cmd) return

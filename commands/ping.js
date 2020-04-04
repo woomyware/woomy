@@ -14,7 +14,7 @@ exports.help = {
   usage: 'ping'
 }
 
-exports.run = async (client, message) => {
+exports.run = async (client, message, args, level, settings) => {
   const msg = await message.channel.send('Pinging...')
   msg.edit(
     `Pong! \`${msg.createdTimestamp - message.createdTimestamp}ms\` (💗 \`${Math.round(client.ws.ping)}ms\`)`

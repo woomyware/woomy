@@ -24,6 +24,6 @@ module.exports = mongoose.model('Guild', new Schema({
 
   adminRole: {
     type: String,
-    default: defaults.modRole
+    default: defaults.adminRole
   }
 }))

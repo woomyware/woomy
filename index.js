@@ -44,6 +44,7 @@ client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
 client.config = require('./config')
+client.version = require('./version.json')
 client.db = require('./util/mongoose')
 require('./util/functions')(client)
 require('./util/music')(client)
