@@ -15,6 +15,13 @@ const Discord = require('discord.js')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
 client.logger = require('tracer').colorConsole({
+  transport: function (data) {
+    console.log(data.output)
+    fs.appendFile('./file.log', data.rawoutput + '\n', err => {
+      if (err) throw err
+    })
+  },
+
   format: [
     '{{timestamp}} | {{title}} | {{file}} | {{message}}',
     {

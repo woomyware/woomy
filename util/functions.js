@@ -7,7 +7,6 @@ module.exports = client => {
     let permlvl = 0
 
     const permOrder = client.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1)
-    console.log(permOrder)
 
     while (permOrder.length) {
       const currentLevel = permOrder.shift()
@@ -32,27 +31,23 @@ module.exports = client => {
 
   // Update settings
   client.updateGuild = async (guild, settings) => {
-    const data = await client.getGuild(guild)
+    let data = await client.getGuild(guild)
+
+    if (typeof data !== 'object') data = {}
     for (const key in settings) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (settings.hasOwnProperty(key)) {
-        if (data[key] !== settings[key]) {
-          data[key] = settings[key]
-        } else {
-          return
-        }
-      }
-      client.logger.debug(`Updated settings for ${data.guildName}: ${Object.keys(settings)}`)
+      if (data[key] !== settings[key]) {
+        data[key] = settings[key]
+      } else return
     }
+
+    return data.updateOne(settings)
   }
 
   // Create new entry for new guild
   client.createGuild = async (settings) => {
     const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, settings)
     const newGuild = await new Guild(merged)
-    return newGuild.save().then(g => {
-      client.logger.debug(`Created settings for guild ${g.guildName}`)
-    })
+    return newGuild.save()
   }
 
   // Delete guild data
@@ -138,6 +133,7 @@ module.exports = client => {
     }
   }
 
+  // Embed colour function
   client.embedColour = function (guild) {
     if (!guild || guild.member(client.user).displayHexColor === '#000000') {
       return ['#ff9d68', '#ff97cb', '#d789ff', '#74FFFF'].random()
@@ -146,7 +142,7 @@ module.exports = client => {
     }
   }
 
-  // Returns a random number between min and max
+  // Returns a random int between min and max
   client.intBetween = function (min, max) {
     return Math.floor((Math.random() * (max - min)) + min)
   }
@@ -208,8 +204,7 @@ module.exports = client => {
   }
 
   client.findRole = function (guild, search) {
-    var role
-    role = guild.roles.cache.find(r => r.name.toLowerCase() === search.toLowerCase())
+    var role = guild.roles.cache.find(r => r.name.toLowerCase() === search.toLowerCase())
     if (!role) {
       role = guild.roles.cache.get(search.toLowerCase())
     }

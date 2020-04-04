@@ -56,7 +56,6 @@ module.exports = async (client, message) => {
     }
   }
 
-  console.log(settings.systemNotice)
   if (level < client.levelCache[cmd.conf.permLevel]) {
     if (settings.systemNotice === true) {
       return message.channel.send('You don\'t have permission to run this command!')
