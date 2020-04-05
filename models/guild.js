@@ -25,5 +25,12 @@ module.exports = mongoose.model('Guild', new Schema({
   adminRole: {
     type: String,
     default: defaults.adminRole
+  },
+
+  mutedRole: {
+    type: String,
+    default: defaults.mutedRole
   }
 }))
+
+// I SPWENT TWO FUCKONG DAUYS TRYING TO FIGURE OUT HOW TO UPDATE EXISTING DB ENTRIES WITH NEW SCHEMA SHIT AND IT DOES THIS BY FUCKING DEFAULT
