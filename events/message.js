@@ -5,6 +5,8 @@ module.exports = async (client, message) => {
 
   data.userData = await client.findOrCreateUser(message.author)
 
+  const prefixes = [data.userData.prefix]
+
   if (message.guild) {
     if (!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {
       try {
@@ -12,16 +14,12 @@ module.exports = async (client, message) => {
       } catch (err) {}
     }
     data.guildData = await client.findOrCreateGuild(message.guild)
+    prefixes.push(data.guildData.prefix)
   }
 
-  const prefixes = [data.userData.prefix, data.guildData.prefix]
+  prefixes.push(`<@${client.user.id}> `, `<@!${client.user.id}> `)
 
   let prefix
-
-  const prefixMention = new RegExp(`^<@!?${client.user.id}> `)
-  if (message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : '!') {
-    prefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : '!'
-  }
 
   for (const thisPrefix of prefixes) {
     if (message.content.startsWith(thisPrefix)) prefix = thisPrefix

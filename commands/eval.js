@@ -12,7 +12,8 @@ exports.help = {
   name: 'eval',
   category: 'Owner',
   description: 'Evaluates arbitrary javascript.',
-  usage: 'eval [code]'
+  usage: 'eval [code]',
+  params: '`[code] - Javascript code you want to execute.'
 }
 
 exports.run = async (client, message, args, level, data) => {

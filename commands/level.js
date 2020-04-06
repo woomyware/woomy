@@ -11,7 +11,8 @@ exports.help = {
   name: 'level',
   category: 'Utility',
   description: 'Returns your permission level.',
-  usage: 'level'
+  usage: 'level',
+  params: null
 }
 
 exports.run = async (client, message, args, level, data) => {

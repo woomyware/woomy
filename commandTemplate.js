@@ -11,7 +11,8 @@ exports.help = {
   name: '',
   category: '',
   description: '',
-  usage: ''
+  usage: '',
+  params: ''
 }
 
 exports.run = async (client, message, args, level, data) => {
