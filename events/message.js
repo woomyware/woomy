@@ -1,33 +1,31 @@
 module.exports = async (client, message) => {
   if (message.author.bot) return
 
-  try {
-    await client.getGuild(message.guild)
-  } catch (err) {
-    try {
-      const newGuild = {
-        guildID: message.guild.id
-      }
-      await client.createGuild(newGuild)
-    } catch (err) {
-      client.logger.error('Failed to create DB entry for existing guild: ' + err)
+  const data = {}
+
+  data.userData = await client.findOrCreateUser(message.author)
+
+  if (message.guild) {
+    if (!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {
+      try {
+        return message.author.send(`I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`)
+      } catch (err) {}
     }
+    data.guildData = await client.findOrCreateGuild(message.guild)
   }
 
-  const settings = await client.getGuild(message.guild)
+  const prefixes = [data.userData.prefix, data.guildData.prefix]
 
-  let prefix = settings.prefix
+  let prefix
 
-  const myMention = `<@&${client.user.id}>`
-  const myMention2 = `<@!${client.user.id}>`
+  const prefixMention = new RegExp(`^<@!?${client.user.id}> `)
+  if (message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : '!') {
+    prefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : '!'
+  }
 
-  if (message.content.startsWith(myMention) || message.content.startsWith(myMention2)) {
-    if (message.content.length > myMention.length + 1 && (message.content.substr(0, myMention.length + 1) === myMention + ' ' || message.content.substr(0, myMention2.length + 1) === myMention2 + ' ')) {
-      prefix = message.content.substr(0, myMention.length) + ' '
-    } else {
-      return message.channel.send(`Current prefix: \`${prefix}\``)
-    };
-  };
+  for (const thisPrefix of prefixes) {
+    if (message.content.startsWith(thisPrefix)) prefix = thisPrefix
+  }
 
   if (message.content.indexOf(prefix) !== 0) return
 
@@ -36,19 +34,35 @@ module.exports = async (client, message) => {
 
   if (message.guild && !message.member) await message.guild.fetchMember(message.author)
 
-  const level = client.permlevel(message, settings)
+  const level = client.permlevel(message, data.guildSettings)
 
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command))
   if (!cmd) return
+
+  if (!cmd.conf.enabled) {
+    if (data.guildData.systemNotice.enabled === true) {
+      return message.channel.send('This command has been disabled by my developers.')
+    } else {
+      return
+    }
+  }
 
   if (cmd && !message.guild && cmd.conf.guildOnly) {
     return message.channel.send('This command is unavailable via private message. Please run this command in a guild.')
   }
 
+  if (message.guild) {
+    var missing = cmd.conf.requiredPerms.filter(p => !message.channel.permissionsFor(client.user).has(p))
+    if (missing.length > 0) {
+      missing = '`' + (missing.join('`, `')) + '`'
+      return message.channel.send(`Missing permissions: ${missing}`)
+    }
+  }
+
   // Dev perm level is separate so dev's don't get owner perms where they shouldn't have them
   if (cmd.conf.permLevel === 'Developer') {
     if (!client.config.devs.includes(message.author.id)) {
-      if (settings.systemNotice === true) {
+      if (data.guildData.systemNotice.enabled === true) {
         return message.channel.send('You don\'t have permission to run this command!')
       } else {
         return
@@ -57,7 +71,7 @@ module.exports = async (client, message) => {
   }
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
-    if (settings.systemNotice === true) {
+    if (data.guildData.systemNotice.enabled === true) {
       return message.channel.send('You don\'t have permission to run this command!')
     } else {
       return
@@ -88,5 +102,5 @@ module.exports = async (client, message) => {
   }
 
   client.logger.log(`Command ran: ${cmd.help.name}`)
-  cmd.run(client, message, args, level, settings)
+  cmd.run(client, message, args, level, data)
 }

@@ -15,7 +15,7 @@ exports.help = {
   usage: 'eval [code]'
 }
 
-exports.run = async (client, message, args, level, settings) => {
+exports.run = async (client, message, args, level, data) => {
   const hastebin = require('hastebin-gen')
   const code = args.join(' ')
   try {

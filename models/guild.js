@@ -1,35 +1,90 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const { defaultGuildSettings: defaults } = require('../config')
+const { Schema, model } = require('mongoose')
+const { defaultPrefix } = require('../config')
 
-module.exports = mongoose.model('Guild', new Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+module.exports = model('Guild', new Schema({
+  _id: Schema.Types.ObjectId,
   guildID: String,
-  guildName: String,
 
   prefix: {
     type: String,
-    default: defaults.prefix
-  },
-
-  systemNotice: {
-    type: Boolean,
-    default: defaults.systemNotice
+    default: defaultPrefix
   },
 
   modRole: {
     type: String,
-    default: defaults.modRole
+    default: null
   },
 
   adminRole: {
     type: String,
-    default: defaults.adminRole
+    default: null
   },
 
   mutedRole: {
     type: String,
-    default: defaults.mutedRole
+    default: null
+  },
+
+  autoRole: {
+    type: String,
+    default: null
+  },
+
+  systemNotice: {
+    type: Object,
+    default: {
+      enabled: true,
+      autoDelete: 0
+    }
+  },
+
+  plugins: {
+    type: Object,
+    default: {
+      welcome: {
+        enabled: false,
+        channel: null,
+        message: null
+      },
+      goodbye: {
+        enabled: false,
+        channel: null,
+        message: null
+      },
+      chatLogs: {
+        enabled: false,
+        channel: null
+      },
+      modLogs: {
+        enabled: false,
+        channel: null
+      }
+    }
+  },
+
+  botChannels: {
+    type: Array,
+    default: []
+  },
+
+  blacklisted: {
+    type: Array,
+    default: []
+  },
+
+  customCommands: {
+    type: Array,
+    default: []
+  },
+
+  disabledCommands: {
+    type: Array,
+    default: []
+  },
+
+  disabledCategories: {
+    type: Array,
+    default: []
   }
 }))
 

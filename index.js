@@ -8,12 +8,20 @@ if (Number(process.version.slice(1).split('.')[0]) < 12) {
 }
 
 // Libraries
+const Discord = require('discord.js')
+const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 const fs = require('fs')
 const colors = require('colors')
 const isDocker = require('is-docker')
-const Discord = require('discord.js')
-const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
+// Helpers
+client.config = require('./config')
+client.version = require('./version.json')
+client.db = require('./helpers/mongoose')
+require('./helpers/_functions')(client)
+require('./helpers/music')(client)
+
+// Initialise logger
 client.logger = require('tracer').colorConsole({
   transport: function (data) {
     console.log(data.output)
@@ -39,24 +47,13 @@ client.logger = require('tracer').colorConsole({
   filters: [colors.white]
 })
 
-// Check to make sure config exists
-if (fs.existsSync('./config.js') === false) {
-  client.logger.fatal('The config.js file is missing! Please create a config.js file.')
-  process.exit()
-}
-
+// Create caches for permissions, commands, cooldowns and aliases
 client.levelCache = {}
 client.commands = new Discord.Collection()
 client.cooldown = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
-client.config = require('./config')
-client.version = require('./version.json')
-client.db = require('./util/mongoose')
-require('./util/functions')(client)
-require('./util/music')(client)
-
-// Initialization function
+// Main initialisation function
 const init = async () => {
   // Command handler
   fs.readdir('./commands', (err, files) => {
@@ -98,6 +95,7 @@ const init = async () => {
     client.levelCache[thisLevel.name] = thisLevel.level
   }
 
+  // Check if Woomy is running inside a Docker container
   if (isDocker() === true) {
     client.devmode = true
     client.logger.warn('Running in development mode.')

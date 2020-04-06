@@ -14,7 +14,7 @@ exports.help = {
   usage: 'level'
 }
 
-exports.run = async (client, message, args, level, settings) => {
+exports.run = async (client, message, args, level, data) => {
   try {
     const friendly = client.config.permLevels.find(l => l.level === level).name
     message.reply(`your permission level is ${level} (${friendly}).`)
