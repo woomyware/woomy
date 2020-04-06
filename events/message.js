@@ -3,9 +3,9 @@ module.exports = async (client, message) => {
 
   const data = {}
 
-  data.userData = await client.findOrCreateUser(message.author)
+  data.user = await client.findOrCreateUser(message.author)
 
-  const prefixes = [data.userData.prefix]
+  const prefixes = [data.user.prefix]
 
   if (message.guild) {
     if (!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {
@@ -13,8 +13,8 @@ module.exports = async (client, message) => {
         return message.author.send(`I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`)
       } catch (err) {}
     }
-    data.guildData = await client.findOrCreateGuild(message.guild)
-    prefixes.push(data.guildData.prefix)
+    data.guild = await client.findOrCreateGuild(message.guild)
+    prefixes.push(data.guild.prefix)
   }
 
   prefixes.push(`<@${client.user.id}> `, `<@!${client.user.id}> `)
@@ -38,7 +38,7 @@ module.exports = async (client, message) => {
   if (!cmd) return
 
   if (!cmd.conf.enabled) {
-    if (data.guildData.systemNotice.enabled === true) {
+    if (data.guild.systemNotice.enabled === true) {
       return message.channel.send('This command has been disabled by my developers.')
     } else {
       return
@@ -60,7 +60,7 @@ module.exports = async (client, message) => {
   // Dev perm level is separate so dev's don't get owner perms where they shouldn't have them
   if (cmd.conf.permLevel === 'Developer') {
     if (!client.config.devs.includes(message.author.id)) {
-      if (data.guildData.systemNotice.enabled === true) {
+      if (data.guild.systemNotice.enabled === true) {
         return message.channel.send('You don\'t have permission to run this command!')
       } else {
         return
@@ -69,7 +69,7 @@ module.exports = async (client, message) => {
   }
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
-    if (data.guildData.systemNotice.enabled === true) {
+    if (data.guild.systemNotice.enabled === true) {
       return message.channel.send('You don\'t have permission to run this command!')
     } else {
       return

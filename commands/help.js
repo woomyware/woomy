@@ -1,7 +1,7 @@
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['commands', 'cmds', 'h'],
+  aliases: ['commands', 'cmds', 'halp'],
   permLevel: 'User',
   requiredPerms: ['EMBED_LINKS'],
   cooldown: 2000
@@ -10,8 +10,8 @@ exports.conf = {
 exports.help = {
   name: 'help',
   category: 'General',
-  description: 'Returns your permission level.',
-  usage: 'help <command> **OR** help all',
+  description: 'Sends you a list of Woomy\'s commands.',
+  usage: '`help <command>`\n`help all` - View full command list.',
   params: '`<command>` - The name of the command you want more information on.'
 }
 
@@ -20,9 +20,9 @@ exports.run = (client, message, args, level, data) => {
   const embed = new Discord.MessageEmbed()
   embed.setColor(client.embedColour(message.guild))
 
-  const prefixes = [data.userData.prefix]
-  if (message.guild && data.userData.prefix !== data.guildData.prefix) {
-    prefixes.push(data.guildData.prefix)
+  const prefixes = [data.user.prefix]
+  if (message.guild && data.user.prefix !== data.guild.prefix) {
+    prefixes.push(data.guild.prefix)
   }
   prefixes.push('@Woomy')
 
@@ -45,11 +45,11 @@ exports.run = (client, message, args, level, data) => {
 
     categories.sort().forEach((cat) => {
       const filtered = commands.filter((cmd) => cmd.help.category === cat)
-      embed.addField(cat + ` [${filtered.size}]`, filtered.map((cmd) => '`' + cmd.help.name + '`').join(' '))
+      embed.addField(cat + ` [${filtered.size}]`, filtered.map((cmd) => '`' + cmd.help.name + '`').join(', '))
     })
 
-    if (message.guild && data.guildData.customCommands.length > 0) {
-      embed.addField('Custom', data.guildData.customCommands.map((cmd) => '`' + cmd.name + '`').join(' '))
+    if (message.guild && data.guild.customCommands.length > 0) {
+      embed.addField('Custom', data.guild.customCommands.map((cmd) => '`' + cmd.name + '`').join(' '))
     }
 
     return message.channel.send(embed)
@@ -69,12 +69,36 @@ exports.run = (client, message, args, level, data) => {
       embed.addField(cat + ` [${filtered.size}]`, filtered.map((cmd) => '`' + cmd.help.name + '`').join(' '))
     })
 
-    if (message.guild && data.guildData.customCommands.length > 0) {
-      embed.addField('Custom', data.guildData.customCommands.map((cmd) => '`' + cmd.name + '`').join(' '))
+    if (message.guild && data.guild.customCommands.length > 0) {
+      embed.addField('Custom', data.guild.customCommands.map((cmd) => '`' + cmd.name + '`').join(' '))
     }
 
     return message.channel.send(embed)
-  } else {
-    
+  } else if (args[0]) {
+    const command = args.shift().toLowerCase()
+    const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command))
+    if (!cmd) {
+      return message.channel.send('Command/alias doesn\'t exist')
+    }
+
+    let aliases = ''
+    if (cmd.conf.aliases.length > 0) {
+      aliases = '`' + cmd.conf.aliases.join('`, `') + '`'
+    }
+
+    embed.setTitle(cmd.help.name)
+    embed.setDescription(cmd.help.description)
+    embed.addField('**Usage:**', cmd.help.usage)
+    if (cmd.help.params.length > 0) {
+      embed.addField('**Parameters:**', cmd.help.params)
+    }
+    if (aliases) {
+      embed.addField('**Aliases:**', aliases)
+    }
+    embed.addField('**Permission level:**', cmd.conf.permLevel, true)
+    embed.addField('**Server only**', cmd.conf.guildOnly, true)
+    embed.addField('**Cooldown**', cmd.conf.cooldown / 1000 + ' seconds', true)
+    embed.setFooter('< > = optional, [ ] = required. Don\'t include the brackets in the command itself!')
+    message.channel.send(embed)
   }
 }

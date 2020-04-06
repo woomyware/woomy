@@ -11,7 +11,8 @@ exports.help = {
   name: 'ping',
   category: 'Utility',
   description: 'Displays bot latency in miliseconds.',
-  usage: 'ping'
+  usage: 'ping',
+  params: ''
 }
 
 exports.run = async (client, message, args, level, data) => {

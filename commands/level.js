@@ -12,13 +12,13 @@ exports.help = {
   category: 'Utility',
   description: 'Returns your permission level.',
   usage: 'level',
-  params: null
+  params: ''
 }
 
 exports.run = async (client, message, args, level, data) => {
   try {
     const friendly = client.config.permLevels.find(l => l.level === level).name
-    message.reply(`your permission level is ${level} (${friendly}).`)
+    message.reply(`Your permission level is: ${friendly} (${level})`)
   } catch (err) {
     message.channel.send('There was an error!\n' + err).catch()
   }
