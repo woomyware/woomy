@@ -4,10 +4,7 @@ module.exports = async (client, guild) => {
 
   // Create DB entry for newly joined guild
   try {
-    const newGuild = {
-      guildID: guild.id
-    }
-    await client.createGuild(newGuild)
+    await client.findOrCreateGuild(guild)
   } catch (err) {
     client.logger.error('Failed to create DB entry for newly joined guild: ' + err)
   }

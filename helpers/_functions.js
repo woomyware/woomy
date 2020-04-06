@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Guild = require('../models/guild')
+const User = require('../models/user')
 
 module.exports = client => {
   // Permission level function
@@ -19,17 +20,19 @@ module.exports = client => {
     return permlvl
   }
 
-  // Get settings
-  client.getGuild = async (guild) => {
+  // Get guild settings
+  client.findOrCreateGuild = async (guild) => {
     const data = await Guild.findOne({ guildID: guild.id })
     if (data) {
       return data
     } else {
-      throw new Error('No entry for this guild was found in the database!')
+      const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, { guildID: guild.id })
+      const newGuild = await new Guild(merged)
+      return newGuild.save()
     }
   }
 
-  // Update settings
+  // Update guild settings
   client.updateGuild = async (guild, settings) => {
     let data = await client.getGuild(guild)
 
@@ -43,18 +46,45 @@ module.exports = client => {
     return data.updateOne(settings)
   }
 
-  // Create new entry for new guild
-  client.createGuild = async (settings) => {
-    const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, settings)
-    const newGuild = await new Guild(merged)
-    return newGuild.save()
-  }
-
-  // Delete guild data
+  // Delete guild settings
   client.deleteGuild = async (guild) => {
     const data = await client.getGuild(guild)
     if (data) {
       data.deleteOne({ guildID: guild.id })
+    }
+  }
+
+  // Get user settings
+  client.findOrCreateUser = async (user) => {
+    const data = await User.findOne({ userID: user.id })
+    if (data) {
+      return data
+    } else {
+      const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, { userID: user.id })
+      const newUser = await new User(merged)
+      return newUser.save()
+    }
+  }
+
+  // Update user settings
+  client.updateUser = async (user, settings) => {
+    let data = await client.getUser(user)
+
+    if (typeof data !== 'object') data = {}
+    for (const key in settings) {
+      if (data[key] !== settings[key]) {
+        data[key] = settings[key]
+      } else return
+    }
+
+    return data.updateOne(settings)
+  }
+
+  // Delete user settings
+  client.deleteUser = async (user) => {
+    const data = await client.getUser(user)
+    if (data) {
+      data.deleteOne({ userID: user.id })
     }
   }
 
