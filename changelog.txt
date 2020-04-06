@@ -1,0 +1,7 @@
+Woomy 2.0:
+- A lot of Woomy's code has been rewritten
+- Woomy now uses MongoDB for settings storage instead of enmap
+- Logger now logs which file a log came from
+- Functions file has been separated into multiple helpers
+- Added systemNotice feature, stops Woomy from outputting permission errors and stuff
+- New ping command

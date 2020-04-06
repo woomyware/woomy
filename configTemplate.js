@@ -23,13 +23,8 @@ const config = {
   // URL of MongoDB database
   mongoDB: 'mongodb://localhost:27017/woomy',
 
-  // Default settings for guilds
-  defaultGuildSettings: {
-    prefix: '~',
-    systemNotice: true,
-    modRole: 'Moderator',
-    adminRole: 'Administrator'
-  },
+  // Default prefix Woomy uses
+  defaultPrefix: '~',
 
   // Emojis used by Woomy
   emojis: {
