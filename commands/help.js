@@ -45,7 +45,7 @@ exports.run = (client, message, args, level, data) => {
 
     categories.sort().forEach((cat) => {
       const filtered = commands.filter((cmd) => cmd.help.category === cat)
-      embed.addField(cat + ` [${filtered.size}]`, filtered.map((cmd) => '`' + cmd.help.name + '`').join(', '))
+      embed.addField(cat + ` [${filtered.size}]`, filtered.map((cmd) => '`' + cmd.help.name + '`').join(', '), true)
     })
 
     if (message.guild && data.guild.customCommands.length > 0) {

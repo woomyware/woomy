@@ -15,7 +15,6 @@ exports.help = {
 }
 
 exports.run = async (client, message, args, level, data) => {
-  var firstName, secondName
   var rating = Math.floor(Math.random() * 100) + 1
   var hearts = [
     '❤️',
@@ -30,21 +29,8 @@ exports.run = async (client, message, args, level, data) => {
     return message.channel.send('<:error:466995152976871434> Please include two names/users.')
   }
 
-  if (message.guild && message.mentions.members && message.mentions.members.size > 0) {
-    firstName = message.mentions.members.first().displayName
-  }
-
-  if (message.guild && message.mentions.members && message.mentions.members.size > 1) {
-    secondName = message.mentions.members.last().displayName
-  }
-
-  if (!firstName) {
-    firstName = args[0]
-  }
-
-  if (!secondName) {
-    secondName = args[1]
-  }
+  const firstName = args[0]
+  const secondName = args[1]
 
   const shipName = firstName.substr(0, firstName.length * 0.5) + secondName.substr(secondName.length * 0.5)
 

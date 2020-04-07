@@ -195,17 +195,6 @@ module.exports = client => {
     const members = []
     let member
 
-    // Try mention
-    if (search.startsWith('<@') && search.endsWith('>')) {
-      let mention = search.slice(2, -1)
-
-      if (mention.startsWith('!')) {
-        mention = mention.slice(1)
-      }
-
-      return guild.members.cache.get(mention)
-    }
-
     // Try ID search
     if (!isNaN(search) === true) {
       members.push(guild.members.cache.get(search))
@@ -231,6 +220,21 @@ module.exports = client => {
     })
 
     return members
+  }
+
+  // USER OBJECT FROM MENTION
+  client.getUserFromMention = mention => {
+    if (!mention) return
+
+    if (mention.startsWith('<@') && mention.endsWith('>')) {
+      mention = mention.slice(2, -1)
+
+      if (mention.startsWith('!')) {
+        mention = mention.slice(1)
+      }
+
+      return client.users.cache.get(mention)
+    }
   }
 
   client.findRole = function (guild, search) {
