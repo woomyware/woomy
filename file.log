@@ -1436,3 +1436,113 @@
 2020-04-08T19:30:12 | [36minfo[39m | index.js | Loading 7 events.
 2020-04-08T19:30:12 | [36minfo[39m | mongoose.js | Connected to the database.
 2020-04-08T19:30:15 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T22:26:56 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T22:26:56 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T22:26:56 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T22:26:59 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T22:39:52 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:40:35 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:40:46 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:40:52 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:44:22 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T22:44:22 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T22:44:23 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T22:44:26 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T22:44:32 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:44:37 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:44:43 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T22:49:00 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T22:49:00 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T22:49:00 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T22:49:03 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T22:49:03 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:01:27 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:01:27 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:01:27 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:01:30 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:10:20 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:10:20 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:10:20 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:10:23 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:10:30 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:10:44 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:10:59 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:11:00 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:11:00 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:11:02 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:11:07 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:13:14 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:13:28 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:13:28 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:13:28 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:13:31 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:13:40 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:13:40 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:13:40 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:13:42 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:13:42 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:13:46 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:14:01 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:14:01 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:14:02 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:14:04 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:14:06 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:14:39 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:26:22 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:26:22 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:26:22 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:26:25 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:27:27 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:27:27 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:27:27 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:27:29 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:27:48 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:28:53 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:28:53 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:28:53 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:28:56 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:28:56 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:29:12 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:29:12 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:29:12 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:29:14 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:29:34 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:29:34 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:29:34 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:29:37 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:29:37 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:30:14 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:30:14 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:30:14 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:30:16 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:30:18 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:30:32 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:30:32 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:30:32 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:30:34 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:30:38 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:34:18 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:34:18 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:34:18 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:34:21 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:34:23 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:34:30 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:35:00 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:35:24 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:35:24 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:35:24 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:35:26 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:35:38 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:35:38 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:35:38 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:35:41 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:35:41 | [37mlog[39m | message.js | Command ran: help
+2020-04-08T23:39:05 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-08T23:39:05 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-08T23:39:05 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-08T23:39:07 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
+2020-04-08T23:39:15 | [37mlog[39m | message.js | Command ran: help
+2020-04-09T00:06:52 | [36minfo[39m | index.js | Loading 5 commands.
+2020-04-09T00:06:52 | [36minfo[39m | index.js | Loading 7 events.
+2020-04-09T00:06:53 | [36minfo[39m | mongoose.js | Connected to the database.
+2020-04-09T00:06:56 | [32mready[39m | ready.js | Connected to Discord as WoomyDev#4547
