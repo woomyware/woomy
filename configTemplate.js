@@ -3,6 +3,9 @@ const config = {
   token: '',
   devtoken: '',
 
+  // Bot name
+  botName: '',
+
   // API keys that are required for some features/commands
   keys: {
     dbl: '', // top.gg key
