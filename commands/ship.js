@@ -11,11 +11,14 @@ exports.help = {
   name: 'ship',
   category: 'Fun',
   description: 'Ship two people together <3',
-  usage: 'ship [name/user] [name/user]'
+  usage: 'ship [name/user] [name/user]',
+  params: ''
 }
 
+const { MessageEmbed } = require('discord.js')
 exports.run = async (client, message, args, level, data) => {
   var rating = Math.floor(Math.random() * 100) + 1
+  var meter = ['▬', '▬', '▬', '▬', '▬', '▬', '▬', '▬', '▬']
   var hearts = [
     '❤️',
     '🧡',
@@ -37,5 +40,25 @@ exports.run = async (client, message, args, level, data) => {
   if (shipName.toLowerCase() === 'teily' || shipName.toLowerCase() === 'emrra') {
     rating = '100'
   }
-  message.channel.send(`__**Ship Generator:**__\n${hearts.random()} Ship Name: \`${shipName}\`\n${hearts.random()} Compatibility: \`${rating}%\``)
+
+  var pos = 0
+  var under = 9
+  while (pos < 10) {
+    if (rating < under) {
+      meter.splice(pos, 0, hearts.random())
+      break
+    }
+    pos++
+    under += 10
+  }
+
+  if (rating > 99) {
+    meter.splice(9, 0, hearts.random())
+  }
+
+  const embed = new MessageEmbed()
+  embed.setTitle(`Original Names: ${firstName}, ${secondName}`)
+  embed.setColor(client.embedColour(message.guild))
+  embed.setDescription(`Ship Name: **${shipName}**\nCompatibility: **${rating}%**\n**[**${meter.join('')}**]**`)
+  message.channel.send(embed)
 }
