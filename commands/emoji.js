@@ -20,11 +20,11 @@ exports.run = async (client, message, args) => {
     };
   
     var ID;
-    var format = ".png"
+    var format = '.png'
     var string =  args[0].replace(/\D/g,'');
   
-    if(args[0].charAt(1) == "a" && args[0].charAt(2) == ":") {
-      format = ".gif"
+    if(args[0].charAt(1) == 'a' && args[0].charAt(2) == ':') {
+      format = '.gif'
     };
     
     if(string.length > 18) {
@@ -39,6 +39,6 @@ exports.run = async (client, message, args) => {
   
   
   
-    message.channel.send("https://cdn.discordapp.com/emojis/" + ID + format)
+    message.channel.send('https://cdn.discordapp.com/emojis/' + ID + format)
 };
   
