@@ -83,11 +83,11 @@ exports.run = (client, message, args, level, data) => {
 
     let aliases = ''
     if (cmd.conf.aliases.length > 0) {
-      aliases = '`' + cmd.conf.aliases.join('`, `') + '`'
+      aliases = cmd.conf.aliases.join(', ')
     }
 
-    embed.setTitle(cmd.help.name)
-    embed.setDescription(cmd.help.description)
+    embed.setTitle(cmd.help.category.toLowerCase() + ':' + cmd.help.name)
+    embed.setDescription(`*(Aliases: ${aliases})*\n\n${cmd.help.description}`)
     embed.addField('**Usage:**', cmd.help.usage)
     if (cmd.help.params.length > 0) {
       embed.addField('**Parameters:**', cmd.help.params)
