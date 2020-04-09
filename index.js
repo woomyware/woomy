@@ -1,6 +1,8 @@
 // Woomy version 2
 // Copyright 2020 mudkipscience
 
+'use strict'
+
 // Check node.js version
 if (Number(process.version.slice(1).split('.')[0]) < 12) {
   console.log('NodeJS 12.0.0 or higher is required. Please update NodeJS on your system.')
@@ -107,10 +109,16 @@ const init = async () => {
   await client.db.init(client)
 
   // Login to Discord
+  function failedToLogin(err) {
+    client.logger.error('Failed to login: ' + err);
+
+    process.exit(0);
+  };
+
   if (client.devmode !== true) {
-    client.login(client.config.token)
+    client.login(client.config.token).catch(failedToLogin)
   } else {
-    client.login(client.config.token_dev)
+    client.login(client.config.token_dev).catch(failedToLogin)
   }
 }
 
