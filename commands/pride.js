@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ['flag'],
   permLevel: 'User',
   requiredPerms: ['ATTACH_FILES'],
   cooldown: 20000
@@ -45,7 +45,7 @@ exports.help = {
   name: 'pride',
   category: 'Fun',
   description: 'Adds a pride flag ring to your avatar. Available flags are lesbian, gay, bisexual, pansexual, trans, asexual, aromantic and ally. Generator created by [Demirramon.](https://demirramon.com/)',
-  usage: '`pride [flag]` - Adds a pride flag overlay to your avatar.\n`pride [flag] -g` - Adds a pride flag gradient on your avatar.',
   flags: '`-g` - Makes the overlay a gradient.',
+  usage: '`pride [flag]` - Adds a pride flag overlay to your avatar.\n`pride [flag] -g` - Adds a pride flag gradient on your avatar.',
   examples: '`pride trans`\n`pride lesbian -g`'
 }
