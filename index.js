@@ -109,10 +109,10 @@ const init = async () => {
   await client.db.init(client)
 
   // Login to Discord
-  function failedToLogin(err) {
-    client.logger.error('Failed to login: ' + err);
+  function failedToLogin (err) {
+    client.logger.error('Failed to login: ' + err)
 
-    process.exit(0);
+    process.exit(0)
   };
 
   if (client.devmode !== true) {

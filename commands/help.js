@@ -60,19 +60,22 @@ exports.run = (client, message, args, level, data) => {
       return message.channel.send('Command/alias doesn\'t exist')
     }
 
-    let desc = ''
+    let aliases
 
     if (cmd.conf.aliases.length > 0) {
-      desc += `*(Aliases: ${cmd.conf.aliases.join(', ')})*\n\n`
+      aliases = '`' + cmd.conf.aliases.join('`, `') + '`'
     }
 
-    desc += cmd.help.description + `\n\n**You need the \`${cmd.conf.permLevel}\` rank to run this command! This command has a cooldown of \`${cmd.conf.cooldown / 1000}\` seconds per user.**`
+    const desc = cmd.help.description + `\n\n**You need the \`${cmd.conf.permLevel}\` rank to run this command! This command has a cooldown of \`${cmd.conf.cooldown / 1000}\` seconds per user.**`
 
     embed.setTitle(cmd.help.category.toLowerCase() + ':' + cmd.help.name)
     embed.setDescription(desc)
     embed.addField('**Usage**', cmd.help.usage)
     if (cmd.help.examples.length > 0) {
       embed.addField('**Examples**', cmd.help.examples)
+    }
+    if (aliases) {
+      embed.addField('**Aliases**', aliases)
     }
     embed.setFooter('< > = optional, [ ] = required. Don\'t include the brackets in the command itself!')
     message.channel.send(embed)
