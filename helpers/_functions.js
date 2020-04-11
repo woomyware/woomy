@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js')
 const mongoose = require('mongoose')
 const Guild = require('../models/guild')
 const User = require('../models/user')
@@ -129,6 +130,18 @@ module.exports = client => {
       }
     }
     return false
+  }
+
+  // Creates an embed for when commands are used incorrectly
+  client.userError = (cmd, err) => {
+    const embed = new MessageEmbed()
+    embed.setColor('#EF5350')
+    embed.setTitle(cmd.help.name + ':' + cmd.help.category.toLowerCase())
+    embed.setDescription(err)
+    embed.addField('**Usage**', cmd.help.usage)
+    embed.addField('**Parameters**', cmd.help.parameters)
+    embed.setFooter(`Run 'help ${cmd.help.name}' for more information.`)
+    return embed
   }
 
   // Clean up input to remove @everyone, token, etc

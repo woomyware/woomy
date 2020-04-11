@@ -9,7 +9,7 @@ exports.conf = {
 
 exports.help = {
   name: 'level',
-  category: 'Utility',
+  category: 'Bot',
   description: 'Returns your permission level.',
   usage: 'level',
   params: ''

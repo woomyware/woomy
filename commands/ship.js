@@ -4,15 +4,16 @@ exports.conf = {
   guildOnly: false,
   aliases: [],
   permLevel: 'User',
-  requiredPerms: []
+  requiredPerms: [],
+  cooldown: 2000
 }
 
 exports.help = {
   name: 'ship',
   category: 'Fun',
   description: 'Ship two people together <3',
-  usage: 'ship [name/user] [name/user]',
-  params: ''
+  usage: 'ship `[name1]` `[name2]`',
+  parameters: '`name1` The name of the first person you want to ship.\n `name` The name of the second person you want to ship.'
 }
 
 const { MessageEmbed } = require('discord.js')
@@ -28,8 +29,12 @@ exports.run = async (client, message, args, level, data) => {
     '💜'
   ]
 
-  if (args.length < 2) {
-    return message.channel.send('<:error:466995152976871434> Please include two names/users.')
+  if (!args[0]) {
+    return message.channel.send(client.userError(exports, 'Missing argument, the `name1` argument is required!'))
+  }
+
+  if (!args[1]) {
+    return message.channel.send(client.userError(exports, 'Missing argument, the `name2` argument is required!'))
   }
 
   const firstName = args[0]

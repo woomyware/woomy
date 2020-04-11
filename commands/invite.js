@@ -8,13 +8,13 @@ exports.conf = {
 }
 
 exports.help = {
-  name: 'support',
+  name: 'invite',
   category: 'Bot',
   description: 'Sends a link to my support/development server.',
-  usage: 'support',
+  usage: 'invite',
   parameters: ''
 }
 
 exports.run = async (client, message, args, level, data) => {
-  message.channel.send('Here you go! Hopefully we can help you here :3 https://discord.gg/HCF8mdv')
+  message.channel.send(`Here you go! I hope you enjoy using me ^-^\n<https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot>`)
 }

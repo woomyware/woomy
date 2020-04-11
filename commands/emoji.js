@@ -11,7 +11,7 @@ exports.help = {
     category: 'Utility',
     description: 'Enlarges and links an custom emoji',
     usage: 'emoji [emoji]',
-    params: '`[emoji] - Discord emoji you want to enlarge.'
+    params: '`[emoji] - Custom emoji you want to enlarge.'
 };
 
 exports.run = async (client, message, args) => {

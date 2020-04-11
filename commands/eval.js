@@ -44,6 +44,7 @@ exports.run = async (client, message, args, level, data) => {
 
       return
     }
-    message.channel.send(`\`ERROR\` \`\`\`xl\n${await errclean}\n\`\`\``)
+    message.author.send(`\`ERROR\` \`\`\`xl\n${await errclean}\n\`\`\``)
+    message.react('⚠️')
   }
 }
