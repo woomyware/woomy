@@ -17,4 +17,4 @@ exports.help = {
 
 exports.run = async (client, message, args, level, data) => {
     client.music.play(message, args[0]);
-}
+};

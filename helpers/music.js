@@ -54,7 +54,7 @@ module.exports = client => {
   };
 
   client.music.isYouTubeLink = function(query) {
-    return query.startsWith('https://youtube.com/') || query.startsWith('http://youtube.com/') || query.startsWith('https://youtu.be/') || query.startswith('http://youtu.be/') || query.startsWith('https://m.youtube.com/') || query.startsWith('http://m.youtube.com/') || query.startsWith('https://www.youtube.com/') || query.startsWith('http://www.youtube.com/');
+    return query.startsWith('https://youtube.com/') || query.startsWith('http://youtube.com/') || query.startsWith('https://youtu.be/') || query.startsWith('http://youtu.be/') || query.startsWith('https://m.youtube.com/') || query.startsWith('http://m.youtube.com/') || query.startsWith('https://www.youtube.com/') || query.startsWith('http://www.youtube.com/');
   };
 
   client.music.getLinkFromID = function(id) {
@@ -72,9 +72,7 @@ module.exports = client => {
       response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&q=' + encodeURIComponent(query));
     };
 
-    let json = await response.json();
-
-    let parsed = JSON.parse(json);
+    let parsed = await response.json();
 
     if(parsed.items) {
       let video = parsed.items[0];
@@ -98,7 +96,7 @@ module.exports = client => {
 
     let vc = message.member.voice.channel;
 
-    let video = client.music.getVideoByQuery(query);
+    let video = await client.music.getVideoByQuery(query);
 
     if(video) {
       // Fix the bot if somehow broken
@@ -121,7 +119,8 @@ module.exports = client => {
         guild.playing = true;
 
         let connection = await vc.join();
-        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(guild.queue[0].id.videoId)), {type: 'opus'});
+        
+        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(guild.queue[0].video.id.videoId)), {type: 'opus'});
         guild.dispatcher.setVolume(0.5);
       };
     } else {
