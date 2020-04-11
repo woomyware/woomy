@@ -131,4 +131,12 @@ module.exports = client => {
       return message.member.reply('failed to find the video!');
     };
   };
+
+  client.music.setVolume = function(guild, target) {
+    let g = client.music.getGuild(guild.id);
+
+    if(g.dispatcher) {
+      g.dispatcher.setVolume(target);
+    };
+  };
 }
