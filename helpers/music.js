@@ -120,8 +120,12 @@ module.exports = client => {
 
         let connection = await vc.join();
         
-        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(guild.queue[0].video.id.videoId)), {type: 'opus'});
-        guild.dispatcher.setVolume(0.5);
+        let v = guild.queue[0];
+
+        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId)), {type: 'opus'});
+        guild.dispatcher.setVolume(0.3);
+
+        message.reply('playing **' + v.video.snippet.title + '**');
       };
     } else {
       return message.member.reply('failed to find the video!');
