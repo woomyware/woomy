@@ -114,7 +114,7 @@ module.exports = client => {
 
       // Figure out if the bot should add it to queue or play it right now
       if(guild.playing) {
-
+        message.reply('added **' + video.snippet.title + '** to the queue');
       } else {
         guild.playing = true;
 

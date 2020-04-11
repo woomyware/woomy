@@ -16,5 +16,5 @@ exports.help = {
 }
 
 exports.run = async (client, message, args, level, data) => {
-    client.music.play(message, args[0]);
+    await client.music.play(message, args[0]);
 };
