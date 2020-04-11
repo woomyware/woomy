@@ -67,9 +67,9 @@ module.exports = client => {
     let response;
 
     if(isLink) {
-       response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&id=' + id);
+       response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&id=' + id);
     } else {
-      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&q=' + encodeURIComponent(query));
+      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&q=' + encodeURIComponent(query));
     };
 
     let parsed = await response.json();
