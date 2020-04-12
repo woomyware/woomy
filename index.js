@@ -15,6 +15,7 @@ const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 const fs = require('fs')
 const colors = require('colors')
 const isDocker = require('is-docker')
+const sentry = require('@sentry/node')
 
 // Helpers
 client.config = require('./config')
@@ -57,6 +58,9 @@ client.aliases = new Discord.Collection()
 
 // Main initialisation function
 const init = async () => {
+  // initialise sentry
+  if (client.config.keys.sentry != '') sentry.init({dsn: client.config.keys.sentry})
+
   // Command handler
   fs.readdir('./commands', (err, files) => {
     if (err) {

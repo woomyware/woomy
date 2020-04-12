@@ -9,7 +9,8 @@ const config = {
   // API keys that are required for some features/commands
   keys: {
     dbl: '', // top.gg key
-    yt: '' // youtube API key
+    yt: '', // youtube API key
+    sentry: '' // sentry.io dsn
   },
 
   // Users added to this embed get access to developer-level commands
