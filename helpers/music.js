@@ -162,4 +162,12 @@ module.exports = client => {
       g.dispatcher.setVolume(target);
     };
   };
+
+  client.music.skip = function(guild, reason) {
+    let g = client.music.getGuild(guild.id);
+
+    if(g.dispatcher) {
+      g.dispatcher.end(reason);
+    };
+  };
 }
