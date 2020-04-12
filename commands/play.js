@@ -4,7 +4,8 @@ exports.conf = {
   aliases: [],
   permLevel: 'User',
   requiredPerms: [],
-  cooldown: 2000
+  cooldown: 2000,
+  joinArguments: 1
 }
 
 exports.help = {

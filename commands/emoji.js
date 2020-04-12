@@ -9,7 +9,7 @@ exports.conf = {
 exports.help = {
   name: 'emoji',
   category: 'Utility',
-  description: 'Enlarges a custom emoji.',
+  description: 'Enlarges a custom emoji (cannot be used to enlarge normal emojis)',
   usage: 'emoji [emoji]',
   parameters: '`[emoji] - Custom emoji you want to enlarge'
 }
