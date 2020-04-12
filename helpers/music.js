@@ -146,7 +146,7 @@ module.exports = client => {
           } else {
             guild.dispatcher = null;
 
-            connection.leave();
+            connection.disconnect();
           };
         });
       };
