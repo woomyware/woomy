@@ -21,7 +21,7 @@ exports.run = async (client, message, args, level, data) => {
   if(vol) {
     vol = Number(vol);
 
-    vol = vol / 100 * 0.25;
+    vol = vol / 100 * 0.5;
 
     if(vol <= 1) {
       client.music.setVolume(message.guild, vol);
