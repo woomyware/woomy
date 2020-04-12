@@ -106,6 +106,15 @@ module.exports = async (client, message) => {
     message.flags.push(args.shift().slice(1))
   }
 
+  let argsPossiblyJoined = args;
+
+  if(cmd.conf.joinArguments) {
+    if(args.length > cmd.conf.joinArguments && args.length > 1)
+    {
+        argsPossiblyJoined[argsLength - 1] = args.slice(argsLength - 1).join(' ');
+    }
+  };
+
   client.logger.log(`Command ran: ${cmd.help.name}`)
-  cmd.run(client, message, args, level, data)
+  cmd.run(client, message, argsPossiblyJoined, level, data)
 }
