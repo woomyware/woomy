@@ -111,7 +111,7 @@ module.exports = async (client, message) => {
   if(cmd.conf.joinArguments) {
     if(args.length > cmd.conf.joinArguments && args.length > 1)
     {
-        argsPossiblyJoined[argsLength - 1] = args.slice(argsLength - 1).join(' ');
+        argsPossiblyJoined[cmd.conf.joinArguments - 1] = args.slice(cmd.conf.joinArguments - 1).join(' ');
     }
   };
 
