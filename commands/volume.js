@@ -2,7 +2,7 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: 'User',
+  permLevel: 'Moderator',
   requiredPerms: ['vol'],
   cooldown: 2000
 }
