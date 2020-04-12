@@ -88,36 +88,44 @@ module.exports = client => {
     };
   };
 
-  client.music.play = async function(message, query) {
+  client.music.play = async function(message, query, ignoreQueue) {
     let guild = client.music.getGuild(message.guild.id);
 
     if(!message.member.voice.channel && !guild.voiceChannel) {
-      return message.member.reply('you are not in a voice channel!');
+      return message.reply('you are not in a voice channel!');
     }
 
     let vc = message.member.voice.channel;
 
-    let video = await client.music.getVideoByQuery(query);
+    let video;
+    
+    if(!ignoreQueue) {
+      video = await client.music.getVideoByQuery(query);
+    };
 
-    if(video) {
-      // Fix the bot if somehow broken
-      // music "playing", nothing in queue
-      if((guild.playing || guild.dispatcher) && guild.queue.length == 0) {
-        guild.playing = false;
-        guild.dispatcher = null;
-      // music not playing, something is in queue
-      } else if(!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
-        guild.queue = [];
+    if(video || ignoreQueue) {
+      if(!ignoreQueue) {
+        // Fix the bot if somehow broken
+        // music "playing", nothing in queue
+        if((guild.playing || guild.dispatcher) && guild.queue.length == 0) {
+          guild.playing = false;
+          guild.dispatcher = null;
+        // music not playing, something is in queue
+        } else if(!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
+          guild.queue = [];
+        };
+
+        // Add video to queue
+        guild.queue.push({video: video, requestedBy: message.member.id});
       };
-
-      // Add video to queue
-      guild.queue.push({video: video, requestedBy: message.member.id});
 
       // Figure out if the bot should add it to queue or play it right now
       if(guild.playing) {
         message.reply('added **' + video.snippet.title + '** to the queue');
       } else {
         guild.playing = true;
+
+        guild.voiceChannel = vc;
 
         let connection = await vc.join();
         
@@ -126,10 +134,24 @@ module.exports = client => {
         guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId), {highWaterMark: 1024 * 1024 * 32}), {type: 'opus'});
         guild.dispatcher.setVolume(0.25);
 
-        message.reply('playing **' + v.video.snippet.title + '**');
+        message.channel.send('Playing **' + v.video.snippet.title + '**');
+
+        // play next in queue on end
+        guild.dispatcher.once('finish', () => {
+          guild.queue.shift();
+          guild.playing = false;
+
+          if(guild.queue.length > 0) {
+            client.music.play(message, null, true);
+          } else {
+            guild.dispatcher = null;
+
+            connection.leave();
+          };
+        });
       };
     } else {
-      return message.member.reply('failed to find the video!');
+      return message.reply('failed to find the video!');
     };
   };
 
