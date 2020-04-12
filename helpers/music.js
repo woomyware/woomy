@@ -123,7 +123,7 @@ module.exports = client => {
         
         let v = guild.queue[0];
 
-        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId)), {type: 'opus'});
+        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId), {highWaterMark: 1024 * 1024 * 32}), {type: 'opus'});
         guild.dispatcher.setVolume(0.25);
 
         message.reply('playing **' + v.video.snippet.title + '**');
