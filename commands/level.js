@@ -12,7 +12,7 @@ exports.help = {
   category: 'Bot',
   description: 'Returns your permission level.',
   usage: 'level',
-  params: ''
+  parameters: ''
 }
 
 exports.run = async (client, message, args, level, data) => {

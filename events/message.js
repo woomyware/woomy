@@ -10,7 +10,7 @@ module.exports = async (client, message) => {
   if (message.guild) {
     if (!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {
       try {
-        return message.author.send(`I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`)
+        return message.author.send(`I don't have permission to speak in \`#${message.channel.name}\`, Please ask a moderator to give me the send messages permission!`)
       } catch (err) {}
     }
     data.guild = await client.findOrCreateGuild(message.guild)
@@ -26,6 +26,13 @@ module.exports = async (client, message) => {
   }
 
   if (message.content.indexOf(prefix) !== 0) return
+
+  console.log(prefix)
+  if (prefix === `<@${client.user.id}> ` || prefix === `<@!${client.user.id}> `) {
+    message.prefix = '@Woomy '
+  } else {
+    message.prefix = prefix
+  }
 
   const args = message.content.slice(prefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()

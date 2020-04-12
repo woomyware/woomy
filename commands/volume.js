@@ -12,7 +12,7 @@ exports.help = {
   category: 'Music',
   description: 'Sets volume of currently playing music. (100% = 25% of the actual volume)',
   usage: 'volume [volume]',
-  params: '[volume] - Target volume from 0-100%'
+  parameters: '[volume] - Target volume from 0-100%'
 }
 
 exports.run = async (client, message, args, level, data) => {

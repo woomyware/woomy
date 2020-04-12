@@ -5,3 +5,9 @@ Woomy 2.0:
 - Functions file has been separated into multiple helpers
 - Added systemNotice feature, stops Woomy from outputting permission errors and stuff
 - New ping command
+- help command overhauled
+- added `pride` command
+- eval now dm's errors to the user who ran the command
+- ship command overhauled
+- added volume command
+- usage errors are now shown in an embed

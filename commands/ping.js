@@ -10,9 +10,9 @@ exports.conf = {
 exports.help = {
   name: 'ping',
   category: 'Bot',
-  description: 'Displays bot latency in miliseconds.',
+  description: 'Check if bot is dying.',
   usage: 'ping',
-  params: ''
+  parameters: ''
 }
 
 exports.run = async (client, message, args, level, data) => {

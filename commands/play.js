@@ -12,7 +12,7 @@ exports.help = {
   category: 'Music',
   description: 'Plays or adds to queue requested music.',
   usage: 'play [query]',
-  params: '[query] - A query to find video by or a link to the video.'
+  parameters: '[query] - A query to find video by or a link to the video.'
 }
 
 exports.run = async (client, message, args, level, data) => {

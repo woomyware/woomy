@@ -10,10 +10,10 @@ exports.conf = {
 
 exports.help = {
   name: 'eval',
-  category: 'Owner',
+  category: 'Developer',
   description: 'Evaluates arbitrary javascript.',
   usage: 'eval [code]',
-  params: '`[code] - Javascript code you want to execute.'
+  parameters: '`[code] - Javascript code you want to execute.'
 }
 
 exports.run = async (client, message, args, level, data) => {

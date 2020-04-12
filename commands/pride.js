@@ -1,7 +1,7 @@
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ['flag'],
+  aliases: [],
   permLevel: 'User',
   requiredPerms: ['ATTACH_FILES'],
   cooldown: 15000
