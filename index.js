@@ -50,6 +50,14 @@ client.logger = require('tracer').colorConsole({
   filters: [colors.white]
 })
 
+// Check if Woomy is running inside a Docker container
+if (isDocker() === true) {
+  client.devmode = true
+  client.logger.warn('Running in development mode.')
+} else {
+  client.devmode = false
+}
+
 // Create caches for permissions, commands, cooldowns and aliases
 client.levelCache = {}
 client.commands = new Discord.Collection()
@@ -59,7 +67,9 @@ client.aliases = new Discord.Collection()
 // Main initialisation function
 const init = async () => {
   // initialise sentry
-  if (client.config.keys.sentry != '') sentry.init({dsn: client.config.keys.sentry})
+  if (client.config.keys.sentry !== '' && client.devmode === false) {
+    sentry.init({ dsn: client.config.keys.sentry })
+  }
 
   // Command handler
   fs.readdir('./commands', (err, files) => {
@@ -99,14 +109,6 @@ const init = async () => {
   for (let i = 0; i < client.config.permLevels.length; i++) {
     const thisLevel = client.config.permLevels[i]
     client.levelCache[thisLevel.name] = thisLevel.level
-  }
-
-  // Check if Woomy is running inside a Docker container
-  if (isDocker() === true) {
-    client.devmode = true
-    client.logger.warn('Running in development mode.')
-  } else {
-    client.devmode = false
   }
 
   // Initialise DB

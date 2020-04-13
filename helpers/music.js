@@ -1,8 +1,8 @@
-const ytdl = require('ytdl-core-discord');
-const fetch = require('node-fetch');
+const ytdl = require('ytdl-core-discord')
+const fetch = require('node-fetch')
 
 module.exports = client => {
-  client.music = {guilds: {}};
+  client.music = { guilds: {} }
 
   // MUSIC - TIMESTAMP
   client.createTimestamp = function (duration) {
@@ -30,137 +30,137 @@ module.exports = client => {
     return time
   }
 
-  client.music.getGuild = function(id) {
-    let guild = client.music.guilds[id];
+  client.music.getGuild = function (id) {
+    let guild = client.music.guilds[id]
 
-    if(!guild) {
-      guild = {};
+    if (!guild) {
+      guild = {}
 
-      guild.dispatcher = null;
-      guild.playing = false;
-      guild.queue = [];
+      guild.dispatcher = null
+      guild.playing = false
+      guild.queue = []
 
-      client.music.guilds[id] = guild;
-    };
-
-    return guild;
-  };
-
-  client.music.isYouTubeLink = function(query) {
-    return query.startsWith('https://youtube.com/') || query.startsWith('http://youtube.com/') || query.startsWith('https://youtu.be/') || query.startsWith('http://youtu.be/') || query.startsWith('https://m.youtube.com/') || query.startsWith('http://m.youtube.com/') || query.startsWith('https://www.youtube.com/') || query.startsWith('http://www.youtube.com/');
-  };
-
-  client.music.getLinkFromID = function(id) {
-    return 'https://www.youtube.com/watch?v=' + id;
-  };
-
-  client.music.getVideoByQuery = async function(query) {
-    let isLink = client.music.isYouTubeLink(query);
-
-    let response;
-
-    if(isLink) {
-       response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&id=' + id);
-    } else {
-      // TODO: replace this workaround
-      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&q=**' + encodeURIComponent(query) + '**');
-    };
-
-    let parsed = await response.json();
-
-    if(parsed.items) {
-      let video = parsed.items[0];
-
-      if(video) {
-        return video;
-      } else {
-        return false;
-      };
-    } else {
-      return false;
-    };
-  };
-
-  client.music.play = async function(message, query, ignoreQueue) {
-    let guild = client.music.getGuild(message.guild.id);
-
-    if(!message.member.voice.channel && !guild.voiceChannel) {
-      return message.reply('you are not in a voice channel!');
+      client.music.guilds[id] = guild
     }
 
-    let vc = message.member.voice.channel;
+    return guild
+  }
 
-    let video;
-    
-    if(!ignoreQueue) {
-      video = await client.music.getVideoByQuery(query);
-    };
+  client.music.isYouTubeLink = function (query) {
+    return query.startsWith('https://youtube.com/') || query.startsWith('http://youtube.com/') || query.startsWith('https://youtu.be/') || query.startsWith('http://youtu.be/') || query.startsWith('https://m.youtube.com/') || query.startsWith('http://m.youtube.com/') || query.startsWith('https://www.youtube.com/') || query.startsWith('http://www.youtube.com/')
+  }
 
-    if(video || ignoreQueue) {
-      if(!ignoreQueue) {
-        // Fix the bot if somehow broken
+  client.music.getLinkFromID = function (id) {
+    return 'https://www.youtube.com/watch?v=' + id
+  }
+
+  client.music.getVideoByQuery = async function (query) {
+    const isLink = client.music.isYouTubeLink(query)
+
+    let response
+
+    if (isLink) {
+      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&id=' + id)
+    } else {
+      // TODO: replace this workaround
+      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&q=**' + encodeURIComponent(query) + '**')
+    }
+
+    const parsed = await response.json()
+
+    if (parsed.items) {
+      const video = parsed.items[0]
+
+      if (video) {
+        return video
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+  }
+
+  client.music.play = async function (message, query, ignoreQueue) {
+    const guild = client.music.getGuild(message.guild.id)
+
+    if (!message.member.voice.channel && !guild.voiceChannel) {
+      return message.reply('you are not in a voice channel!')
+    }
+
+    const vc = message.member.voice.channel
+
+    let video
+
+    if (!ignoreQueue) {
+      video = await client.music.getVideoByQuery(query)
+    }
+
+    if (video || ignoreQueue) {
+      if (!ignoreQueue) {
+        // Fix the bot if  somehow broken
         // music "playing", nothing in queue
-        if((guild.playing || guild.dispatcher) && guild.queue.length == 0) {
-          guild.playing = false;
-          guild.dispatcher = null;
+        if ((guild.playing || guild.dispatcher) && guild.queue.length === 0) {
+          guild.playing = false
+          guild.dispatcher = null
         // music not playing, something is in queue
-        } else if(!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
-          guild.queue = [];
-        };
+        } else if (!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
+          guild.queue = []
+        }
 
         // Add video to queue
-        guild.queue.push({video: video, requestedBy: message.member.id});
-      };
+        guild.queue.push({ video: video, requestedBy: message.member.id })
+      }
 
-      // Figure out if the bot should add it to queue or play it right now
-      if(guild.playing) {
-        message.reply('added **' + video.snippet.title + '** to the queue');
+      // Figure out if  the bot should add it to queue or play it right now
+      if (guild.playing) {
+        message.reply('added **' + video.snippet.title + '** to the queue')
       } else {
-        guild.playing = true;
+        guild.playing = true
 
-        guild.voiceChannel = vc;
+        guild.voiceChannel = vc
 
-        let connection = await vc.join();
-        
-        let v = guild.queue[0];
+        const connection = await vc.join()
 
-        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId), {highWaterMark: 1024 * 1024 * 32}), {type: 'opus'});
-        guild.dispatcher.setVolume(0.25);
+        const v = guild.queue[0]
 
-        message.channel.send('Playing **' + v.video.snippet.title + '**');
+        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
+        guild.dispatcher.setVolume(0.25)
+
+        message.channel.send('Playing **' + v.video.snippet.title + '**')
 
         // play next in queue on end
         guild.dispatcher.once('finish', () => {
-          guild.queue.shift();
-          guild.playing = false;
+          guild.queue.shift()
+          guild.playing = false
 
-          if(guild.queue.length > 0) {
-            client.music.play(message, null, true);
+          if (guild.queue.length > 0) {
+            client.music.play(message, null, true)
           } else {
-            guild.dispatcher = null;
+            guild.dispatcher = null
 
-            connection.disconnect();
-          };
-        });
-      };
+            connection.disconnect()
+          }
+        })
+      }
     } else {
-      return message.reply('failed to find the video!');
-    };
-  };
+      return message.reply('failed to find the video!')
+    }
+  }
 
-  client.music.setVolume = function(guild, target) {
-    let g = client.music.getGuild(guild.id);
+  client.music.setVolume = function (guild, target) {
+    const g = client.music.getGuild(guild.id)
 
-    if(g.dispatcher) {
-      g.dispatcher.setVolume(target);
-    };
-  };
+    if (g.dispatcher) {
+      g.dispatcher.setVolume(target)
+    }
+  }
 
-  client.music.skip = function(guild, reason) {
-    let g = client.music.getGuild(guild.id);
+  client.music.skip = function (guild, reason) {
+    const g = client.music.getGuild(guild.id)
 
-    if(g.dispatcher) {
-      g.dispatcher.end(reason);
-    };
-  };
+    if (g.dispatcher) {
+      g.dispatcher.end(reason)
+    }
+  }
 }

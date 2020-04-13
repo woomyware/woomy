@@ -4,8 +4,7 @@ exports.conf = {
   aliases: [],
   permLevel: 'User',
   requiredPerms: [],
-  cooldown: 2000,
-  joinArguments: 1
+  cooldown: 2000
 }
 
 exports.help = {
@@ -16,6 +15,6 @@ exports.help = {
   parameters: '[query] - A query to find video by or a link to the video.'
 }
 
-exports.run = async (client, message, args, level, data) => {
-    await client.music.play(message, args[0]);
-};
+exports.run = async (client, message, [...args], level, data) => {
+  await client.music.play(message, args)
+}

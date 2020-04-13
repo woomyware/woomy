@@ -1,9 +1,9 @@
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: [],
+  aliases: ['vol'],
   permLevel: 'Moderator',
-  requiredPerms: ['vol'],
+  requiredPerms: [],
   cooldown: 2000
 }
 
@@ -16,17 +16,17 @@ exports.help = {
 }
 
 exports.run = async (client, message, args, level, data) => {
-  let vol = args[0];
+  let vol = args[0]
 
-  if(vol) {
-    vol = Number(vol);
+  if (vol) {
+    vol = Number(vol)
 
-    vol = vol / 100 * 0.5;
+    vol = vol / 100 * 0.5
 
-    if(vol <= 1) {
-      client.music.setVolume(message.guild, vol);
+    if (vol <= 1) {
+      client.music.setVolume(message.guild, vol)
 
-      message.reply('set volume to ' + vol * 100 + '%');
-    };
-  };
-};
+      message.reply('set volume to ' + vol * 100 + '%')
+    }
+  }
+}
