@@ -16,7 +16,7 @@ exports.help = {
 
 exports.run = async (client, message, args) => {
   if (!args[0]) {
-    return message.channel.send(client.userError(exports, 'Missing argument, the `emoji` argument is required!'))
+    return client.userError(message, exports, 'Missing argument, the `emoji` argument is required!')
   };
 
   var ID

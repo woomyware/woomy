@@ -20,7 +20,7 @@ const Discord = require('discord.js')
 exports.run = (client, message, args) => {
   const flag = args[0]
   if (!flag) {
-    return message.channel.send(client.userError(exports, 'Missing argument, the `flag` argument is required!'))
+    return client.userError(message, exports, 'Missing argument, the `flag` argument is required!')
   }
 
   const available = ['lesbian', 'gay', 'bisexual', 'pansexual', 'trans', 'asexual', 'aromantic', 'ally']

@@ -35,7 +35,7 @@ module.exports = client => {
 
   // Update guild settings
   client.updateGuild = async (guild, settings) => {
-    let data = await client.getGuild(guild)
+    let data = await client.findOrCreateGuild(guild)
 
     if (typeof data !== 'object') data = {}
     for (const key in settings) {
@@ -49,7 +49,7 @@ module.exports = client => {
 
   // Delete guild settings
   client.deleteGuild = async (guild) => {
-    const data = await client.getGuild(guild)
+    const data = await client.findOrCreateGuild(guild)
     if (data) {
       data.deleteOne({ guildID: guild.id })
     }
@@ -69,7 +69,7 @@ module.exports = client => {
 
   // Update user settings
   client.updateUser = async (user, settings) => {
-    let data = await client.getUser(user)
+    let data = await client.findOrCreateUser(user)
 
     if (typeof data !== 'object') data = {}
     for (const key in settings) {
@@ -83,7 +83,7 @@ module.exports = client => {
 
   // Delete user settings
   client.deleteUser = async (user) => {
-    const data = await client.getUser(user)
+    const data = await client.findOrCreateUser(user)
     if (data) {
       data.deleteOne({ userID: user.id })
     }
@@ -133,7 +133,7 @@ module.exports = client => {
   }
 
   // Creates an embed for when commands are used incorrectly
-  client.userError = (cmd, err) => {
+  client.userError = (msg, cmd, err) => {
     const embed = new MessageEmbed()
     embed.setColor('#EF5350')
     embed.setTitle(cmd.help.name + ':' + cmd.help.category.toLowerCase())
@@ -141,7 +141,9 @@ module.exports = client => {
     embed.addField('**Usage**', cmd.help.usage)
     embed.addField('**Parameters**', cmd.help.parameters)
     embed.setFooter(`Run 'help ${cmd.help.name}' for more information.`)
-    return embed
+    msg.channel.send(embed).then(msg => {
+      msg.delete({ timeout: 60000 })
+    })
   }
 
   // Clean up input to remove @everyone, token, etc
@@ -184,6 +186,14 @@ module.exports = client => {
       return guild.member(client.user).displayHexColor
     }
   }
+
+  // Capitalises the first letter of every word in a string
+  // eslint-disable-next-line no-extend-native
+  Object.defineProperty(String.prototype, 'toProperCase', {
+    value: function () {
+      return this.replace(/([^\W_]+[^\s-]*) */g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+    }
+  })
 
   // Returns a random int between min and max
   client.intBetween = function (min, max) {

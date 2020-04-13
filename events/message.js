@@ -8,11 +8,6 @@ module.exports = async (client, message) => {
   const prefixes = [data.user.prefix]
 
   if (message.guild) {
-    if (!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {
-      try {
-        return message.author.send(`I don't have permission to speak in \`#${message.channel.name}\`, Please ask a moderator to give me the send messages permission!`)
-      } catch (err) {}
-    }
     data.guild = await client.findOrCreateGuild(message.guild)
     prefixes.push(data.guild.prefix)
   }
@@ -27,7 +22,6 @@ module.exports = async (client, message) => {
 
   if (message.content.indexOf(prefix) !== 0) return
 
-  console.log(prefix)
   if (prefix === `<@${client.user.id}> ` || prefix === `<@!${client.user.id}> `) {
     message.prefix = '@Woomy '
   } else {
@@ -44,6 +38,26 @@ module.exports = async (client, message) => {
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command))
   if (!cmd) return
 
+  if (message.guild) {
+    if (!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {
+      try {
+        return message.author.send(`I don't have permission to speak in \`#${message.channel.name}\`, Please ask a moderator to give me the send messages permission!`)
+      } catch (err) {}
+    }
+
+    if (data.guild.disabledCommands.includes(cmd.help.name)) {
+      if (data.guild.systemNotice.enabled === true) {
+        return message.channel.send('This command has been disabled in this server.')
+      }
+    }
+
+    if (data.guild.disabledCategories.includes(cmd.help.category)) {
+      if (data.guild.systemNotice.enabled === true) {
+        return message.channel.send('This category has been disabled in this server.')
+      }
+    }
+  }
+
   if (!cmd.conf.enabled) {
     if (data.guild.systemNotice.enabled === true) {
       return message.channel.send('This command has been disabled by my developers.')
@@ -53,7 +67,7 @@ module.exports = async (client, message) => {
   }
 
   if (cmd && !message.guild && cmd.conf.guildOnly) {
-    return message.channel.send('This command is unavailable via private message. Please run this command in a guild.')
+    return message.channel.send('This command is unavailable in direct messages! Please run this command in a server.')
   }
 
   if (message.guild) {
@@ -100,7 +114,6 @@ module.exports = async (client, message) => {
 
   message.author.permLevel = level
 
-  // Might use this
   message.flags = []
   while (args[0] && args[0][0] === '-') {
     message.flags.push(args.shift().slice(1))
