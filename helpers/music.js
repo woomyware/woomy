@@ -47,21 +47,16 @@ module.exports = client => {
     return guild
   }
 
-  client.music.isYouTubeLink = function (query) {
-    return query.startsWith('https://youtube.com/') || query.startsWith('http://youtube.com/') || query.startsWith('https://youtu.be/') || query.startsWith('http://youtu.be/') || query.startsWith('https://m.youtube.com/') || query.startsWith('http://m.youtube.com/') || query.startsWith('https://www.youtube.com/') || query.startsWith('http://www.youtube.com/')
-  }
-
   client.music.getLinkFromID = function (id) {
     return 'https://www.youtube.com/watch?v=' + id
   }
 
   client.music.getVideoByQuery = async function (query) {
-    const isLink = client.music.isYouTubeLink(query)
-
     let response
 
-    if (isLink) {
-      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&id=' + id)
+    if (ytdl.validateURL(query)) {
+      const id = await await ytdl.getURLVideoID(query)
+      response = await fetch('https://invidio.us/api/v1/videos/' + id)
     } else {
       // TODO: replace this workaround
       response = await fetch('https://invidio.us/api/v1/search?q=' + encodeURIComponent(query) + '**')
@@ -69,7 +64,7 @@ module.exports = client => {
 
     const parsed = await response.json()
 
-    if (parsed[0]) {
+    if (parsed) {
       const videos = parsed
 
       if (videos) {
@@ -137,8 +132,10 @@ module.exports = client => {
           }
         }
 
-        if (!video) {
+        if (!video && videos[0]) {
           video = videos[0]
+        } else {
+          video = videos
         }
 
         // Add video to queue
