@@ -131,9 +131,7 @@ module.exports = client => {
             }
           }
         }
-
-
-
+        
         if (!video && videos[0]) {
           video = videos[0]
         } else if(!video) {
@@ -155,7 +153,7 @@ module.exports = client => {
         const connection = await vc.join()
 
         const v = guild.queue[0]
-        
+
         guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
         guild.dispatcher.setVolume(0.25)
 
