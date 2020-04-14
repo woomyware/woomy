@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core-discord')
 const fetch = require('node-fetch')
+const { MessageEmbed } = require('discord.js')
 
 module.exports = client => {
   client.music = { guilds: {} }
@@ -63,16 +64,16 @@ module.exports = client => {
       response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&id=' + id)
     } else {
       // TODO: replace this workaround
-      response = await fetch('https://www.googleapis.com/youtube/v3/search?key=' + client.config.keys.yt + '&part=id,snippet&maxResults=1&type=video&q=**' + encodeURIComponent(query) + '**')
+      response = await fetch('https://invidio.us/api/v1/search?q=' + encodeURIComponent(query) + '**')
     }
 
     const parsed = await response.json()
 
-    if (parsed.items) {
-      const video = parsed.items[0]
+    if (parsed[0]) {
+      const videos = parsed
 
-      if (video) {
-        return video
+      if (videos) {
+        return videos
       } else {
         return false
       }
@@ -91,12 +92,13 @@ module.exports = client => {
     const vc = message.member.voice.channel
 
     let video
+    let videos
 
     if (!ignoreQueue) {
-      video = await client.music.getVideoByQuery(query)
+      videos = await client.music.getVideoByQuery(query)
     }
 
-    if (video || ignoreQueue) {
+    if (videos || ignoreQueue) {
       if (!ignoreQueue) {
         // Fix the bot if  somehow broken
         // music "playing", nothing in queue
@@ -108,13 +110,44 @@ module.exports = client => {
           guild.queue = []
         }
 
+        if (videos[1]) {
+          let output = ''
+          let i = 0
+          for (i = 0; i < 5; i++) {
+            if (!videos[i]) break
+            output += `\`${i + 1}:\` **[${videos[i].title}](https://www.youtube.com/watch?v=${videos[i].videoId})** \`[${client.createTimestamp(videos[i].lengthSeconds)}]\`\n`
+          }
+
+          const embed = new MessageEmbed()
+          embed.setTitle('Please reply with a number `1-' + i + '` to select which song you want to add to the queue.')
+          embed.setColor(client.embedColour(message.guild))
+          embed.setDescription(output)
+          const selection = await client.awaitReply(message, embed)
+
+          for (i = 0; i < 4; i++) {
+            if ([`${i + 1}`].includes(selection)) {
+              if (!videos[i]) {
+                return message.channel.send('Invalid selection')
+              }
+
+              video = videos[i]
+
+              break
+            }
+          }
+        }
+
+        if (!video) {
+          video = videos[0]
+        }
+
         // Add video to queue
         guild.queue.push({ video: video, requestedBy: message.member.id })
       }
 
       // Figure out if  the bot should add it to queue or play it right now
       if (guild.playing) {
-        message.reply('added **' + video.snippet.title + '** to the queue')
+        message.reply('added **' + video.title + '** to the queue')
       } else {
         guild.playing = true
 
@@ -124,10 +157,12 @@ module.exports = client => {
 
         const v = guild.queue[0]
 
-        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.id.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
+        console.log(v.video)
+
+        guild.dispatcher = connection.play(await ytdl(client.music.getLinkFromID(v.video.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
         guild.dispatcher.setVolume(0.25)
 
-        message.channel.send('Playing **' + v.video.snippet.title + '**')
+        message.channel.send('Playing **' + v.video.title + '**')
 
         // play next in queue on end
         guild.dispatcher.once('finish', () => {

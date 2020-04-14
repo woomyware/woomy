@@ -15,6 +15,6 @@ exports.help = {
   parameters: '[query] - A query to find video by or a link to the video.'
 }
 
-exports.run = async (client, message, [...args], level, data) => {
-  await client.music.play(message, args)
+exports.run = async (client, message, args, level, data) => {
+  await client.music.play(message, args.join(' '))
 }
