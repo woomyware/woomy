@@ -51,18 +51,18 @@ module.exports = client => {
     return 'https://www.youtube.com/watch?v=' + id
   }
 
-  client.music.getVideoByQuery = async function (query) {
-    let response
+  client.music.getVideoByQuery = async query => {
+    let resp
 
-    if (ytdl.validateURL(query)) {
-      const id = await await ytdl.getURLVideoID(query)
-      response = await fetch('https://invidio.us/api/v1/videos/' + id)
-    } else {
-      // TODO: replace this workaround
-      response = await fetch('https://invidio.us/api/v1/search?q=' + encodeURIComponent(query) + '**')
+    try {
+      const id = await ytdl.getURLVideoID(query)
+      resp = await fetch('https://invidio.us/api/v1/videos/' + id)
+      console.log(resp)
+    } catch (err) {
+      resp = await fetch('https://invidio.us/api/v1/search?q=' + encodeURIComponent(query))
     }
 
-    const parsed = await response.json()
+    const parsed = await resp.json()
 
     if (parsed) {
       const videos = parsed
@@ -91,6 +91,13 @@ module.exports = client => {
 
     if (!ignoreQueue) {
       videos = await client.music.getVideoByQuery(query)
+      if (!videos[1]) {
+        if (!videos[0]) {
+          video = videos
+        } else {
+          video = videos[0]
+        }
+      }
     }
 
     if (videos || ignoreQueue) {
@@ -105,7 +112,7 @@ module.exports = client => {
           guild.queue = []
         }
 
-        if (videos[1]) {
+        if (!video) {
           let output = ''
           let i = 0
           for (i = 0; i < 5; i++) {
@@ -118,25 +125,20 @@ module.exports = client => {
           embed.setColor(client.embedColour(message.guild))
           embed.setDescription(output)
           const selection = await client.awaitReply(message, embed)
+          console.log(selection)
 
-          for (i = 0; i < 4; i++) {
-            if ([`${i + 1}`].includes(selection)) {
-              if (!videos[i]) {
-                return message.channel.send('Invalid selection')
-              }
+          switch (selection) {
 
-              video = videos[i]
-
-              break
-            }
           }
         }
-        
+
         if (!video && videos[0]) {
           video = videos[0]
-        } else if(!video) {
+        } else if (!video) {
           video = videos
         }
+
+        console.log(video)
 
         // Add video to queue
         guild.queue.push({ video: video, requestedBy: message.member.id })
