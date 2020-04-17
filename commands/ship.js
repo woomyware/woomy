@@ -57,7 +57,7 @@ exports.run = async (client, message, args, level, data) => {
     under += 10
   }
 
-  if (rating > 99) {
+  if (rating >= 99) {
     meter.splice(9, 0, hearts.random())
   }
 
