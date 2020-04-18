@@ -1,6 +1,4 @@
 .vscode
-.env
 *config.js
 node_modules
-data/enmap*
-file.log
+logs
