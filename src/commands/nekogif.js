@@ -1,4 +1,4 @@
-const API = require('nekos.life');
+/*const API = require('nekos.life');
 const {sfw} = new API();
 exports.run = async (client, message) => {
   message.channel.startTyping();
@@ -27,4 +27,4 @@ exports.help = {
   category: "Image",
   description: "Sends you gifs of catgirls.",
   usage: "nekogif"
-};
+};*/
