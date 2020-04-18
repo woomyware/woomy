@@ -56,10 +56,10 @@ module.exports = client => {
 
     try {
       const id = await ytdl.getURLVideoID(query)
-      resp = await fetch('https://invidio.us/api/v1/videos/' + id)
+      resp = await fetch('https://invidious.snopyta.org/api/v1/videos/' + id)
       console.log(resp)
     } catch (err) {
-      resp = await fetch('https://invidio.us/api/v1/search?q=' + encodeURIComponent(query))
+      resp = await fetch('https://invidious.snopyta.org/api/v1/search?q=' + encodeURIComponent(query))
     }
 
     const parsed = await resp.json()
