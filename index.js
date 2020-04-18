@@ -11,44 +11,20 @@ if (Number(process.version.slice(1).split('.')[0]) < 12) {
 
 // Libraries
 const Discord = require('discord.js')
-const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 const fs = require('fs')
-const colors = require('colors')
 const isDocker = require('is-docker')
 const sentry = require('@sentry/node')
 
-// Helpers
+// Create bot client instance
+const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
+
+// Load all our useful utilities
 client.config = require('./config')
 client.version = require('./version.json')
-client.db = require('./helpers/mongoose')
-require('./helpers/_functions')(client)
-require('./helpers/music')(client)
-
-// Initialise logger
-client.logger = require('tracer').colorConsole({
-  transport: function (data) {
-    console.log(data.output)
-    fs.appendFile('./file.log', data.rawoutput + '\n', err => {
-      if (err) throw err
-    })
-  },
-
-  format: [
-    '{{timestamp}} | {{title}} | {{file}} | {{message}}',
-    {
-      debug: `{{timestamp}} | ${'{{title}}'.magenta} | {{file}} | {{message}}`,
-      log: `{{timestamp}} | ${'{{title}}'.white} | {{file}} | {{message}}`,
-      info: `{{timestamp}} | ${'{{title}}'.cyan} | {{file}} | {{message}}`,
-      ready: `{{timestamp}} | ${'{{title}}'.green} | {{file}} | {{message}}`,
-      warn: `{{timestamp}} | ${'{{title}}'.yellow} | {{file}} | {{message}}`,
-      error: `{{timestamp}} | ${'{{title}}'.red} | {{file}} | {{message}}`,
-      fatal: `{{timestamp}} | ${'{{title}}'.red.bold} | {{file}} | {{message}}`
-    }
-  ],
-  dateformat: 'yyyy-mm-dd"T"HH:MM:ss',
-  methods: ['log', 'debug', 'info', 'ready', 'warn', 'error', 'fatal'],
-  filters: [colors.white]
-})
+client.db = require('./utils/mongoose')
+client.logger = require('./utils/logger')
+require('./utils/_functions')(client)
+require('./utils/music')(client)
 
 // Check if Woomy is running inside a Docker container
 if (isDocker() === true) {
@@ -116,7 +92,7 @@ const init = async () => {
 
   // Login to Discord
   function failedToLogin (err) {
-    client.logger.error('Failed to login: ' + err)
+    client.logger.error('Couldn\'t login: ' + err)
 
     process.exit(0)
   };
