@@ -278,7 +278,7 @@ module.exports = client => {
   // Both of these functions catch errors and log them (maybe we could use sentry?)
   process.on('uncaughtException', (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, 'g'), './')
-    client.logger.fatal(`Uncaught Exception: ${errorMsg}`)
+    client.logger.error(`Uncaught Exception: ${errorMsg}`)
     process.exit(1)
   })
 

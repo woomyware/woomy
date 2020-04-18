@@ -53,7 +53,7 @@ const init = async () => {
   // Command handler
   fs.readdir('./commands', (err, files) => {
     if (err) {
-      client.logger.fatal('Failed to get files in commands directory: ' + err)
+      client.logger.error('Failed to get files in commands directory: ' + err)
       process.exit()
     }
     client.logger.info(`Loading ${files.length} commands.`)
@@ -71,7 +71,7 @@ const init = async () => {
   // Event handler
   fs.readdir('./events', (err, files) => {
     if (err) {
-      client.logger.fatal('Failed to get files in events directory: ' + err)
+      client.logger.error('Failed to get files in events directory: ' + err)
       process.exit()
     }
     client.logger.info(`Loading ${files.length} events.`)

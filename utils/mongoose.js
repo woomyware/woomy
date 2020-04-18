@@ -14,7 +14,7 @@ module.exports = {
       mongoose.set('useFindAndModify', false)
       mongoose.Promise = global.Promise
     } catch (err) {
-      client.logger.fatal(`Could not connect to the database:\n ${err.stack}`)
+      client.logger.error(`Could not connect to the database:\n ${err.stack}`)
     }
 
     mongoose.connection.on('connected', () => {

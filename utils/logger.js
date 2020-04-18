@@ -12,12 +12,11 @@ const logger = colorConsole({
       info: `{{timestamp}} | ${'{{title}}'.cyan} | {{file}} | {{message}}`,
       ready: `{{timestamp}} | ${'{{title}}'.green} | {{file}} | {{message}}`,
       warn: `{{timestamp}} | ${'{{title}}'.yellow} | {{file}} | {{message}}`,
-      error: `{{timestamp}} | ${'{{title}}'.red} | {{file}} | {{message}}`,
-      fatal: `{{timestamp}} | ${'{{title}}'.red.bold} | {{file}} | {{message}}`
+      error: `{{timestamp}} | ${'{{title}}'.red} | {{file}} | {{message}}`
     }
   ],
   dateformat: 'yyyy-mm-dd"T"HH:MM:ss',
-  methods: ['cmd', 'debug', 'info', 'ready', 'warn', 'error', 'fatal'],
+  methods: ['cmd', 'debug', 'info', 'ready', 'warn', 'error'],
   filters: [colors.white]
 })
 
