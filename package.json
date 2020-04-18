@@ -6,6 +6,7 @@
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
     "@sentry/node": "^5.15.4",
+    "colors": "^1.4.0",
     "discord.js": "^12.2.0",
     "hastebin-gen": "^2.0.5",
     "is-docker": "^2.0.0",
@@ -13,8 +14,7 @@
     "mongoose": "^5.9.9",
     "node-fetch": "^2.6.0",
     "prism-media": "^1.2.1",
-    "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^4.4.2",
+    "tracer": "^1.0.3",
     "ytdl-core-discord": "^1.2.0"
   },
   "devDependencies": {
