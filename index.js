@@ -3,6 +3,9 @@
 
 'use strict'
 
+// remove this after we uncomment sentry
+/* eslint-disable no-unused-vars */
+
 // Check node.js version
 if (Number(process.version.slice(1).split('.')[0]) < 12) {
   console.log('NodeJS 12.0.0 or higher is required. Please update NodeJS on your system.')
@@ -58,9 +61,9 @@ const init = async () => {
       if (!file.endsWith('.js')) {
         return
       }
-      const response = client.loadCommand(file)
-      if (response) {
-        client.logger.error(response)
+      const res = client.loadCommand(file)
+      if (res) {
+        client.logger.error(res)
       }
     })
   })
