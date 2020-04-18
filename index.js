@@ -44,7 +44,7 @@ client.aliases = new Discord.Collection()
 const init = async () => {
   // initialise sentry
   if (client.config.keys.sentry !== '' && client.devmode === false) {
-    sentry.init({ dsn: client.config.keys.sentry })
+    // sentry.init({ dsn: client.config.keys.sentry })
   }
 
   // Command handler
