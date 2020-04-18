@@ -118,7 +118,7 @@ module.exports = async (client, message) => {
   while (args[0] && args[0][0] === '-') {
     message.flags.push(args.shift().slice(1))
   }
+  client.logger.cmd(`Command ran: ${cmd.help.name}`)
 
-  client.logger.log(`Command ran: ${cmd.help.name}`)
   cmd.run(client, message, args, level, data)
 }
