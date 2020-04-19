@@ -15,8 +15,9 @@ exports.help = {
   params: ''
 }
 
+const { skip } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
-  client.music.skip(message.guild, 'forceskip');
+  skip(message.guild, 'forceskip')
 
-  message.reply('skipped currently playing music');
-};
+  message.reply('skipped currently playing music')
+}

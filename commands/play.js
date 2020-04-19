@@ -15,6 +15,7 @@ exports.help = {
   parameters: '[query] - A query to find video by or a link to the video.'
 }
 
+const { play } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
-  await client.music.play(message, args.join(' '))
+  await play(client, message, args.join(' '))
 }

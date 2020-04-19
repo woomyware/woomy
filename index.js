@@ -27,7 +27,6 @@ client.version = require('./version.json')
 client.db = require('./utils/mongoose')
 client.logger = require('./utils/logger')
 require('./utils/_functions')(client)
-require('./utils/music')(client)
 
 // Check if Woomy is running inside a Docker container
 if (isDocker() === true) {

@@ -15,6 +15,7 @@ exports.help = {
   parameters: '[volume] - Target volume from 0-100%'
 }
 
+const { setVolume } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
   let vol = args[0]
 
@@ -24,7 +25,7 @@ exports.run = async (client, message, args, level, data) => {
     vol = vol / 100 * 0.5
 
     if (vol <= 1) {
-      client.music.setVolume(message.guild, vol)
+      setVolume(message.guild, vol)
 
       message.reply('set volume to ' + vol * 100 + '%')
     }
