@@ -6,7 +6,6 @@ const { utc } = require('moment')
 module.exports = client => {
   client.music = { guilds: {} }
 
-  // MUSIC - TIMESTAMP
   client.createTimestamp = function (s) {
     if (s >= 3600) {
       return utc(s * 1000).format('HH:mm:ss')
@@ -64,7 +63,7 @@ module.exports = client => {
     const guild = client.music.getGuild(message.guild.id)
 
     if (!message.member.voice.channel && !guild.voiceChannel) {
-      return message.reply('you are not in a voice channel!')
+      return message.reply('You have to be connected to a voice channel to use this command!')
     }
 
     const vc = message.member.voice.channel
