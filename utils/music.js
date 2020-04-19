@@ -33,14 +33,14 @@ exports.getLinkFromID = function (id) {
   return 'https://www.youtube.com/watch?v=' + id
 }
 
-exports.getVideoByQuery = async query => {
+exports.getVideoByQuery = async function (client, query) {
   let res
 
   try {
     const id = await ytdl.getURLVideoID(query)
-    res = await fetch('https://invidious.snopyta.org/api/v1/videos/' + id)
+    res = await fetch(`${client.config.endpoints.invidious}v1/videos/${id}`)
   } catch (err) {
-    res = await fetch('https://invidious.snopyta.org/api/v1/search?q=' + encodeURIComponent(query))
+    res = await fetch(`${client.config.endpoints.invidious}v1/search?q=${encodeURIComponent(query)}`)
   }
 
   const parsed = await res.json()
@@ -71,7 +71,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
   let videos
 
   if (!ignoreQueue) {
-    videos = await exports.getVideoByQuery(query)
+    videos = await exports.getVideoByQuery(client, query)
     if (!videos[1]) {
       if (!videos[0]) {
         video = videos

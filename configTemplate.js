@@ -12,6 +12,11 @@ const config = {
     sentry: '' // sentry.io dsn
   },
 
+  // Configurable API endpoints
+  endpoints: {
+    invidious: "https://invidious.snopyta.org/api/"
+  },
+
   // Users added to this embed get access to developer-level commands
   devs: [''],
 
