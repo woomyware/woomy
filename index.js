@@ -28,12 +28,18 @@ client.db = require('./utils/mongoose')
 client.logger = require('./utils/logger')
 require('./utils/_functions')(client)
 
-// Check if Woomy is running inside a Docker container
-if (isDocker() === true) {
-  client.devmode = true
+if (typeof client.config.devmode !== 'undefined') { //Check if devmode is explicitly overridden
+  client.devmode = client.config.devmode;
+} else { //Check if Woomy is running inside a Docker
+  if (isDocker() === false) {
+    client.devmode = true
+  } else {
+    client.devmode = false
+  }
+}
+
+if (client.devmode) {
   client.logger.warn('Running in development mode.')
-} else {
-  client.devmode = false
 }
 
 // Create caches for permissions, commands, cooldowns and aliases
@@ -101,7 +107,7 @@ const init = async () => {
   if (client.devmode !== true) {
     client.login(client.config.token).catch(failedToLogin)
   } else {
-    client.login(client.config.token_dev).catch(failedToLogin)
+    client.login(client.config.devtoken).catch(failedToLogin)
   }
 }
 
