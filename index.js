@@ -96,9 +96,8 @@ const init = async () => {
   // Login to Discord
   function failedToLogin (err) {
     client.logger.error('Couldn\'t login: ' + err)
-
     process.exit(0)
-  };
+  }
 
   if (client.devmode !== true) {
     client.login(client.config.token).catch(failedToLogin)

@@ -57,7 +57,6 @@ module.exports = client => {
     try {
       const id = await ytdl.getURLVideoID(query)
       resp = await fetch('https://invidious.snopyta.org/api/v1/videos/' + id)
-      console.log(resp)
     } catch (err) {
       resp = await fetch('https://invidious.snopyta.org/api/v1/search?q=' + encodeURIComponent(query))
     }
@@ -124,11 +123,44 @@ module.exports = client => {
           embed.setTitle('Please reply with a number `1-' + i + '` to select which song you want to add to the queue.')
           embed.setColor(client.embedColour(message.guild))
           embed.setDescription(output)
-          const selection = await client.awaitReply(message, embed)
-          console.log(selection)
+
+          let selection = await client.awaitReply(message, embed)
+          selection = Number(selection)
 
           switch (selection) {
-
+            case 1:
+              video = videos[0]
+              break
+            case 2:
+              if (videos[1]) {
+                video = videos[1]
+              } else {
+                return message.channel.send('Invalid choice.')
+              }
+              break
+            case 3:
+              if (videos[2]) {
+                video = videos[2]
+              } else {
+                return message.channel.send('Invalid choice.')
+              }
+              break
+            case 4:
+              if (videos[3]) {
+                video = videos[3]
+              } else {
+                return message.channel.send('Invalid choice.')
+              }
+              break
+            case 5:
+              if (videos[4]) {
+                video = videos[4]
+              } else {
+                return message.channel.send('Invalid choice.')
+              }
+              break
+            default:
+              return message.channel.send('Invalid choice.')
           }
         }
 
@@ -137,8 +169,6 @@ module.exports = client => {
         } else if (!video) {
           video = videos
         }
-
-        console.log(video)
 
         // Add video to queue
         guild.queue.push({ video: video, requestedBy: message.member.id })
