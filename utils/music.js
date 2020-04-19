@@ -1,34 +1,18 @@
 const ytdl = require('ytdl-core-discord')
 const fetch = require('node-fetch')
 const { MessageEmbed } = require('discord.js')
+const { utc } = require('moment')
 
 module.exports = client => {
   client.music = { guilds: {} }
 
   // MUSIC - TIMESTAMP
-  client.createTimestamp = function (duration) {
-    var hrs = ~~(duration / 60 / 60)
-    var min = ~~(duration / 60) % 60
-    var sec = ~~(duration - min * 60)
-
-    if (String(hrs).length < 2) {
-      hrs = '0' + String(hrs) + ':'
+  client.createTimestamp = function (s) {
+    if (s >= 3600) {
+      return utc(s * 1000).format('HH:mm:ss')
+    } else {
+      return utc(s * 1000).format('mm:ss')
     }
-
-    if (String(min).length < 2) {
-      min = '0' + String(min)
-    }
-
-    if (String(sec).length < 2) {
-      sec = '0' + String(sec)
-    }
-
-    if (hrs === '00:') {
-      hrs = ''
-    }
-
-    var time = hrs + min + ':' + sec
-    return time
   }
 
   client.music.getGuild = function (id) {
