@@ -10,16 +10,16 @@ exports.conf = {
 }
 
 exports.help = {
-  name: 'forceskip',
+  name: 'skip',
   category: 'Music',
   description: 'Force skips currently playing song.',
-  usage: 'forceskip',
+  usage: 'skip',
   params: ''
 }
 
 const { skip } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
-  skip(message.guild, 'forceskip')
+  skip(message.guild, 'skip')
 
   message.reply('skipped currently playing music')
 }
