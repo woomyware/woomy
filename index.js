@@ -1,8 +1,4 @@
-/* Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
- * You will find this message at the start of every file in woomy. Please
- * keep in mind that I didn't do all the work, I just don't think the other
- * developers would be comfortable providing their names :P
- */
+// Copyright 2020 Emily J. / mudkipscience and contributors. Subject to the AGPLv3 license.
 
 'use strict'
 

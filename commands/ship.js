@@ -1,5 +1,5 @@
 
-// Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+// Copyright 2020 Emily J. / mudkipscience and contributors. Subject to the AGPLv3 license.
 
 exports.conf = {
   enabled: true,
