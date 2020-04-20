@@ -1,17 +1,17 @@
-Woomy
-================
-
-shields go here
+# Woomy
+![GitHub repo size](https://img.shields.io/github/repo-size/mudkipscience/woomy)
 
 ## A feature-rich and configurable Discord bot for music, moderation, currency and more!
 
-### Links
+**Links**
 * [Official bot invite](https://discordapp.com/oauth2/authorize?client_id=435961704145485835&permissions=2134240503&scope=bot)
 * [For updates and support join my Discord server!](https://discord.gg/HCF8mdv)
 
-# Getting Started
+## Using Woomy
 
-# Contributors
+The easiest and recommended way to use Woomy is to invite the official version to your server, which is hosted 24/7 and gets the newest updates as soon as they come out. The invite can be found above, under links. You can also self-host, but no support will be provided to you if you decide to do this.
+
+## Contributors
 
 Thanks to the following people who have contributed to Woomy:
 
@@ -21,22 +21,13 @@ Thanks to the following people who have contributed to Woomy:
 
 And a few other people as well. Check out the [Contributors](https://github.com/mudkipscience/woomy/graphs/contributors) tab!
 
-# Legal stuff
+## Legal stuff
 
-## Using our code
+### Using our code
 If you wish to use our code in your project, please credit us! We don't mind you using Woomy's code (it is open source for a reason :P) as long as you dont blatantly copy it and/or refrain from crediting us.
 
-## License
+### License
 
 Copyright (C) 2018-2020 **Emily J. / mudkipscience**
 
->This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License
->as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
->                                                   
->This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
->without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
->                                                   
->See the GNU Affero General Public License for more details. 
->You should have received a copy of the GNU Affero General Public License along with this program. If not, see http://www.gnu.org/licenses/
-
-The full license can be found in the root of this repository.
+Copyrights licensed under the GNU AGPLv3 License, see the accompanying LICENSE file for details.
