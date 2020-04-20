@@ -1,4 +1,5 @@
-/* Copyright 2020 Emily J. / mudkipscience and contributors. Subject to the AGPLv3 license.
+/*
+ * Copyright 2020 Emily J. / mudkipscience and contributors. Subject to the AGPLv3 license.
  * Some code found in this file has been taken from Guidebot, which is licensed under the MIT license.
  */
 
