@@ -1,7 +1,8 @@
 # Woomy
 ![Status](https://top.gg/api/widget/status/435961704145485835.svg)
-![Servers](https://top.gg/api/widget/servers/435961704145485835.svg?noavatar=true)
+![Servers](https://top.gg/api/widget/servers/435961704145485835.svg)
 ![Discord](https://img.shields.io/discord/410990517841690625)
+![Version](https://img.shields.io/github/package-json/v/mudkipscience/woomy)
 ![License](https://img.shields.io/github/license/mudkipscience/woomy)
 
 ## A feature-rich and configurable Discord bot for music, moderation, currency and more!
