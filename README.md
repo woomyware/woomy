@@ -32,6 +32,6 @@ If you wish to use our code in your project, please credit us! We don't mind you
 
 ### License
 
-Copyright (C) 2018-2020 **Emily J. / mudkipscience**
+Copyright (C) 2018-2020 Emily J. / mudkipscience
 
 Copyrights licensed under the GNU AGPLv3 License, see the accompanying LICENSE file for details.

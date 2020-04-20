@@ -1,4 +1,6 @@
 
+// Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+
 exports.conf = {
   enabled: true,
   guildOnly: false,

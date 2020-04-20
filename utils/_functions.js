@@ -1,3 +1,7 @@
+/* Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+ * Some code found in this file has been taken from Guidebot, which is licensed under the MIT license.
+ */
+
 // Functions in this file are bound to the client object, and available basically anywhere.
 
 const { MessageEmbed } = require('discord.js')

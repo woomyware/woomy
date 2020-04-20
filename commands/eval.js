@@ -1,3 +1,5 @@
+// Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+
 /* eslint-disable no-eval */
 
 exports.conf = {

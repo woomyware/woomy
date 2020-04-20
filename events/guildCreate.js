@@ -1,3 +1,5 @@
+// Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+
 const Discord = require('discord.js')
 module.exports = async (client, guild) => {
   client.logger.info('Guild joined.')

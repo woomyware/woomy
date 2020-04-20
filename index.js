@@ -1,5 +1,8 @@
-// Woomy version 2
-// Copyright 2020 mudkipscience
+/* Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+ * You will find this message at the start of every file in woomy. Please
+ * keep in mind that I didn't do all the work, I just don't think the other
+ * developers would be comfortable providing their names :P
+ */
 
 'use strict'
 
@@ -28,9 +31,9 @@ client.db = require('./utils/mongoose')
 client.logger = require('./utils/logger')
 require('./utils/_functions')(client)
 
-if (typeof client.config.devmode !== 'undefined') { //Check if devmode is explicitly overridden
-  client.devmode = client.config.devmode;
-} else { //Check if Woomy is running inside a Docker
+if (typeof client.config.devmode !== 'undefined') { // Check if devmode is explicitly overridden
+  client.devmode = client.config.devmode
+} else { // Check if Woomy is running inside a Docker
   if (isDocker() === false) {
     client.devmode = true
   } else {

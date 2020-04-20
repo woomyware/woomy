@@ -1,3 +1,5 @@
+// Copyright 2020 Emily J. / mudkipscience. Subject to the AGPLv3 license.
+
 const moment = require('moment')
 module.exports = (client) => {
   const timestamp = moment().format('YYYY-MM-DD HH:mm:ss')
