@@ -8,7 +8,9 @@ const { utc } = require('moment')
 exports.queue = {}
 
 exports.createTimestamp = function (s) {
-  if (s >= 3600) {
+  if (s < 1) {
+    return 'LIVE'
+  } else if (s >= 3600) {
     return utc(s * 1000).format('HH:mm:ss')
   } else {
     return utc(s * 1000).format('mm:ss')
@@ -21,9 +23,11 @@ exports.getGuild = function (id) {
   if (!guild) {
     guild = {}
 
-    guild.dispatcher = null
-    guild.playing = false
     guild.queue = []
+    guild.playing = false
+    guild.paused = false
+    guild.dispatcher = null
+    guild.skippers = []
 
     exports.queue[id] = guild
   }
@@ -155,7 +159,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
       }
 
       // Add video to queue
-      guild.queue.push({ video: video, requestedBy: message.member.id })
+      guild.queue.push({ video: video, requestedBy: message.author })
     }
 
     // Figure out if  the bot should add it to queue or play it right now
@@ -181,7 +185,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
         guild.playing = false
 
         if (guild.queue.length > 0) {
-          exports.play(message, null, true)
+          exports.play(client, message, null, true)
         } else {
           guild.dispatcher = null
 
