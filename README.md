@@ -3,9 +3,9 @@ Woomy
 
 shields go here
 
-### A feature-rich and configurable Discord bot for music, moderation, currency and more!
+## A feature-rich and configurable Discord bot for music, moderation, currency and more!
 
-**Links**
+### Links
 * [Official bot invite](https://discordapp.com/oauth2/authorize?client_id=435961704145485835&permissions=2134240503&scope=bot)
 * [For updates and support join my Discord server!](https://discord.gg/HCF8mdv)
 
