@@ -1,4 +1,4 @@
-/*const API = require('nekos.life');
+const API = require('nekos.life');
 const {sfw} = new API();
 exports.run = async (client, message) => {
   message.channel.startTyping();
@@ -28,4 +28,3 @@ exports.help = {
   description: "Sends you pictures of fox girls.",
   usage: "foxgirl"
 };
-*/
