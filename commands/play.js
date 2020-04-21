@@ -5,8 +5,8 @@ exports.conf = {
   guildOnly: true,
   aliases: [],
   permLevel: 'User',
-  requiredPerms: [],
-  cooldown: 2000
+  requiredPerms: ['CONNECT', 'SPEAK'],
+  cooldown: 5000
 }
 
 exports.help = {

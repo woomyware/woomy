@@ -5,7 +5,7 @@ exports.conf = {
   guildOnly: true,
   aliases: ['np'],
   permLevel: 'User',
-  requiredPerms: [],
+  requiredPerms: ['EMBED_LINKS'],
   cooldown: 2000
 }
 
