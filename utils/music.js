@@ -67,7 +67,7 @@ exports.getVideoByQuery = async function (client, query) {
 exports.play = async function (client, message, query, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
 
-  if (!message.member.voice.channel && !guild.voiceChannel) {
+  if (!message.member.voice.channel && !guild.voice.channel) {
     return message.reply('You have to be connected to a voice channel to use this command!')
   }
 
@@ -168,7 +168,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
     } else {
       guild.playing = true
 
-      guild.voiceChannel = vc
+      guild.voice.channel = vc
 
       const connection = await vc.join()
 
