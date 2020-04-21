@@ -163,6 +163,10 @@ module.exports = async (client, message) => {
     return message.author.send(`<:error:466995152976871434> I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`);
   };
 
+  if (!cmd.conf.enabled) {
+    return message.channel.send('<:error:466995152976871434> This command has been disabled by my developers.')
+  }
+
   if(message.guild && blacklisted == true) {
     try {
       return message.author.send(
