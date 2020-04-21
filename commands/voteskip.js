@@ -27,9 +27,9 @@ exports.run = (client, message, args, level) => {
     )
   }
 
-  const vc = message.guild.members.cache.get(client.user.id).voiceChannel
+  const vc = message.guild.members.cache.get(client.user.id).voice.channel
 
-  if (vc !== message.member.voiceChannel) {
+  if (vc !== message.member.voice.channel) {
     return message.channel.send(
       '<:error:466995152976871434> You need to be in my voice channel to use this command!'
     )

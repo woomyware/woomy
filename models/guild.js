@@ -38,6 +38,11 @@ module.exports = model('Guild', new Schema({
     }
   },
 
+  autoplay: {
+    type: Boolean,
+    default: false
+  },
+
   plugins: {
     type: Object,
     default: {
