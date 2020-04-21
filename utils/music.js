@@ -162,7 +162,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
       guild.queue.push({ video: video, requestedBy: message.author })
     }
 
-    // Figure out if  the bot should add it to queue or play it right now
+    // Figure out if the bot should add it to queue or play it right now
     if (guild.playing) {
       message.reply('added **' + video.title + '** to the queue')
     } else {
