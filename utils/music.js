@@ -66,6 +66,7 @@ exports.getVideoByQuery = async function (client, query) {
 
 exports.play = async function (client, message, query, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
+  guild.message = message;
 
   if (!message.member.voice.channel && !guild.voiceChannel) {
     return message.reply('You have to be connected to a voice channel to use this command!')
