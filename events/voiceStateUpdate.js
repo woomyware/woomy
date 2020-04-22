@@ -16,6 +16,9 @@ module.exports = (client, oldState, newState) => {
                             if(guild.voiceChannel.members.size == 1 && guild.autoDisconnect) {
                                 setTimeout(() => {
                                     if(guild.voiceChannel.members.size == 1 && guild.autoDisconnect) {
+                                        guild.playing = false;
+                                        guild.queue = [];
+
                                         // Probably should be async? But no need here I think
                                         guild.dispatcher.end('silent');
                                         guild.message.channel.send('No one is listening to me. Leaving voice chat!');
