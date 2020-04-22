@@ -29,7 +29,6 @@ exports.run = async (client, message) => {
   guild.queue = []
   guild.playing = false
   guild.paused = false
-  guild.dispatcher = null
   guild.skippers = []
 
   message.channel.send('Playback stopped!')
