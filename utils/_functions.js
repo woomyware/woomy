@@ -152,25 +152,6 @@ module.exports = client => {
     return role
   }
 
-  // Loads commands
-  client.loadCommand = (commandName) => {
-    try {
-      const props = require(`../commands/${commandName}`)
-      if (props.init) {
-        props.init(client)
-      }
-      client.commands.set(props.help.name, props)
-      // So commands can each have their own cooldown time
-      client.cooldown.set(props.help.name, new Map())
-      props.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, props.help.name)
-      })
-      return false
-    } catch (e) {
-      return `Failed to load ${commandName}: ${e}`
-    }
-  }
-
   // Permission level function
   client.permlevel = (message, settings) => {
     let permlvl = 0
@@ -253,6 +234,25 @@ module.exports = client => {
     const data = await client.findOrCreateUser(user)
     if (data) {
       data.deleteOne({ userID: user.id })
+    }
+  }
+
+  // Loads commands
+  client.loadCommand = (commandName) => {
+    try {
+      const props = require(`../commands/${commandName}`)
+      if (props.init) {
+        props.init(client)
+      }
+      client.commands.set(props.help.name, props)
+      // So commands can each have their own cooldown time
+      client.cooldown.set(props.help.name, new Map())
+      props.conf.aliases.forEach(alias => {
+        client.aliases.set(alias, props.help.name)
+      })
+      return false
+    } catch (e) {
+      return `Failed to load ${commandName}: ${e}`
     }
   }
 
