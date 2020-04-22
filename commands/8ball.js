@@ -17,19 +17,8 @@ exports.help = {
   parameters: '`question` - the question you want to ask'
 }
 
+const responses = require('../assets/json/8ball.json').responses
 exports.run = async (client, message, args, level, data) => {
 
   // Finish later
-  const responses = [
-    'No darndested clue.',
-    '¯\\_(ツ)_/¯',
-    'Stupid question. You should be ashamed of yourself for even asking.',
-    'Yes!',
-    'Not in your wildest dreams!',
-    'No chance.',
-    'Never.',
-    'Possibly.',
-    'There\'s a high chance.',
-    'I\'d rather not say.'
-  ]
 }
