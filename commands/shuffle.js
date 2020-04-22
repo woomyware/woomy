@@ -25,16 +25,13 @@ module.exports.run = (client, message, args, level) => {
     return message.channel.send('Not enough songs are in the queue for this command to work!')
   }
 
-  let j, x, i
-
-  for (i = queue.length - 1; i > 0; i--) {
-    if (i > 1) {
-      console.log(i)
-      j = Math.floor(Math.random() * (i + 1))
-      x = queue[i]
-      queue[i] = queue[j]
-      queue[j] = x
-    }
+  const max = queue.length - 1
+  const min = 1
+  for (let i = max; i >= min; i--) {
+    const randomIndex = Math.floor(Math.random() * (max - min + 1)) + min
+    const itemAtIndex = queue[randomIndex]
+    queue[randomIndex] = queue[i]
+    queue[i] = itemAtIndex
   }
 
   message.channel.send('Queue shuffled!')

@@ -66,6 +66,7 @@ exports.getVideoByQuery = async function (client, query) {
 
 exports.play = async function (client, message, query, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
+  guild.message = message
 
   if (!message.member.voice.channel && !guild.voiceChannel) {
     return message.reply('You have to be connected to a voice channel to use this command!')
@@ -92,8 +93,10 @@ exports.play = async function (client, message, query, ignoreQueue) {
       // Fix the bot if  somehow broken
       // music "playing", nothing in queue
       if ((guild.playing || guild.dispatcher) && guild.queue.length === 0) {
+        guild.queue = []
         guild.playing = false
-        guild.dispatcher = null
+        guild.paused = false
+        guild.skippers = []
       // music not playing, something is in queue
       } else if (!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
         guild.queue = []
@@ -169,7 +172,6 @@ exports.play = async function (client, message, query, ignoreQueue) {
       guild.playing = true
 
       guild.voiceChannel = vc
-      console.log(vc)
 
       const connection = await vc.join()
 
@@ -188,7 +190,10 @@ exports.play = async function (client, message, query, ignoreQueue) {
         if (guild.queue.length > 0) {
           exports.play(client, message, null, true)
         } else {
-          guild.dispatcher = null
+          guild.queue = []
+          guild.playing = false
+          guild.paused = false
+          guild.skippers = []
 
           connection.disconnect()
         }

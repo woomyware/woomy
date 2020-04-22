@@ -24,11 +24,12 @@ exports.run = async (client, message) => {
   if (guild.queue.length < 1 || !guild.playing || !guild.dispatcher) return message.channel.send('Nothing is playing.')
   if (!message.member.voice.channel) return message.channel.send('You need to be in voice channel to use this command!')
 
+  guild.dispatcher.end('silent')
+
+  guild.queue = []
   guild.playing = false
   guild.paused = false
-  guild.queue = []
-
-  guild.dispatcher.end('silent')
+  guild.skippers = []
 
   message.channel.send('Playback stopped!')
 }
