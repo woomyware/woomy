@@ -35,7 +35,6 @@ module.exports.run = (client, message, args, level) => {
 
   const oldPosition = +args[0]
   const newPosition = +args[1]
-  const songName = queue[oldPosition].video.title
 
   if (isNaN(oldPosition) === true) {
     return message.channel.send('That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
@@ -60,6 +59,8 @@ module.exports.run = (client, message, args, level) => {
   if (newPosition >= queue.length) {
     return message.channel.send('This number is too high!')
   }
+
+  const songName = queue[oldPosition].video.title
 
   queue.splice(newPosition, 0, queue.splice(oldPosition, 1)[0])
 
