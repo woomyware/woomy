@@ -169,7 +169,6 @@ exports.play = async function (client, message, query, ignoreQueue) {
       guild.playing = true
 
       guild.voiceChannel = vc
-      console.log(vc)
 
       const connection = await vc.join()
 

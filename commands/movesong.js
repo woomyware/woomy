@@ -20,31 +20,45 @@ exports.help = {
 const { getGuild } = require('../utils/music')
 module.exports.run = (client, message, args, level) => {
   const queue = getGuild(message.guild.id).queue
-  const oldPosition = +args[0]
-  const newPosition = +args[1]
-  const songName = queue[oldPosition].video.title
 
   if (queue.length < 3) {
     return message.channel.send('<:error:466995152976871434> Not enough songs are in the queue for this command to work!')
   }
 
   if (!args[0]) {
-    return message.channel.send(`<:error:466995152976871434> You didn't tell me what song to move! Usage: \`${client.commands.get('removesong').help.usage}\``)
+    return client.userError(message, exports, 'Missing argument, the `current position` argument is required!')
   }
 
   if (!args[1]) {
-    return message.channel.send(`<:error:466995152976871434> You didn't tell me what position in the queue you want to move this song to! Usage: \`${client.commands.get('removesong').help.usage}\``)
+    return client.userError(message, exports, 'Missing argument, the `new position` argument is required!')
   }
 
-  if (isNaN(oldPosition) === true || isNaN(newPosition) === true) {
+  const oldPosition = +args[0]
+  const newPosition = +args[1]
+  const songName = queue[oldPosition].video.title
+
+  if (isNaN(oldPosition) === true) {
     return message.channel.send('That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
   }
 
+  if (isNaN(newPosition) === true) {
+    return message.channel.send('That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
+  }
+
+  if (oldPosition < 1) {
+    return message.channel.send('This number is too low!')
+  }
+
+  if (newPosition < 1) {
+    return message.channel.send('This number is too low!')
+  }
+
+  if (oldPosition >= queue.length) {
+    return message.channel.send('This number is too high!')
+  }
+
   if (newPosition >= queue.length) {
-    var k = newPosition - queue.length + 1
-    while (k--) {
-      queue.push(undefined)
-    }
+    return message.channel.send('This number is too high!')
   }
 
   queue.splice(newPosition, 0, queue.splice(oldPosition, 1)[0])

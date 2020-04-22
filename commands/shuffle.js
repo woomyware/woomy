@@ -27,14 +27,13 @@ module.exports.run = (client, message, args, level) => {
 
   let j, x, i
 
-  for (i = queue.length - 1; i > 0; i--) {
-    if (i > 1) {
-      console.log(i)
-      j = Math.floor(Math.random() * (i + 1))
-      x = queue[i]
-      queue[i] = queue[j]
-      queue[j] = x
-    }
+  // Make it so it shuffles all elements EXCEPT [0]
+
+  for (i = queue.length - 1; i > 1; i--) {
+    j = Math.floor(Math.random() * (i + 1))
+    x = queue[i]
+    queue[i] = queue[j]
+    queue[j] = x
   }
 
   message.channel.send('Queue shuffled!')
