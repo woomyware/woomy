@@ -6,6 +6,14 @@ const config = {
   // Bot name
   botName: '',
 
+  // Auto-update from git (WIP)
+  autoUpdate: {
+    enabled: false, // enable auto-update
+    branch: 'next', // git branch
+    autoFetch: false, // check if an update is available and automatically restart and update
+    fetchInterval: 60000, // auto-fetch interval in milliseconds
+  },
+
   // API keys that are required for some features/commands
   keys: {
     dbl: '', // top.gg key
