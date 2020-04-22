@@ -21,11 +21,21 @@ const sentry = require('@sentry/node')
 const client = new Discord.Client({ disabledEvents: ['TYPING_START'] })
 
 // Load all our useful utilities
+client.configTemplate = require('./configTemplate')
 client.config = require('./config')
 client.version = require('./version.json')
 client.db = require('./utils/mongoose')
 client.logger = require('./utils/logger')
 require('./utils/_functions')(client)
+
+// Set missing values in config from config template
+for(let c in client.configTemplate) {
+  if(typeof client.config[c] == 'undefined') {
+    client.logger.warn('Config value missing: ' + String(c))
+
+    client.config[c] = client.configTemplate[c]
+  }
+}
 
 if (typeof client.config.devmode !== 'undefined') { // Check if devmode is explicitly overridden
   client.devmode = client.config.devmode
