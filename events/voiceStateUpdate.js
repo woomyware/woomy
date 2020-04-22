@@ -7,33 +7,32 @@ module.exports = (client, oldState, newState) => {
     const guild = music.getGuild(newState.guild.id)
 
     if (guild.playing && guild.voiceChannel.id === oldState.channelID) {
-      if (guild.voiceChannel.members.size === 1) {
+      if (guild.voiceChannel.members.filter(member => !member.user.bot).size < 1) {
         guild.autoDisconnect = true
 
-        setTimeout(() => {
-          if (guild.voiceChannel.members.size === 1 && guild.autoDisconnect) {
-            setTimeout(() => {
-              if (guild.voiceChannel.members.size === 1 && guild.autoDisconnect) {
-                setTimeout(() => {
-                  if (guild.voiceChannel.members.size === 1 && guild.autoDisconnect) {
-                    guild.playing = false
-                    guild.queue = []
+        guild.message.channel.send(`The music will end in 2 minutes if nobody rejoins **${guild.voiceChannel.name}**`)
+          .then(msg => {
+            msg.delete({ timeout: 120000 })
+          })
 
-                    // Probably should be async? But no need here I think
-                    guild.dispatcher.end('silent')
-                    guild.message.channel.send('No one is listening to me. Leaving voice chat!')
-                  } else {
-                    guild.autoDisconnect = false
-                  }
-                }, 30000)
-              } else {
-                guild.autoDisconnect = false
-              }
-            }, 20000)
+        setTimeout(() => {
+          if (guild.dispatcher !== null && guild.voiceChannel.members.filter(member => !member.user.bot).size < 1 && guild.autoDisconnect) {
+            // Probably should be async? But no need here I think
+            guild.dispatcher.end('silent')
+
+            guild.queue = []
+            guild.playing = false
+            guild.paused = false
+            guild.dispatcher = null
+            guild.skippers = []
+
+            guild.message.channel.send('The music has ended because no one was listening to me ;~;')
           } else {
             guild.autoDisconnect = false
           }
-        }, 10000)
+        }, 120000)
+      } else {
+        guild.autoDisconnect = false
       }
     }
   }

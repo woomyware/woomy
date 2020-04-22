@@ -93,8 +93,11 @@ exports.play = async function (client, message, query, ignoreQueue) {
       // Fix the bot if  somehow broken
       // music "playing", nothing in queue
       if ((guild.playing || guild.dispatcher) && guild.queue.length === 0) {
+        guild.queue = []
         guild.playing = false
+        guild.paused = false
         guild.dispatcher = null
+        guild.skippers = []
       // music not playing, something is in queue
       } else if (!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
         guild.queue = []
@@ -188,7 +191,11 @@ exports.play = async function (client, message, query, ignoreQueue) {
         if (guild.queue.length > 0) {
           exports.play(client, message, null, true)
         } else {
+          guild.queue = []
+          guild.playing = false
+          guild.paused = false
           guild.dispatcher = null
+          guild.skippers = []
 
           connection.disconnect()
         }
