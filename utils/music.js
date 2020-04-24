@@ -172,6 +172,7 @@ exports.play = async function (client, data, message, query, ignoreQueue) {
       guild.playing = true
 
       guild.voiceChannel = vc
+      guild.channel = message.channel
 
       const connection = await vc.join()
 
@@ -180,7 +181,7 @@ exports.play = async function (client, data, message, query, ignoreQueue) {
       guild.dispatcher = connection.play(await ytdl(exports.getLinkFromID(v.video.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
       guild.dispatcher.setVolume(data.defaultVolume)
 
-      message.channel.send('Playing **' + v.video.title + '**')
+      guild.channel.send('Playing **' + v.video.title + '**')
 
       // play next in queue on end
       guild.dispatcher.once('finish', () => {
