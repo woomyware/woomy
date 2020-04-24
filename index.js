@@ -38,7 +38,7 @@ for (const c in client.configTemplate) {
 
 if (typeof client.config.devmode !== 'undefined') { // Check if devmode is explicitly overridden
   client.devmode = client.config.devmode
-} else { // Check if Woomy is running inside a Docker
+} else { // Check if Woomy is running inside a Docker container
   if (isDocker() === false) {
     client.devmode = true
   } else {
