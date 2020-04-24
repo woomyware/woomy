@@ -17,6 +17,7 @@ exports.help = {
   parameters: '`question` - the question you want to ask'
 }
 
+// eslint-disable-next-line no-unused-vars
 const responses = require('../assets/json/8ball.json').responses
 exports.run = async (client, message, args, level, data) => {
 

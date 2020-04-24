@@ -29,10 +29,9 @@ client.logger = require('./utils/logger')
 require('./utils/_functions')(client)
 
 // Set missing values in config from config template
-for(let c in client.configTemplate) {
-  if(typeof client.config[c] == 'undefined') {
+for (const c in client.configTemplate) {
+  if (typeof client.config[c] === 'undefined') {
     client.logger.warn('Config value missing: ' + String(c))
-
     client.config[c] = client.configTemplate[c]
   }
 }

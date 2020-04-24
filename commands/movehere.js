@@ -12,7 +12,7 @@ exports.conf = {
 exports.help = {
   name: 'movehere',
   category: 'Music',
-  description: 'Moves ' + client.config.botName + ' into your voice channel and/or text channel.',
+  description: 'Moves the bot into your voice channel and/or text channel.',
   usage: 'movehere',
   parameters: ''
 }
@@ -20,16 +20,16 @@ exports.help = {
 const music = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
   // get guild music data
-  let mGuild = music.getGuild(message.guild.id)
+  const mGuild = music.getGuild(message.guild.id)
 
-  if(!mGuild.playing) {
+  if (!mGuild.playing) {
     return message.channel.send('<:error:466995152976871434> Nothing is playing.')
   }
 
   // change text channel
   let textChannelChanged = false
 
-  if(mGuild.channel.id != message.channel.id) {
+  if (mGuild.channel.id !== message.channel.id) {
     mGuild.channel = message.channel
 
     textChannelChanged = true
@@ -38,18 +38,18 @@ exports.run = async (client, message, args, level, data) => {
   // move to another voice channel
   let voiceChannelMoved = false
 
-  if(message.voice.channel && mGuild.voiceChannel && (message.voice.channel != mGuild.voiceChannel.id)) {
+  if (message.voice.channel && mGuild.voiceChannel && (message.voice.channel !== mGuild.voiceChannel.id)) {
     // TODO: this
 
     voiceChannelMoved = true
   }
 
   // response
-  if(textChannelChanged && voiceChannelMoved) {
+  if (textChannelChanged && voiceChannelMoved) {
     return message.channel.send('<:success:466995111885144095> Music playback moved to your voice channel and music messages to your text channel.')
-  } else if(textChannelChanged) {
+  } else if (textChannelChanged) {
     return message.channel.send('<:success:466995111885144095> Music module will send messages to your text channel.')
-  } else if(voiceChannelMoved) {
+  } else if (voiceChannelMoved) {
     return message.channel.send('<:success:466995111885144095> Music playback moved to your voice channel.')
   } else {
     return message.channel.send('<:error:466995152976871434> Music is already playing in your voice channel!')
