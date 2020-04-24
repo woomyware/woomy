@@ -19,5 +19,5 @@ exports.help = {
 
 const { play } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
-  await play(client, message, args.join(' '))
+  await play(client, data.guild.music, message, args.join(' '))
 }

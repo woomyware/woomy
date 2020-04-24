@@ -64,7 +64,7 @@ exports.getVideoByQuery = async function (client, query) {
   }
 }
 
-exports.play = async function (client, message, query, ignoreQueue) {
+exports.play = async function (client, data, message, query, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
   guild.message = message
 
@@ -178,7 +178,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
       const v = guild.queue[0]
 
       guild.dispatcher = connection.play(await ytdl(exports.getLinkFromID(v.video.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
-      guild.dispatcher.setVolume(0.25)
+      guild.dispatcher.setVolume(data.defaultVolume)
 
       message.channel.send('Playing **' + v.video.title + '**')
 
@@ -188,7 +188,7 @@ exports.play = async function (client, message, query, ignoreQueue) {
         guild.playing = false
 
         if (guild.queue.length > 0) {
-          exports.play(client, message, null, true)
+          exports.play(client, data, message, null, true)
         } else {
           guild.queue = []
           guild.playing = false

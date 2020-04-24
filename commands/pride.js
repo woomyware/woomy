@@ -12,7 +12,7 @@ exports.conf = {
 exports.help = {
   name: 'pride',
   category: 'Fun',
-  description: 'Adds a pride flag ring to your avatar. Available flags are lesbian, gay, bisexual, pansexual, trans, asexual, aromantic and ally. Generator created by [Demirramon.](https://demirramon.com/)',
+  description: 'Adds a pride flag ring to your avatar. Available flags are lesbian, gay, bisexual, pansexual, trans, asexual, aromantic and ally.',
   usage: '`pride [flag]` - Adds a pride flag overlay to your avatar.\n`pride -g [flag]` - Adds a pride flag gradient on your avatar.',
   parameters: '`flag` - What flag you want to add to your avatar (options listed above)\n`-g` - Add this to the start of the command to turn the flag into a gradient.'
 }

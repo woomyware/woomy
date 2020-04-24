@@ -38,9 +38,11 @@ module.exports = model('Guild', new Schema({
     }
   },
 
-  autoplay: {
-    type: Boolean,
-    default: false
+  music: {
+    type: Object,
+    default: {
+      defaultVolume: 0.25
+    }
   },
 
   plugins: {
