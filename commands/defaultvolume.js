@@ -18,19 +18,22 @@ exports.help = {
 }
 
 exports.run = async (client, message, args, level, data) => {
-  const prefix = args.join(' ')
-
-  if (!prefix) {
-    return message.channel.send(`Current server prefix: \`${data.guild.prefix}\``)
+  if (!args[0]) {
+    return message.channel.send(`Current default volume: \`${data.guild.music.defaultVolume}\``)
   }
 
-  if (prefix.toLowerCase() === 'reset') {
+  if (args[0].toLowerCase() === 'reset') {
     await client.updateGuild(message.guild, { prefix: client.config.defaultPrefix })
-
     return message.channel.send('Server prefix has been reset.')
   }
 
-  await client.updateGuild(message.guild, { prefix: prefix })
+  const vol = +args[0]
+
+  if (isNaN(vol) === true) {
+    return message.channel.send('new volume must be a number')
+  }
+
+  await client.updateGuild(message.guild, { music.defaultVoume: vol })
 
   message.channel.send(`The server prefix has been updated: \`${prefix}\``)
 }
