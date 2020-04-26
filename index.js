@@ -29,17 +29,16 @@ client.logger = require('./utils/logger')
 require('./utils/_functions')(client)
 
 // Set missing values in config from config template
-for(let c in client.configTemplate) {
-  if(typeof client.config[c] == 'undefined') {
+for (const c in client.configTemplate) {
+  if (typeof client.config[c] === 'undefined') {
     client.logger.warn('Config value missing: ' + String(c))
-
     client.config[c] = client.configTemplate[c]
   }
 }
 
 if (typeof client.config.devmode !== 'undefined') { // Check if devmode is explicitly overridden
   client.devmode = client.config.devmode
-} else { // Check if Woomy is running inside a Docker
+} else { // Check if Woomy is running inside a Docker container
   if (isDocker() === false) {
     client.devmode = true
   } else {
