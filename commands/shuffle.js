@@ -21,8 +21,8 @@ const { getGuild } = require('../utils/music')
 module.exports.run = (client, message, args, level) => {
   var queue = getGuild(message.guild.id).queue
 
-  if (queue.length < 3) {
-    return message.channel.send('Not enough songs are in the queue for this command to work!')
+  if (queue.length < 4) {
+    return message.channel.send('<:error:466995152976871434> There aren\'t enough songs are in the queue for this command to work!')
   }
 
   const max = queue.length - 1
@@ -34,5 +34,5 @@ module.exports.run = (client, message, args, level) => {
     queue[i] = itemAtIndex
   }
 
-  message.channel.send('Queue shuffled!')
+  message.channel.send('<:success:466995111885144095> Queue shuffled!')
 }

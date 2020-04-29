@@ -22,16 +22,16 @@ exports.run = async (client, message, args, level, data) => {
   const guild = getGuild(message.guild.id)
 
   if (guild.paused === false) {
-    return message.channel.send('The music is already playing, use pause to pause the music first!')
+    return message.channel.send('<:error:466995152976871434> The music is already playing, use pause to pause the music first!')
   }
 
   if (guild.queue.length < 1) {
-    return message.channel.send('Nothing is playing!')
+    return message.channel.send('<:error:466995152976871434> Nothing is playing!')
   }
 
   guild.playing = true
   guild.paused = false
   guild.dispatcher.resume()
 
-  message.channel.send('Music resumed!')
+  message.channel.send('<:success:466995111885144095> Music playback has been resumed.')
 }

@@ -21,5 +21,5 @@ const { skip } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
   skip(message.guild, 'skip')
 
-  message.reply('skipped currently playing music')
+  message.reply('<:success:466995111885144095> Song skipped.')
 }

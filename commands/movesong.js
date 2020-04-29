@@ -45,16 +45,16 @@ module.exports.run = (client, message, args, level) => {
   }
 
   if (oldPosition < 1 || oldPosition >= queue.length) {
-    return message.channel.send('<:error:466995152976871434> Invalid song ID.')
+    return message.channel.send('<:error:466995152976871434> Old position is not a valid song ID.')
   }
 
   if (newPosition < 1 || newPosition >= queue.length) {
-    return message.channel.send('<:error:466995152976871434> Invalid song ID.')
+    return message.channel.send('<:error:466995152976871434> New position is not a valid song ID.')
   }
 
   const songName = queue[oldPosition].video.title
 
   queue.splice(newPosition, 0, queue.splice(oldPosition, 1)[0])
 
-  message.channel.send(`Moved **${songName}** from position \`${oldPosition}\` to \`${newPosition}\``)
+  message.channel.send(`<:success:466995111885144095> Moved **${songName}** from position \`${oldPosition}\` to \`${newPosition}\``)
 }

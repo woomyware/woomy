@@ -4,7 +4,7 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ['vol'],
-  permLevel: 'Moderator',
+  permLevel: 'User',
   requiredPerms: [],
   cooldown: 2000
 }
@@ -19,7 +19,17 @@ exports.help = {
 
 const { setVolume } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
-  let userVolume = args[0]
+  let userVolume
+
+  if (args[0].includes('%')) {
+    userVolume.replace('%', '')
+  }
+
+  userVolume = +userVolume
+
+  if (isNaN(userVolume) === true) {
+    return message.channel.send('<:error:466995152976871434> Input must be a number!')
+  }
 
   if (userVolume) {
     userVolume = Number(userVolume)

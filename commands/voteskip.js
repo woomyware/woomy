@@ -39,7 +39,7 @@ exports.run = (client, message, args, level) => {
     skip(message.guild, 'skip')
 
     message.channel.send(
-      '<:skip:467216735356059660> Song has been skipped by the user who requested it.'
+      '<:success:466995111885144095> Song has been skipped by the user who requested it.'
     )
 
     return
@@ -52,7 +52,7 @@ exports.run = (client, message, args, level) => {
       skip(message.guild, 'skip')
 
       message.channel.send(
-        '<:skip:467216735356059660> Song has been skipped.'
+        '<:skip:467216735356059660> Song skipped.'
       )
     } else {
       message.channel.send(
