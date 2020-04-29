@@ -6,17 +6,16 @@ module.exports = (client, oldState, newState) => {
   if (newState.channelID !== oldState.channelID) {
     const guild = music.getGuild(newState.guild.id)
 
-    /* Reset queue, dispatcher, etc if Woomy is forcibly disconnected from the queue
+    // Reset queue, dispatcher, etc if Woomy is forcibly disconnected from the queue
     if (guild.voiceChannel && !guild.voiceChannel.members.get(client.user.id) && guild.queue.length > 0) {
       guild.queue = []
       guild.playing = false
       guild.paused = false
       guild.skippers = []
     }
-    */
 
     // Auto-disconnect feature
-    if (guild.playing && guild.Channel && guild.voiceChannel.id === oldState.channelID) {
+    if (guild.playing && guild.channel && guild.voiceChannel.id === oldState.channelID) {
       if (guild.voiceChannel.members.filter(member => !member.user.bot).size < 1) {
         guild.autoDisconnect = true
 
