@@ -37,27 +37,19 @@ module.exports.run = (client, message, args, level) => {
   const newPosition = +args[1]
 
   if (isNaN(oldPosition) === true) {
-    return message.channel.send('That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
+    return message.channel.send('<:error:466995152976871434> That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
   }
 
   if (isNaN(newPosition) === true) {
-    return message.channel.send('That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
+    return message.channel.send('<:error:466995152976871434> That isn\'t a number! You need to tell me the songs position in the queue (1, 2, etc.)')
   }
 
-  if (oldPosition < 1) {
-    return message.channel.send('This number is too low!')
+  if (oldPosition < 1 || oldPosition >= queue.length) {
+    return message.channel.send('<:error:466995152976871434> Invalid song ID.')
   }
 
-  if (newPosition < 1) {
-    return message.channel.send('This number is too low!')
-  }
-
-  if (oldPosition >= queue.length) {
-    return message.channel.send('This number is too high!')
-  }
-
-  if (newPosition >= queue.length) {
-    return message.channel.send('This number is too high!')
+  if (newPosition < 1 || newPosition >= queue.length) {
+    return message.channel.send('<:error:466995152976871434> Invalid song ID.')
   }
 
   const songName = queue[oldPosition].video.title

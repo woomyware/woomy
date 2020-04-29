@@ -4,15 +4,15 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: 'User  ',
+  permLevel: 'User',
   requiredPerms: ['CONNECT', 'SPEAK'],
-  cooldown: 10000
+  cooldown: 2000
 }
 
 exports.help = {
   name: 'movehere',
   category: 'Music',
-  description: 'Moves the bot into your voice channel and/or text channel.',
+  description: 'Moves music related messages to the channel the this command is ran in.',
   usage: 'movehere',
   parameters: ''
 }
@@ -26,32 +26,11 @@ exports.run = async (client, message, args, level, data) => {
     return message.channel.send('<:error:466995152976871434> Nothing is playing.')
   }
 
-  let textChannelChanged = false
-  let voiceChannelChanged = false
-
-  // change text channel
-  if (guild.channel.id !== message.channel.id) {
-    guild.channel = message.channel
-
-    textChannelChanged = true
+  if (guild.channel.id === message.channel.id) {
+    return message.channel.send('<:error:466995152976871434> Music messages are already being sent to this channel.')
   }
 
-  // move to another voice channel
-  if (message.member.voice.channel && guild.voiceChannel && (message.member.voice.channel !== guild.voiceChannel.id)) {
-    guild.voiceChannel.leave()
-    guild.voiceChannel = message.member.voice.channel
-    guild.voiceChannel.join()
-    voiceChannelChanged = true
-  }
+  guild.channel = message.channel
 
-  // response
-  if (textChannelChanged && voiceChannelChanged) {
-    return message.channel.send('<:success:466995111885144095> Music playback moved to your voice channel and music messages to your text channel.')
-  } else if (textChannelChanged) {
-    return message.channel.send('<:success:466995111885144095> Music module will send messages to your text channel.')
-  } else if (voiceChannelChanged) {
-    return message.channel.send('<:success:466995111885144095> Music playback moved to your voice channel.')
-  } else {
-    return message.channel.send('<:error:466995152976871434> Music is already playing in your voice channel!')
-  }
+  message.channel.send('<:success:466995111885144095> Music messages will now be sent to this channel.')
 }
