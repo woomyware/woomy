@@ -64,7 +64,7 @@ exports.getVideoByQuery = async function (client, query) {
   }
 }
 
-exports.play = async function (client, data, message, query, ignoreQueue) {
+exports.play = async function (client, data, message, query, playNext, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
   guild.message = message
 
@@ -162,7 +162,11 @@ exports.play = async function (client, data, message, query, ignoreQueue) {
       }
 
       // Add video to queue
-      guild.queue.push({ video: video, requestedBy: message.author })
+      if (playNext === true) {
+        guild.queue.splice(1, 0, { video: video, requestedBy: message.author })
+      } else {
+        guild.queue.push({ video: video, requestedBy: message.author })
+      }
     }
 
     // Figure out if the bot should add it to queue or play it right now
@@ -172,7 +176,10 @@ exports.play = async function (client, data, message, query, ignoreQueue) {
       guild.playing = true
 
       guild.voiceChannel = vc
-      guild.channel = message.channel
+
+      if (!guild.channel) {
+        guild.channel = message.channel
+      }
 
       const connection = await vc.join()
 
@@ -189,7 +196,7 @@ exports.play = async function (client, data, message, query, ignoreQueue) {
         guild.playing = false
 
         if (guild.queue.length > 0) {
-          exports.play(client, data, message, null, true)
+          exports.play(client, data, message, null, false, true)
         } else {
           guild.queue = []
           guild.playing = false

@@ -12,12 +12,12 @@ exports.conf = {
 exports.help = {
   name: 'play',
   category: 'Music',
-  description: 'Plays or adds to queue requested music.',
-  usage: 'play [query]',
-  parameters: '[query] - A query to find video by or a link to the video.'
+  description: 'Plays the song you request, or adds it to the queue.',
+  usage: 'playnext [song]',
+  parameters: '[song] - The name or youtube URL of the song you want to play.'
 }
 
 const { play } = require('../utils/music')
 exports.run = async (client, message, args, level, data) => {
-  await play(client, data.guild.music, message, args.join(' '))
+  await play(client, data.guild.music, message, args.join(' '), false)
 }
