@@ -11,8 +11,12 @@ const config = {
   // Tokens
   "token": "", // Your bot's token.
   "devtoken": "", // (optional) another token, meant for a bot used for development
-  "ytkey": "", // Youtube API key, needed for music searching to work
-  "dblkey": "", // top.gg key, sends bot statistics to top.gg. You do not need this.
+  "dblkey": "", // (optional) top.gg key, sends bot statistics to top.gg. You do not need this.
+
+  // Configurable API endpoints
+  endpoints: {
+    invidious: 'https://invidio.us/api/'
+  },
 
   // Default per-server settings 
   "defaultSettings" : {
