@@ -1,8 +1,3 @@
-const ytdl = require('ytdl-core-discord');
-const youtubeInfo = require('youtube-info');
-const getYoutubeId = require('get-youtube-id');
-const fetch = require('node-fetch');
-
 module.exports = client => {
   // Permission level function
   client.permlevel = message => {
