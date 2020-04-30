@@ -1,171 +1,162 @@
 'use strict';
 
-const Discord = require("discord.js");
+const { getGuild, createTimestamp } = require('../modules/music')
+const Discord = require('discord.js')
 exports.run = (client, message, args) => {
-  var queue = client.music.getGuild(message.guild.id).queue;
+  var queue = getGuild(message.guild.id).queue
 
-  if(queue.length < 1) {
-    return message.channel.send("<:error:466995152976871434> Nothing is playing.");
+  if (queue.length < 1) {
+    return message.channel.send('<:error:466995152976871434> Nothing is playing.')
   }
 
-  let lists = [];
+  const lists = []
 
-  function generateList(start, number) {
-    var list = "";
-    var timestamp;
-    var livestream;
+  function generateList (start, number) {
+    let list = ''
+    let timestamp
 
-    if(start == 1 && queue.length == 1) {
-      return ["There's nothing else waiting to be played!", 1];
+    if (start === 1 && queue.length === 1) {
+      return ['There\'s nothing else waiting to be played!', 1]
     }
 
-    if(number == 1 && queue.length + 1 < start) {
-      return false;
-    };
-
-    let q = queue.slice(start);
-
-    let i = 0;
-
-    for(i = 0; i < q.length; i++) {
-        let song = q[i];
-
-        if(song.duration == 0) {
-          timestamp = "LIVE";
-          livestream = true;
-        } else {
-          timestamp = client.createTimestamp(song.duration);
-        };
-
-        let aaa = list + `\`${(i + 1) + start - 1}:\` **[${song.title}](https://www.youtube.com/watch?v=${song.id})** added by ${song.requestedBy} \`[${timestamp}]\`\n`;
-
-        if(aaa.length > 1024) {
-          return [list, start + i - 1];
-        } else {
-          list = aaa;
-        }
-
-        //totalDuration = totalDuration + song.duration;
-    };
-
-    return [list, start + i + 1];
-  };
-
-  let songsInQueue = queue.length - 1;
-  let songsInQueueEnglish = "song";
-  let timeRemaining = 0;
-
-  function generatePage(list, page) {
-    if(!list || list == "") {
-      return false;
+    if (number === 1 && queue.length + 1 < start) {
+      return false
     }
 
-    var embed = new Discord.MessageEmbed();
-    embed.setTitle(`Queue for: ${message.guild.name}`);
-    embed.setColor(client.embedColour(message));
-  
-    var elapsedTime = client.music.getGuild(message.guild.id).dispatcher.streamTime / 1000
-    var totalDuration = queue[0].duration - elapsedTime;
+    const q = queue.slice(start)
 
-    let timeRemaining = "";
-    
-    for(let i = 1; i < queue.length; i++) {
-      let b = queue[i];
+    let i = 0
 
-      if(b.duration ==  0) {
-        timeRemaining = "∞";
+    for (i = 0; i < q.length; i++) {
+      const song = q[i]
 
-        break;
-      }
+      timestamp = createTimestamp(song.video.lengthSeconds)
 
-      totalDuration += b.duration;
-    }
-  
-    if(timeRemaining == "") {
-      let queueDuration = client.createTimestamp(totalDuration);
+      const aaa = list + `\`${(i + 1) + start - 1}:\` **[${song.video.title}](https://www.youtube.com/watch?v=${song.video.videoId})** added by ${song.requestedBy} \`[${timestamp}]\`\n`
 
-      timeRemaining = queueDuration;
-    }
-
-    let timestamp;
-
-    if(queue[0].duration == 0) {
-      timestamp = "LIVE";
-      livestream = true;
-    } else {
-      timestamp = client.createTimestamp(elapsedTime) + '/' + client.createTimestamp(queue[0].duration);
-    };
-
-    embed.addField(`Now playing:`, `**[${queue[0].title}](https://www.youtube.com/watch?v=${queue[0].id})** added by ${queue[0].requestedBy} \`[${timestamp}]\``)
-    
-    embed.addField(`Up next:`, list);
-
-    if(songsInQueue > 1 || songsInQueue == 0) {
-      songsInQueueEnglish = "songs";
-    }
-
-    embed.setFooter(`Page ${page}/${lists.length} | ${songsInQueue + " " + songsInQueueEnglish} in queue | ${timeRemaining} time remaining`);
-
-    return embed;
-  };
-
-  var myMessage = null;
-
-  function displayPage(number) {
-    let page = generatePage(lists[number - 1], number);
-
-    if(page) {
-      if(myMessage) {
-        myMessage.edit(page);
+      if (aaa.length > 1024) {
+        return [list, start + i - 1]
       } else {
-        myMessage = message.channel.send(page);
+        list = aaa
       }
 
-      return true;
-    } else {
-      return false;
+      // totalDuration = totalDuration + song.duration
     }
-  };
 
-  function aFunction(start) {
+    return [list, start + i + 1]
+  }
+
+  const songsInQueue = queue.length - 1
+  let songsInQueueEnglish = 'song'
+
+  function generatePage (list, page) {
+    if (!list || list === '') {
+      return false
+    }
+
+    var embed = new Discord.MessageEmbed()
+    embed.setTitle(`Queue for: ${message.guild.name}`)
+    embed.setColor(client.embedColour(message))
+
+    var elapsedTime = getGuild(message.guild.id).dispatcher.streamTime / 1000
+    var totalDuration = queue[0].video.lengthSeconds - elapsedTime
+
+    let timeRemaining = ''
+
+    for (let i = 1; i < queue.length; i++) {
+      const b = queue[i]
+
+      if (b.video.lengthSeconds === 0) {
+        timeRemaining = '∞'
+
+        break
+      }
+
+      totalDuration += b.video.lengthSeconds
+    }
+
+    if (timeRemaining === '') {
+      const queueDuration = createTimestamp(totalDuration)
+
+      timeRemaining = queueDuration
+    }
+
+    let timestamp = `\`${createTimestamp(queue[0].video.lengthSeconds)}\``
+
+    if (timestamp !== '`[LIVE]`') {
+      timestamp = `\`[${createTimestamp(elapsedTime) + '/' + createTimestamp(queue[0].video.lengthSeconds)}]\``
+    }
+
+    embed.addField('Now playing:', `**[${queue[0].video.title}](https://www.youtube.com/watch?v=${queue[0].video.videoId})** added by ${queue[0].requestedBy} ${timestamp}`)
+
+    embed.addField('Up next:', list)
+
+    if (songsInQueue > 1 || songsInQueue === 0) {
+      songsInQueueEnglish = 'songs'
+    }
+
+    embed.setFooter(`Page ${page}/${lists.length} | ${songsInQueue + ' ' + songsInQueueEnglish} in queue | ${timeRemaining} time remaining`)
+
+    return embed
+  }
+
+  var myMessage = null
+
+  function displayPage (number) {
+    const page = generatePage(lists[number - 1], number)
+
+    if (page) {
+      if (myMessage) {
+        myMessage.edit(page)
+      } else {
+        myMessage = message.channel.send(page)
+      }
+
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function aFunction (start) {
     // start - index of song, which we should start with
     // end - index of song, which we ended with
 
-    let [list, end] = generateList(start, lists.length + 1);
+    const [list, end] = generateList(start, lists.length + 1)
 
-    if(list && list != "") {
-      lists.push(list);
-      
-      if(queue[end + 1]) {
-        aFunction(end + 1);
+    if (list && list !== '') {
+      lists.push(list)
+
+      if (queue[end + 1]) {
+        aFunction(end + 1)
       }
     }
-  };
+  }
 
-  aFunction(1);
+  aFunction(1)
 
-  let page = 1;
+  let page = 1
 
-  if(args[0]) {
-    let userPage = Number(args[0]);
+  if (args[0]) {
+    const userPage = Number(args[0])
 
-    if(userPage) {
-      page = userPage;
+    if (userPage) {
+      page = userPage
     } else {
       return message.channel.send(
-        `<:error:466995152976871434> Invalid page. Usage: \`${client.commands.get(`queue`).help.usage}\``
-      );
+        `<:error:466995152976871434> Invalid page number. Usage: \`${client.commands.get('queue').help.usage}\``
+      )
     }
-  };
+  }
 
-  if(displayPage(page)) {
+  if (displayPage(page)) {
 
   } else {
     return message.channel.send(
       `<:error:466995152976871434> Page ${page} doesn't exist!`
-    );
+    )
   }
-};
+}
 
 exports.conf = {
   enabled: true,

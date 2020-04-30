@@ -1,15 +1,20 @@
-const Discord = require("discord.js")
+const { getGuild } = require('../modules/music')
 exports.run = (client, message, args, level) => {
-  let guild = client.music.getGuild(message.guild.id);
-  if(guild.queue.length < 1) {
-    return message.channel.send("<:error:466995152976871434> Nothing is playing.");
-  };
-  guild.playing = true;
-  guild.paused = false;
-  guild.dispatcher.resume();
-  message.channel.send("<:play:467216788187512832> Playback resumed!");
+  const guild = getGuild(message.guild.id)
 
+  if (guild.paused === false) {
+    return message.channel.send('<:error:466995152976871434> The music is already playing, use pause to pause the music first!')
+  }
 
+  if (guild.queue.length < 1) {
+    return message.channel.send('<:error:466995152976871434> Nothing is playing!')
+  }
+
+  guild.playing = true
+  guild.paused = false
+  guild.dispatcher.resume()
+
+  message.channel.send('<:success:466995111885144095> Music playback has been resumed.')
 };
 
 exports.conf = {

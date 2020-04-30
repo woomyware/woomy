@@ -1,15 +1,20 @@
+const { getGuild } = require('../modules/music')
 exports.run = (client, message, args, level) => {
-  let guild = client.music.getGuild(message.guild.id);
-  if(guild.queue.length < 1) {
-    return message.channel.send("<:error:466995152976871434> Nothing is playing.");
-  };
+  const guild = getGuild(message.guild.id)
 
-  guild.playing = false;
-  guild.paused = true;
-  guild.dispatcher.pause();
-  message.channel.send("<:pause:467639357961142273> Playback paused!");
+  if (guild.paused === true) {
+    return message.channel.send('<:error:466995152976871434> The music has already been paused! Run resume to start the music again.')
+  }
 
+  if (guild.queue.length < 1 || guild.playing === false) {
+    return message.channel.send('<:error:466995152976871434> Nothing is playing!')
+  }
 
+  guild.playing = false
+  guild.paused = true
+  guild.dispatcher.pause()
+
+  message.channel.send('<:pause:467639357961142273> Music playback has been paused.')
 };
 
 exports.conf = {
@@ -17,7 +22,7 @@ exports.conf = {
   guildOnly: true,
   aliases: [],
   permLevel: "Moderator",
-  requiredPerms: ["CONNECT", "SPEAK"]
+  requiredPerms: []
 };
 
 exports.help = {

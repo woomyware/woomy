@@ -1,31 +1,30 @@
-const Discord = require("discord.js");
+const { getGuild, createTimestamp } = require('../modules/music')
+const { MessageEmbed } = require('discord.js')
 exports.run = async (client, message) => {  
-  let guild = client.music.getGuild(message.guild.id);
-  
-  if(guild.queue.length < 1) {
-    return message.channel.send("<:error:466995152976871434> Nothing is playing.");
+  const guild = getGuild(message.guild.id)
+
+  if (guild.queue.length < 1) {
+    return message.channel.send(client.config.emojis.error + ' Nothing is in the queue!')
   }
 
-  var song = guild.queue[0];
-  var elapsedTime = client.createTimestamp(guild.dispatcher.streamTime / 1000);
-  var timestamp;
+  const s = guild.queue[0]
+  const elapsedTime = createTimestamp(guild.dispatcher.streamTime / 1000)
+  let timestamp = `\`[${createTimestamp(s.video.lengthSeconds)}]\``
 
-  if(song.duration == 0) {
-    timestamp = "`[LIVE]`";
-  } else {
-    timestamp = `\`[${elapsedTime + "/" + client.createTimestamp(song.duration)}]\``;
-  };
+  if (timestamp !== '`[LIVE]`') {
+    timestamp = `\`[${elapsedTime + '/' + createTimestamp(s.video.lengthSeconds)}]\``
+  }
 
-  embed = new Discord.MessageEmbed();
-  embed.setTitle("Now playing:")
-  embed.setThumbnail(song.thumbnail)
-  embed.setColor(client.embedColour(message));
-	embed.setDescription(`**[${song.title}](https://www.youtube.com/watch?v=${song.id})**`)
-	embed.addField("Channel:", song.author, true)
-  embed.addField("Time:", timestamp, true)
-  embed.setFooter("Requested by " + song.requestedBy.tag, song.requestedBy.avatarURL({format: "png", dynamic: true, size: 2048}))
+  const embed = new MessageEmbed()
+  embed.setTitle('Now playing')
+  embed.setThumbnail(s.video.videoThumbnails[1].url)
+  embed.setColor(client.embedColour(message))
+  embed.setDescription(`**[${s.video.title}](https://www.youtube.com/watch?v=${s.video.videoId})**`)
+  embed.addField('Channel:', s.video.author, true)
+  embed.addField('Time:', timestamp, true)
+  embed.setFooter('Requested by ' + s.requestedBy.tag, s.requestedBy.avatarURL({ format: 'png', dynamic: true, size: 2048 }))
 
-	message.channel.send(embed)
+  message.channel.send(embed)
 };
 
 exports.conf = {
