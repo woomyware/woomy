@@ -15,7 +15,7 @@ module.exports = (client, oldState, newState) => {
     }
 
     // Auto-disconnect feature
-    if (guild.playing && guild.channel && guild.voiceChannel.id === oldState.channelID) {
+    if (guild.playing && guild.voiceChannel && guild.voiceChannel.id === oldState.channelID) {
       if (guild.voiceChannel.members.filter(member => !member.user.bot).size < 1) {
         guild.message.channel.send('Everyone has left my voice channel, the music will end in two minutes if no one rejoins.')
           .then(msg => {
