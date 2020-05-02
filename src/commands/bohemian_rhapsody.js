@@ -40,6 +40,6 @@ exports.conf = {
 exports.help = {
   name: "bohemian_rhapsody",
   category: "Fun",
-  description: "Queen kareoke",
+  description: "Queen karaoke",
   usage: "bohemian_rhapsody"
 };
