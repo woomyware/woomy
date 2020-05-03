@@ -12,6 +12,10 @@ exports.run = async (client, message, args) => {
     return message.channel.send("<:error:466995152976871434> Invalid ID")
   }
 
+  if(message.author.id == args[0]) {
+    return message.channel.send("<:error:466995152976871434> Don't try and ban yourself.")
+  }
+
   if(message.guild.member(args[0])) {
     if(!message.guild.member(args[0]).bannable) {
       return message.channel.send("<:error:466995152976871434> User is not bannable.")
