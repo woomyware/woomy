@@ -57,7 +57,7 @@ exports.run = (client, message, args, level, data) => {
     }
     embed.addField('**Prefixes**', `Default Prefix: \`${client.config.defaultPrefix}\`\nUser Prefix: ${uPrefix}\nServer Prefix: ${gPrefix}`)
     embed.addField('**Command Syntax**', 'For arguments in commands:\n» Arguments in `[]` brackets are required.\n» Arguments in `<>` brackets are optional.\n» Arguments prefixed with `-` are flags, and are placed at the start of the command (`avatar -jpg mudkipscience`)')
-    embed.addField('**Commands**', `Use \`${message.prefix}help all\` to view all commands, or \`${message.prefix}help <command>\` for more information on a specific command.\n\n[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot) | [Discord Server](https://discord.gg/HCF8mdv) | [GitHub](https://github.com/mudkipscience/woomy) | [Vote for me!](https://top.gg/bot/435961704145485835/vote)`)
+    embed.addField('**Commands**', `Use \`${message.prefix}help all\` to view all commands, or \`${message.prefix}help <command>\` for more information on a specific command.\n\n[Bot Invite](https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot) | [Discord Server](https://discord.gg/HCF8mdv) | [GitHub](https://github.com/mudkipscience/woomy) | [Vote for me!](https://top.gg/bot/435961704145485835/vote)`)
 
     return message.channel.send(embed)
   } else if (args[0] === 'all') {

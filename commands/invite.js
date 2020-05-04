@@ -18,5 +18,5 @@ exports.help = {
 }
 
 exports.run = async (client, message, args, level, data) => {
-  message.channel.send(`Here you go! I hope you enjoy using me ^-^\n<https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot>`)
+  message.channel.send(`Here you go! I hope you enjoy using me ^-^\n<https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot>`)
 }
