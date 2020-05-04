@@ -1,18 +1,18 @@
-const Discord = require("discord.js");
-
+const { getGuild } = require('../modules/music')
 exports.run = async (client, message) => {
-  let guild = client.music.getGuild(message.guild.id);
+  const guild = getGuild(message.guild.id)
 
-    if(guild.queue.length < 1 || !guild.playing || !guild.dispatcher) return message.channel.send("<:error:466995152976871434> Nothing is playing.");
-    if(!message.member.voice.channel) return message.channel.send('<:error:466995152976871434> You need to be in voice channel to use this command!');
+  if (guild.queue.length < 1 || !guild.playing || !guild.dispatcher) return message.channel.send('Nothing is playing.')
+  if (!message.member.voice.channel) return message.channel.send('You need to be in voice channel to use this command!')
 
-    guild.playing = false;
-    guild.paused = false;
-    guild.queue = [];
+  guild.dispatcher.end('silent')
 
-  guild.dispatcher.end("silent");
+  guild.queue = []
+  guild.playing = false
+  guild.paused = false
+  guild.skippers = []
 
-  message.channel.send("<:stop:467639381390262284> Playback stopped!");
+  message.channel.send('<:success:466995111885144095> Playback stopped!')
 };
 
 exports.conf = {

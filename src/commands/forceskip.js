@@ -1,11 +1,16 @@
+const { skip, getGuild } = require('../modules/music')
 exports.run = (client, message) => {
-    let guild = client.music.getGuild(message.guild.id);
+  const guild = getGuild(message.guild.id)
 
-    if(guild.queue.length < 1) return message.channel.send(
-      `<:error:466995152976871434> There is nothing for me to skip!`
-      );
-    skip_song(guild);
-      message.channel.send("<:skip:467216735356059660> Skipped the song!")
+  if (guild.queue.length < 1 || !guild.playing || !guild.dispatcher) {
+    return message.channel.send(
+      '<:error:466995152976871434> Nothing is playing.'
+    )
+  }
+
+  skip(message.guild, 'skip')
+
+  message.channel.send('<:success:466995111885144095> Song skipped.')
 };
 
 exports.conf = {
@@ -13,7 +18,7 @@ exports.conf = {
   guildOnly: true,
   aliases: [],
   permLevel: "Moderator",
-  requiredPerms: ["SPEAK"]
+  requiredPerms: []
 };
 
 exports.help = {
@@ -22,7 +27,3 @@ exports.help = {
   description: "Skips the currently playing song without requiring a vote.",
   usage: "forceskip"
 };
-
-function skip_song(guild) {
-  guild.dispatcher.end();
-}

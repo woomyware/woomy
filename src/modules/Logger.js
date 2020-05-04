@@ -2,17 +2,25 @@ const chalk = require("chalk");
 const moment = require("moment");
 
 exports.log = (content, type = "log") => {
-  const timestamp = chalk.grey(`[${moment().format("YYYY-MM-DD HH:mm:ss")}]`);
+  const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]`;
 
   let channel;
+  
+  try { 
+    channel = client.guilds.cache.get(client.config.loggingServer).channels.cache.get(client.config.consoleLogs); 
+  } catch(err) {};
 
-  try { channel = client.guilds.cache.get('410990517841690625').channels.cache.get('570963481189154822'); } catch(err) {}
+  var logToServer = false;
+
+  if(client.devmode === false && channel && client.guilds.cache.get(client.config.loggingServer).available) {
+    logToServer = true;
+  };
 
   switch (type) {
     case "info": {
       try {
-        if (client.devmode == false) {
-          channel.send(`\`${timestamp}\`: ` + content);
+        if (logToServer == true) {
+          channel.send(`\`${timestamp}\` \`[${type.toUpperCase()}]\` ` + content);
         };
       } catch(err) {};
       return console.log(`${timestamp} ${chalk.cyanBright(`[${type.toUpperCase()}]`)} ${content} `);
@@ -20,8 +28,8 @@ exports.log = (content, type = "log") => {
 
     case "warn": {
       try {
-        if (client.devmode == false) {
-          channel.send(`\`${timestamp}\`: ` + content);
+        if (logToServer == true) {
+          channel.send(`\`${timestamp}\` \`[${type.toUpperCase()}]\` ` + content);
         };
       } catch(err) {};
       return console.log(`${timestamp} ${chalk.yellowBright(`[${type.toUpperCase()}]`)} ${content} `);
@@ -29,8 +37,8 @@ exports.log = (content, type = "log") => {
 
     case "error": {
       try {
-        if (client.devmode == false) {
-          channel.send(`\`${timestamp}\`: ` + content);
+        if (logToServer == true) {
+          channel.send(`\`${timestamp}\` \`[${type.toUpperCase()}]\` ` + content);
         };
       } catch(err) {}
       return console.log(`${timestamp} ${chalk.redBright(`[${type.toUpperCase()}]`)} ${content} `);
@@ -38,8 +46,8 @@ exports.log = (content, type = "log") => {
 
     case "debug": {
       try {
-        if (client.devmode == false) {
-          channel.send(`\`${timestamp}\`: ` + content);
+        if (logToServer == true) {
+          channel.send(`\`${timestamp}\` \`[${type.toUpperCase()}]\` ` + content);
         };
       } catch(err) {};
       return console.log(`${timestamp} ${chalk.magentaBright(`[${type.toUpperCase()}]`)} ${content} `);
@@ -47,14 +55,19 @@ exports.log = (content, type = "log") => {
 
     case "cmd": {
       try {
-        if (client.devmode == false) {
-          channel.send(`\`${timestamp}\` ` + content);
+        if (logToServer == true) {
+          channel.send(`\`${timestamp}\` \`[${type.toUpperCase()}]\` ` + content);
         };
       } catch(err) {};
       return console.log(`${timestamp} ${chalk.whiteBright(`[${type.toUpperCase()}]`)} ${content}`);
     };
 
     case "ready": {
+      try {
+        if (logToServer == true) {
+          channel.send(`\`${timestamp}\` \`[${type.toUpperCase()}]\` ` + content);
+        };
+      } catch(err) {};
       return console.log(`${timestamp} ${chalk.greenBright (`[${type.toUpperCase()}]`)} ${content}`);
     };
 

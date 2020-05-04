@@ -1,28 +1,57 @@
+if (Number(process.version.slice(1).split(".")[0]) < 12) {
+  throw new Error("Node 12.0.0 or higher is required. Please update Node on your system.");
+};
+
 const Discord = require('discord.js');
 const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const Enmap = require('enmap');
 const chalk = require('chalk');
-const DBL = require("dblapi.js");
 const client = new Discord.Client();
 
-client.config = require('./config');
-client.version = require('./version.json');
-client.logger = require('./src/modules/Logger');
-require("./src/modules/functions")(client);
+try {
+  client.config = require('./config');
+} catch (err) {
+  console.log('Failed to load config.js:', err);
+  process.exit();
+};
+
+try{
+  client.version = require('./version.json');
+} catch (err) {
+  console.log('Failed to load version.json:', err);
+  process.exit();
+};
+
+try{
+  client.logger = require('./src/modules/Logger');
+} catch (err) {
+  console.log('Failed to load Logger.js:', err);
+  process.exit();
+};
+
 client.logger.setClient(client);
 
-if(process.env['USER'] != 'container') {
+try{
+  require("./src/modules/functions")(client);
+} catch (err) {
+  console.log('Failed to load functions.js:', err);
+  process.exit();
+};
+
+if(client.config.devmodeEnabled == true && process.env['USER'] != 'container') {
   client.devmode = true;
 } else {
   client.devmode = false;
-  const dblapi = new DBL(client.config.dblkey, client);
-}
+  if(client.config.dblkey.length > 0) {
+    const DBL = require("dblapi.js");
+    const dblapi = new DBL(client.config.dblkey, client);
+  };
+};
 
 client.commands = new Enmap();
 client.aliases = new Enmap();
 client.settings = new Enmap({name: 'settings'});
-client.blacklist = new Enmap({name: 'blacklist'});
 
 const init = async () => {
   const cmdFiles = await readdir("./src/commands/");

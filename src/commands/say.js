@@ -5,7 +5,7 @@ exports.run = (client, message, args, level) => {
     );
   };
   if (message.content.includes("@everyone")) {
-    return message.channel.send(`<@${message.author.id}>`);
+    return message.channel.send(message.author);
   };
 
   message.delete().catch(O_o => {});
@@ -24,5 +24,5 @@ exports.help = {
   name: "say",
   category: "Fun",
   description: "Makes Woomy copy what the user says.",
-  usage: "echo  <-hide> [message]"
+  usage: "echo [message]"
 };

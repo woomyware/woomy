@@ -13,8 +13,8 @@ exports.run = (client, message, args) => {
   owoified = owoified.replace(/!+/g, ' ' + faces[~~(Math.random() * faces.length)] + ' ')
 
   if(owoified.length > 2000) {
-    return message.channel.send("<:error:466995152976871434> The owoified message exceeds 2000 characters.")
-  }
+    owoified = owoified.slice(0, -Math.abs(owoified.length - 2000))
+  };
 
 message.channel.send(owoified)
 };

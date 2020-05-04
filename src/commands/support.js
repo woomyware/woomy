@@ -12,7 +12,7 @@ exports.conf = {
 
 exports.help = {
     name: "support",
-    category: "utility",
+    category: "Utility",
     description: "Sends a link to Woomy's support/development server.",
     usage: "support"
     };

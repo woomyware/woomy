@@ -2,3 +2,4 @@ node_modules
 data
 config.js
 package-lock.json
+.env

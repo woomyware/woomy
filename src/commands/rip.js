@@ -1,12 +1,15 @@
-var request = require('request');
+const fetch = require('node-fetch');
 const Discord = require("discord.js")
 exports.run = (client, message) => {
   message.channel.startTyping();
-  var r = request.get('http://mityurl.com/y/yKsQ/r', function (err, res, body) {
-    var rip = r.uri.href
-    message.channel.send(`>:] ${rip}`)
-    message.channel.stopTyping();
-  });
+  try{
+    fetch('http://mityurl.com/y/yKsQ/r', { redirect: 'follow' })
+      .then(res => res)
+      .then(res => message.channel.send(`>:] ${res.url}`))
+  } catch(err) {
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
+  };
+  message.channel.stopTyping();
 }
 
 exports.conf = {

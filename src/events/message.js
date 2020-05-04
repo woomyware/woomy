@@ -1,4 +1,4 @@
-const commandRanRecently = new Set();
+const cooldown = new Set();
 module.exports = async (client, message) => {
   if (message.author.bot) return;
   
@@ -131,11 +131,17 @@ module.exports = async (client, message) => {
     };
   };
   
-  const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
-
-  if (message.content.match(prefixMention)) {
-    return message.channel.send(`Current prefix: \`${prefix}\``);
-  }
+  //const prefixMention = new RegExp(`^<@!?${client.user.id}>( |)$`);
+  const myMention = `<@&${client.user.id}>`;
+  const myMention2 = `<@!${client.user.id}>`;
+  
+  if (message.content.startsWith(myMention) || message.content.startsWith(myMention2)) {
+    if(message.content.length > myMention.length + 1 && (message.content.substr(0, myMention.length + 1) == myMention + ' ' || message.content.substr(0, myMention2.length + 1) == myMention2 + ' ')) {
+      prefix = message.content.substr(0, myMention.length) + ' ';
+    } else {
+      return message.channel.send(`Current prefix: \`${prefix}\``);
+    };
+  };
 
   if (message.content.indexOf(prefix) !== 0) return;
 
@@ -145,16 +151,21 @@ module.exports = async (client, message) => {
 
   if (!cmd) return;
 
-  if (commandRanRecently.has(message.author.id)) {
+  if (cooldown.has(message.author.id)) {
     return message.channel.send(
-        `⏱️ You are being ratelimited. Please try again in 2 seconds.`
-      )
-      .then(m => m.delete(2000));
+      `⏱️ You are being ratelimited. Please try again in 2 seconds.`
+    ).then(msg => {
+      msg.delete({timeout: 2000});
+    });
   };
 
-  if (!perms.has('SEND_MESSAGES')) {
+  if (message.guild && !perms.has('SEND_MESSAGES')) {
     return message.author.send(`<:error:466995152976871434> I don't have permission to speak in **#${message.channel.name}**, Please ask a moderator to give me the send messages permission!`);
   };
+
+  if (!cmd.conf.enabled) {
+    return message.channel.send('<:error:466995152976871434> This command has been disabled by my developers.')
+  }
 
   if(message.guild && blacklisted == true) {
     try {
@@ -216,12 +227,13 @@ module.exports = async (client, message) => {
     message.flags.push(args.shift().slice(1));
   };
   
-  commandRanRecently.add(message.author.id);
-  setTimeout(() => {
-    commandRanRecently.delete(message.author.id);
-  }, {timeout: 2000});
+  cooldown.add(message.author.id);
 
-  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`);
+  setTimeout(() => {
+    cooldown.delete(message.author.id);
+  }, 2000);
+
+  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ran command ${cmd.help.name}`);
   
   cmd.run(client, message, args, level);
 };

@@ -22,14 +22,14 @@ exports.run = (client, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ["flip"],
   permLevel: "User",
   requiredPerms: []
 };
 
 exports.help = {
-  name: "flip",
+  name: "coinflip",
   category: "Fun",
   description: "Flips a coin!",
-  usage: "flip [heads/tails]"
+  usage: "coinflip [heads/tails]"
 };
