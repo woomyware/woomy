@@ -1,6 +1,6 @@
 exports.run = async (client, message) => {
   message.channel.send(
-    `Use this link to invite me to your server:\n<https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot>`
+    `Use this link to invite me to your server:\n<https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=2134240503&scope=bot>`
     );
 };
 

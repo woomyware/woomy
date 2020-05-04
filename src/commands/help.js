@@ -50,7 +50,7 @@ exports.run = (client, message, args, level) => {
 
     embed.addField(
       "Invite me",
-      "[Click here](https://discordapp.com/oauth2/authorize?client_id=435961704145485835&permissions=8&scope=bot) to add me to your server",
+      "[Click here](https://discord.com/oauth2/authorize?client_id=435961704145485835&permissions=8&scope=bot) to add me to your server",
       true
     );
     embed.addField(
@@ -97,7 +97,7 @@ exports.run = (client, message, args, level) => {
 
     embed.addField(
       "Invite me",
-      "[Click here](https://discordapp.com/oauth2/authorize?client_id=435961704145485835&permissions=8&scope=bot) to add me to your server",
+      "[Click here](https://discord.com/oauth2/authorize?client_id=435961704145485835&permissions=8&scope=bot) to add me to your server",
       true
     );
     embed.addField(
