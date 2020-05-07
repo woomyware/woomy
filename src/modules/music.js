@@ -225,7 +225,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
       })
     }
   } else {
-    return message.channel.channelsend('failed to find the video!')
+    return message.channel.send('failed to find the video!')
   }
 }
 
