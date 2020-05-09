@@ -240,6 +240,8 @@ exports.setVolume = function (guild, target) {
 exports.skip = function (guild, reason) {
   const g = exports.getGuild(guild.id)
 
+  g.skippers = []
+
   if (g.dispatcher) {
     g.dispatcher.end(reason)
   }
