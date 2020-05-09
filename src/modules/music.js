@@ -69,7 +69,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
   guild.message = message
   
-  message.channel.startTyping()
+  // message.channel.startTyping()
 
   if (!message.member.voice.channel && !guild.voiceChannel) {
     message.channel.stopTyping()
@@ -239,8 +239,6 @@ exports.setVolume = function (guild, target) {
 
 exports.skip = function (guild, reason) {
   const g = exports.getGuild(guild.id)
-
-  g.skippers = []
 
   if (g.dispatcher) {
     g.dispatcher.end(reason)
