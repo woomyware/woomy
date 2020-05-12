@@ -16,6 +16,11 @@ var rating = [
     "9/10",
     "10/10"
 ];
+
+if (message.content.includes("@everyone")) {
+  return message.channel.send('>:(');
+}
+
     let mess = rating.random();
     message.channel.send(`<:star:618393201501536258> I give ${args.join(" ")} a **${mess}**`);
 };
