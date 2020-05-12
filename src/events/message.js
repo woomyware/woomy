@@ -1,7 +1,8 @@
 const cooldown = new Set();
 module.exports = async (client, message) => {
   if (message.author.bot) return;
-  
+  if (typeof(message.content) === 'string') message.content = message.content.replace(/\u8203/g,'').replace(/\uB200/g,'').replace("\\uB200",''); // Remove zero-width characters
+
   var settings;
 
   if(message.guild) {
