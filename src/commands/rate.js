@@ -17,7 +17,7 @@ var rating = [
     "10/10"
 ];
 
-if (message.content.includes("@everyone")) {
+if (message.content.includes("@everyone") || message.content.includes("@here")) {
   return message.channel.send('>:(');
 }
 

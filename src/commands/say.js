@@ -4,8 +4,8 @@ exports.run = (client, message, args, level) => {
       `<:error:466995152976871434> No message provided. Usage: \`${client.commands.get(`echo`).help.usage}\``
     );
   };
-  if (message.content.includes("@everyone")) {
-    return message.channel.send(message.author);
+  if (message.content.includes("@everyone") || message.content.includes("@here")) {
+    return message.channel.send('>:(');
   };
 
   message.delete().catch(O_o => {});
