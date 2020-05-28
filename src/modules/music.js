@@ -28,6 +28,7 @@ exports.getGuild = function (id) {
     guild.paused = false
     guild.dispatcher = null
     guild.skippers = []
+    guild.fixers = []
 
     exports.queue[id] = guild
   }
@@ -102,6 +103,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         guild.playing = false
         guild.paused = false
         guild.skippers = []
+        guild.fixers = []
       // music not playing, something is in queue
       } else if (!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
         guild.queue = []
@@ -200,8 +202,9 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
           guild.queue.pop()
         }
 
-        client.logger.error(err)
-        return message.channel.send(`<:error:466995152976871434> An error has occured! If this issue persists, please contact my developers with this:\n\`${err}\``)
+        client.logger.error('(YT API change, disregard) ' + err)
+        // return message.channel.send(`<:error:466995152976871434> An error has occured! If this issue persists, please contact my developers with this:\n\`${err}\``)
+        return message.channel.send('<:error:466995152976871434> YouTube have made changes to their site that break Woomy\'s music module. An announcement will be made in the development server when this issue is resolved.')
       }
       guild.dispatcher.setVolume(0.25)
 
@@ -219,6 +222,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
           guild.playing = false
           guild.paused = false
           guild.skippers = []
+          guild.fixers = []
 
           connection.disconnect()
         }
