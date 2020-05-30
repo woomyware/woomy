@@ -203,8 +203,8 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         }
 
         client.logger.error('(YT API change, disregard) ' + err)
-        // return message.channel.send(`<:error:466995152976871434> An error has occured! If this issue persists, please contact my developers with this:\n\`${err}\``)
-        return message.channel.send('<:error:466995152976871434> YouTube have made changes to their site that break Woomy\'s music module. An announcement will be made in the development server when this issue is resolved.')
+        return message.channel.send(`<:error:466995152976871434> An error has occured: \n\`${err}\``)
+        // return message.channel.send('<:error:466995152976871434> YouTube have made changes to their site that break Woomy\'s music module. An announcement will be made in the development server when this issue is resolved.')
       }
       guild.dispatcher.setVolume(0.25)
 
