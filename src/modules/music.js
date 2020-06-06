@@ -211,6 +211,8 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
       guild.channel.send('<:player:467216674622537748> Now playing: **' + v.video.title + '** `[' + exports.createTimestamp(v.video.lengthSeconds) + ']`')
 
       // play next in queue on end
+      guild.dispatcher.on('error', console.error);
+
       guild.dispatcher.once('finish', () => {
         guild.queue.shift()
         guild.playing = false
