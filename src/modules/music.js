@@ -189,40 +189,23 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         guild.channel = message.channel
       }
 
-      console.log('[MUSIC DEBUG] joining vc');
-
       const connection = await vc.join()
-
-      console.log('[MUSIC DEBUG] joined vc');
 
       const v = guild.queue[0]
 
-      console.log('[MUSIC DEBUG] got v');
-
       try {
-        console.log('[MUSIC DEBUG] getting link');
         let link = exports.getLinkFromID(v.video.videoId);
-        console.log('[MUSIC DEBUG] got link: ' + (message.guild.id == '410990517841690625' ? link : 'not woomy server'));
 
         let y = null;
-
-        setTimeout(() => {
+        /*setTimeout(() => {
           if(y == null) {
             console.log('[MUSIC DEBUG] y is still null');
           };
-        }, 5000);
-
-        console.log('[MUSIC DEBUG] await ytdl');
+        }, 5000);*/
         y = await ytdl(link, { highWaterMark: 1024 * 1024 * 32 });
-        console.log('[MUSIC DEBUG] got ytdl');
 
-        console.log('[MUSIC DEBUG] connection.play');
         guild.dispatcher = connection.play(y, { type: 'opus' });
-
-        console.log('[MUSIC DEBUG] got dispatcher');
       } catch (err) {
-        console.error(err);
-
         if (playNext && playNext === true) {
           guild.queue.splice(1, 1)
         } else {
@@ -233,9 +216,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         return message.channel.send(`<:error:466995152976871434> An error has occured: \n\`${err}\``)
         // return message.channel.send('<:error:466995152976871434> YouTube have made changes to their site that break Woomy\'s music module. An announcement will be made in the development server when this issue is resolved.')
       }
-      console.log('[MUSIC DEBUG] setting volume');
       guild.dispatcher.setVolume(0.25)
-      console.log('[MUSIC DEBUG] set volume');
 
       guild.channel.send('<:player:467216674622537748> Now playing: **' + v.video.title + '** `[' + exports.createTimestamp(v.video.lengthSeconds) + ']`')
 
@@ -245,8 +226,6 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
       });
 
       guild.dispatcher.once('finish', () => {
-        console.log('[MUSIC DEBUG] dispatcher finish');
-
         guild.queue.shift()
         guild.playing = false
 
