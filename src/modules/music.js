@@ -204,8 +204,16 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         let link = exports.getLinkFromID(v.video.videoId);
         console.log('[MUSIC DEBUG] got link: ' + (message.guild.id == '410990517841690625' ? link : 'not woomy server'));
 
+        let y = null;
+
+        setTimeout(() => {
+          if(y == null) {
+            console.log('[MUSIC DEBUG] y is still null');
+          };
+        }, 5000);
+
         console.log('[MUSIC DEBUG] await ytdl');
-        let y = await ytdl(link, { highWaterMark: 1024 * 1024 * 32 });
+        y = await ytdl(link);
         console.log('[MUSIC DEBUG] got ytdl');
 
         console.log('[MUSIC DEBUG] connection.play');
