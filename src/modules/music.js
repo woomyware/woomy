@@ -213,7 +213,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         }, 5000);
 
         console.log('[MUSIC DEBUG] await ytdl');
-        y = await ytdl(link);
+        y = await ytdl(link, { highWaterMark: 1024 * 1024 * 32 });
         console.log('[MUSIC DEBUG] got ytdl');
 
         console.log('[MUSIC DEBUG] connection.play');
