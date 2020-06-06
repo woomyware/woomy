@@ -37,7 +37,7 @@ exports.getGuild = function (id) {
 }
 
 exports.getLinkFromID = function (id) {
-  return 'https://invidio.us/watch?v=' + id
+  return 'https://invidio.us/watch?v=' + id + '&local=true'
 }
 
 exports.getVideoByQuery = async function (client, query, message) {
