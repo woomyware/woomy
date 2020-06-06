@@ -23,8 +23,8 @@
     "to-zalgo": "^1.0.1",
     "urban": "^0.3.2",
     "weather-js": "^2.0.0",
-    "ytdl-core": "github:FLGX06/node-ytdl-core#invidious",
-    "ytdl-core-discord": "github:FLGX06/ytdl-core-discord#invidious"
+    "ytdl-core": "^2.1.7",
+    "ytdl-core-discord": "^1.2.0"
   },
   "devDependencies": {},
   "scripts": {
