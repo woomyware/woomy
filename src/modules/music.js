@@ -189,13 +189,23 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         guild.channel = message.channel
       }
 
+      console.log('[MUSIC DEBUG] joining vc');
+
       const connection = await vc.join()
+
+      console.log('[MUSIC DEBUG] joined vc');
 
       const v = guild.queue[0]
 
+      console.log('[MUSIC DEBUG] got v');
+
       try {
         guild.dispatcher = connection.play(await ytdl(exports.getLinkFromID(v.video.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
+
+        console.log('[MUSIC DEBUG] got dispatcher')
       } catch (err) {
+        console.error(err);
+
         if (playNext && playNext === true) {
           guild.queue.splice(1, 1)
         } else {
@@ -206,14 +216,20 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         return message.channel.send(`<:error:466995152976871434> An error has occured: \n\`${err}\``)
         // return message.channel.send('<:error:466995152976871434> YouTube have made changes to their site that break Woomy\'s music module. An announcement will be made in the development server when this issue is resolved.')
       }
+      console.log('[MUSIC DEBUG] setting volume');
       guild.dispatcher.setVolume(0.25)
+      console.log('[MUSIC DEBUG] set volume');
 
       guild.channel.send('<:player:467216674622537748> Now playing: **' + v.video.title + '** `[' + exports.createTimestamp(v.video.lengthSeconds) + ']`')
 
       // play next in queue on end
-      guild.dispatcher.on('error', console.error);
+      guild.dispatcher.on('error', (err) => {
+        console.error('[MUSIC ERROR] ' + String(err));
+      });
 
       guild.dispatcher.once('finish', () => {
+        console.log('[MUSIC DEBUG] dispatcher finish');
+
         guild.queue.shift()
         guild.playing = false
 
