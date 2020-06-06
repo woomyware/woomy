@@ -69,7 +69,7 @@ exports.getVideoByQuery = async function (client, query, message) {
 exports.play = async function (client, message, query, playNext, ignoreQueue) {
   const guild = exports.getGuild(message.guild.id)
   guild.message = message
-  
+
   // message.channel.startTyping()
 
   if (!message.member.voice.channel && !guild.voiceChannel) {
@@ -105,7 +105,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         guild.skippers = []
         guild.fixers = []
       // music not playing, something is in queue
-      } else if (!guild.playing && !guild.dispatcher && guild.queue.length > 0) {
+      } else if ((!guild.playing || !guild.dispatcher) && guild.queue.length > 0) {
         guild.queue = []
       }
 
