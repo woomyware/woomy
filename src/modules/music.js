@@ -200,9 +200,18 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
       console.log('[MUSIC DEBUG] got v');
 
       try {
-        guild.dispatcher = connection.play(await ytdl(exports.getLinkFromID(v.video.videoId), { highWaterMark: 1024 * 1024 * 32 }), { type: 'opus' })
+        console.log('[MUSIC DEBUG] getting link');
+        let link = exports.getLinkFromID(v.video.videoId);
+        console.log('[MUSIC DEBUG] got link: ' + (message.guild.id == '410990517841690625' ? link : 'not woomy server'));
 
-        console.log('[MUSIC DEBUG] got dispatcher')
+        console.log('[MUSIC DEBUG] await ytdl');
+        let y = await ytdl(link, { highWaterMark: 1024 * 1024 * 32 });
+        console.log('[MUSIC DEBUG] got ytdl');
+
+        console.log('[MUSIC DEBUG] connection.play');
+        guild.dispatcher = connection.play(y, { type: 'opus' });
+
+        console.log('[MUSIC DEBUG] got dispatcher');
       } catch (err) {
         console.error(err);
 
