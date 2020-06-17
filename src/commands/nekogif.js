@@ -1,15 +1,13 @@
-const API = require('nekos.life');
-const {sfw} = new API();
-exports.run = async (client, message) => {
+const fetch = require("node-fetch")
+exports.run = async (client, message, args) => {
   message.channel.startTyping();
-  try {
-    sfw.nekoGif().then((json) => {
-      message.channel.send(json.url);
+  try{
+    fetch(`https://purrbot.site/api/img/sfw/neko/gif/`)
+      .then(res => res.json())
+      .then(json => message.channel.send(json.link));
       message.channel.stopTyping();
-    });
-  } catch (err) {
-    client.logger.error("nekogif.js: " + err);
-    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`)
+  } catch(err) {
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
     message.channel.stopTyping();
   };
 };

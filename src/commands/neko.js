@@ -1,21 +1,19 @@
-const API = require('nekos.life');
-const {sfw} = new API();
-exports.run = async (client, message) => {
+const fetch = require("node-fetch")
+exports.run = async (client, message, args) => {
   message.channel.startTyping();
-  try {
-    sfw.neko().then((json) => {
-      message.channel.send(json.url);
+  try{
+    fetch(`https://purrbot.site/api/img/sfw/neko/img/`)
+      .then(res => res.json())
+      .then(json => message.channel.send(json.link));
       message.channel.stopTyping();
-    });
-  } catch (err) {
-    client.logger.error("neko.js: " + err);
-    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`)
+  } catch(err) {
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
     message.channel.stopTyping();
   };
 };
 
 exports.conf = {
-  enabled: false, 
+  enabled: true, 
   guildOnly: false,
   aliases: ["catgirl"],
   permLevel: "User",
@@ -25,6 +23,6 @@ exports.conf = {
 exports.help = {
   name: "neko",
   category: "Image",
-  description: "Sends you pictures of catgirls.",
+  description: "Sends you cute wholesome pictures of catgirls.",
   usage: "neko"
 };
