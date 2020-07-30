@@ -15,6 +15,8 @@ module.exports.run = async (client, message, args, level) =>{
       guild.dispatcher.end('silent')
     }  
 
+    guild.fixers = []
+
     message.channel.send(
       '<:success:466995111885144095> Music has been fixed!'
     )
@@ -34,7 +36,9 @@ module.exports.run = async (client, message, args, level) =>{
     
       if (guild.dispatcher) {
         guild.dispatcher.end('silent')
-      }  
+      }
+
+      guild.fixers = []
 
       message.channel.send(
         '<:success:466995111885144095> Music has been fixed!'

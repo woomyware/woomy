@@ -19,6 +19,8 @@ exports.run = (client, message, args, level) => {
   if (guild.queue[0].requestedBy.id === message.author.id) {
     skip(message.guild, 'skip')
 
+    guild.skippers = []
+    
     message.channel.send(
       '<:success:466995111885144095> Song has been skipped by the user who requested it.'
     )
@@ -31,6 +33,8 @@ exports.run = (client, message, args, level) => {
 
     if (guild.skippers.length >= Math.ceil(vc.members.filter(member => !member.user.bot).size / 2)) {
       skip(message.guild, 'skip')
+
+      guild.skippers = []
 
       message.channel.send(
         '<:skip:467216735356059660> Song skipped.'

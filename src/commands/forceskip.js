@@ -10,6 +10,8 @@ exports.run = (client, message) => {
 
   skip(message.guild, 'skip')
 
+  guild.skippers = []
+
   message.channel.send('<:success:466995111885144095> Song skipped.')
 };
 
