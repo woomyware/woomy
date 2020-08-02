@@ -4,7 +4,7 @@ module.exports.run = async (client, message, args, level) =>{
 
   const lvl = client.config.permLevels.find(l => l.level === level)
 
-  if (lvl >= 1) {
+  if (lvl.level >= 1) {
     guild.queue = []
     guild.playing = false
     guild.paused = false
@@ -23,6 +23,8 @@ module.exports.run = async (client, message, args, level) =>{
 
     return
   }
+
+  const vc = message.guild.members.cache.get(client.user.id).voice.channel
 
   if (guild.fixers.indexOf(message.author.id) === -1) {
     guild.fixers.push(message.author.id)
