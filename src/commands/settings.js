@@ -80,7 +80,7 @@ exports.run = async (client, message, args) => {
     embed.setAuthor("Settings for: " + message.guild.name, message.guild.iconURL({dynamic: true}))
     embed.setColor(message.guild.member(client.user).displayHexColor)
     embed.setDescription("You can edit these settings using the commands in the 'configure' section of the help command.")
-    embed.addFields({ name: "General:", value: `Prefix: \`${prefix}\`\nChat logging: ${chatChan}\nMod logging: ${modChan}\nRaid mode: ${raidMode}\nJoin/leave channel: ${greetChan}\nWelcome message: ${welcomeMessage}\nLeave message: ${leaveMessage}`, inline: true}, {name: "Roles:", value: `Moderator: ${modRole}\nAdministrator: ${adminRole}\nMuted: ${mutedRole}\nBlacklisted: ${blacklist}\nAutorole: ${autorole}`, inline: true})
+    embed.addFields({ name: "General:", value: `Prefix: \`${prefix}\`\nChat logging: ${chatChan}\nMod logging: ${modChan}\nRaid mode: ${raidMode}\nJoin/leave channel: ${greetChan}\nWelcome message: ${welcomeMessage}\nLeave message: ${leaveMessage}`, inline: true}, {name: "Roles:", value: `Moderator: ${modRole}\nAdministrator: ${adminRole}\nMuted: ${mutedRole}\nBlocklist: ${blacklist}\nAutorole: ${autorole}`, inline: true})
     message.channel.send(embed)
 
 };

@@ -171,7 +171,7 @@ module.exports = async (client, message) => {
   if(message.guild && blacklisted == true) {
     try {
       return message.author.send(
-        `<:denied:466995195150336020> You have been blacklisted from using commands in \`${message.guild.name}\``
+        `<:denied:466995195150336020> You have been blocked from using commands in \`${message.guild.name}\``
       );
     } catch(err) {
       client.logger.log(err, "error")

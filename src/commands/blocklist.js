@@ -7,7 +7,7 @@ exports.run = async (client, message, [action, ...member]) => {
 
   if(!action) {
     return message.channel.send(
-      `<:error:466995152976871434> You didn't tell me if I was meant to add or remove someone from the blacklist! Usage: \`${client.commands.get(`blacklist`).help.usage}\``
+      `<:error:466995152976871434> You didn't tell me if I was meant to add or remove someone from the blocklist! Usage: \`${client.commands.get(`blocklist`).help.usage}\``
     )
   }
 
@@ -15,7 +15,7 @@ exports.run = async (client, message, [action, ...member]) => {
 
   if(!member) {
     return message.channel.send(
-      `<:error:466995152976871434> You didn't tell me who to blacklist! Usage: \`${client.commands.get(`blacklist`).help.usage}\``
+      `<:error:466995152976871434> You didn't tell me who to add to the blocklist! Usage: \`${client.commands.get(`blocklist`).help.usage}\``
     );
   };
 
@@ -41,18 +41,18 @@ exports.run = async (client, message, [action, ...member]) => {
       };
 
       if (user.id === message.guild.owner.id) {
-        return message.channel.send("<:error:466995152976871434> You can't blacklist the owner!")
+        return message.channel.send("<:error:466995152976871434> You can't add the owner to the blocklist!")
       };
 
       let admin = message.guild.member(message.author)
       if (user.roles.highest.position >= admin.roles.highest.position && admin.user.id !== message.guild.ownerID) {
         return message.channel.send(
-          `<:error:466995152976871434> You can't blacklist people higher ranked than yourself!`
+          `<:error:466995152976871434> You can't add people higher ranked than yourself to the blocklist!`
         );
       };
     
       if(user.id === message.member.id) {
-        return message.channel.send('<:error:466995152976871434> You can\'t blacklist yourself!');
+        return message.channel.send('<:error:466995152976871434> You can\'t add yourself to the blocklist!');
       };
 
       let blacklisted = false;
@@ -65,13 +65,13 @@ exports.run = async (client, message, [action, ...member]) => {
         });
 
         if(blacklisted == true) {
-          return message.channel.send('<:error:466995152976871434> This person has already been blacklisted!');
+          return message.channel.send('<:error:466995152976871434> This person is already on the blocklist!');
         };
       };
 
       client.settings.push(message.guild.id, user.id, "blacklisted")
       
-      return message.channel.send(`<:success:466995111885144095> Blacklisted \`${user.user.tag}\``)
+      return message.channel.send(`<:success:466995111885144095> Added \`${user.user.tag}\` to the blocklist.`)
   };
 
 
@@ -99,26 +99,26 @@ exports.run = async (client, message, [action, ...member]) => {
     });
 
     if(blacklisted != true) {
-      return message.channel.send('<:error:466995152976871434> This user isn\'t blacklisted!');
+      return message.channel.send('<:error:466995152976871434> This user isn\'t on the blocklist!');
     };
   
   client.settings.remove(message.guild.id, user.id, "blacklisted")
 
-  return message.channel.send(`<:success:466995111885144095> Removed \`${user.user.tag}\` from the blacklist.`)
+  return message.channel.send(`<:success:466995111885144095> Removed \`${user.user.tag}\` from the blocklist.`)
   };
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: [],
+  aliases: ['bl'],
   permLevel: "Administrator",
   requiredPerms: []
 };
 
 exports.help = {
-  name: "blacklist",
+  name: "blocklist",
   category: "Moderation",
-  description: "Allows you to configure Woomy's blacklist. Blacklisted users cannot use commands.",
-  usage: "blacklist [add/remove] [member]"
+  description: "Allows you to configure Woomy's blocklist. Users on the blocklist cannot use commands.",
+  usage: "blocklist [add/remove] [member]"
 };
