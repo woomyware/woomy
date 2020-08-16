@@ -1,4 +1,4 @@
 {
-    "number": "1.3.8",
+    "number": "1.3.9",
     "changelog": "**1.3.0 Changelog:**\n> • Music module has been rewritten for better stability and lots more features\n> • Force disconnecting Woomy from a voice channel no longer breaks music\n> • Music should (hopefully) break less in general\n> • Existing music commands have been rewritten\n> • Added the following new commands: fixmusic, movehere, movesong, playnext, shuffle, songinfo, volume\n> • Updated ship command\n**Notes:**\n> • This will be the final major update to Woomy V1, as we are shifting our focus to Woomy V2, which is a complete rewrite."
 }
