@@ -1,6 +1,6 @@
 var allowed = ["+", "-", "*", "/", "(", ")", " "];
 exports.run = (client, message, args) => {
-	let exercise = args.join(" ");
+	let exercise = args.join("").trim();
 	
   if (!exercise) {
     return message.channel.send(
