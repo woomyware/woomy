@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const coolPeople = require('../../resources/other/coolpeople.json')
 exports.run = (client, message, args) => {
-  var user, guild, status, createdAt, avurl, tag, id;
-  var nick = "", roles = "", presence = "", badges = "";
+  var user, guild, createdAt, avurl, tag, id;
+  var nick = "", roles = "", badges = "";
   var coolPerson = false;
   var friendos = coolPeople.coolPeople;
 
@@ -74,41 +74,10 @@ exports.run = (client, message, args) => {
     createdAt = user.createdAt;
   };
 
-  if(user.presence.status == "online") {
-    status = `online <:status_online:685462758023626762>`
-  };
-
-  if(user.presence.status == "idle") {
-    status = `idle <:status_idle:685462771529154561>`
-  };
-
-  if(user.presence.status == "dnd") {
-    status = `do not disturb <:status_dnd:685462782963220495>`
-  };
-
-  if(user.presence.status == "offline") {
-    status = `offline <:status_offline:685462758229016633>`
-  };
-
-  if(user.presence.activities[0]) {
-    presence = "\n• **Presence:** ";
-    if(user.presence.activities[0].type == "PLAYING") {
-      presence += `Playing ${user.presence.activities[0].name}`;
-    };
-
-    if(user.presence.activities[0].type == "STREAMING") {
-      presence += `Streaming ${user.presence.activities[0].name}`;
-    };
-
-    if(user.presence.activities[0].type == "CUSTOM_STATUS") {
-      presence += `${user.presence.activities[0].state}`;
-    };
-  };
-
   embed = new Discord.MessageEmbed();
   embed.setTitle(tag);
   embed.setThumbnail(avurl);
-  embed.setDescription(`${badges}• **ID:** ${id}${nick}\n• **Status:** ${status}${presence}${guild}\n• **Account created:** ${createdAt}`)
+  embed.setDescription(`${badges}• **ID:** ${id}${nick}${guild}\n• **Account created:** ${createdAt}`)
   embed.setColor(colour);
   message.channel.send(embed);
 };
