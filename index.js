@@ -7,7 +7,14 @@ const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const Enmap = require('enmap');
 const chalk = require('chalk');
-const client = new Discord.Client({ ws: { intents: Discord.Intents.ALL }});
+const client = new Discord.Client({ ws: { intents: [
+  'GUILDS',
+  'GUILD_MEMBERS',
+  'GUILD_EMOJIS',
+  'GUILD_VOICE_STATES',
+  'GUILD_MESSAGES',
+  'DIRECT_MESSAGES'
+]}});
 
 try {
   client.config = require('./config');
