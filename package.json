@@ -10,7 +10,6 @@
     "dblapi.js": "^2.4.1",
     "discord.js": "^12.4.0",
     "enmap": "^5.8.0",
-    "garfield": "^1.1.2",
     "hastebin-gen": "^2.0.5",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
