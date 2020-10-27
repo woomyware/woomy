@@ -12,7 +12,7 @@ exports.run = async (client, message, args, level) => {
   embed = new Discord.MessageEmbed();
   embed.setTitle(colour)
   embed.setColor(colour);
-  embed.setImage("https://api.alexflipnote.xyz/colour/image/" + colour.replace("#", ""));
+  embed.setImage(`https://fakeimg.pl/256x256/${colour.replace("#", "")}/?text=%20`);
   message.channel.send(embed)
 };
 
