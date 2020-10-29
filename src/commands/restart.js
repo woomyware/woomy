@@ -7,12 +7,12 @@ exports.run = (client, message) => {// eslint-disable-line no-unused-vars
   message.channel.send("<:reboot:467216876938985482> Restarting...");
   
   client.destroy();
-  client.wait();
+  require("util").promisify(setTimeout);
 
   fetch('https://gamecp.apex.to/api/client/servers/1fc76afa-9a4d-497b-983a-a898795ab5b5/power', {
     method: 'post',
-    body: { 'signal': 'restart' },
-    headers: { 'Authorization': `Bearer ${client.config.server}` }
+    body: JSON.stringify({ 'signal': 'restart' }),
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${client.config.server}` }
   });
 };
 
