@@ -97,4 +97,10 @@ const init = async () => {
   };
 };
 
+process.on('SIGINT', function(){
+  client.logger.info("Disconnecting...")
+  client.destroy();
+  process.exit();
+});
+
 init();
