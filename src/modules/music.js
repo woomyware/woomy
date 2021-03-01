@@ -1,6 +1,6 @@
 // Copyright 2020 Emily J. / mudkipscience and contributors. Subject to the AGPLv3 license.
 
-const ytdl = require('ytdl-core-discord')
+const ytdl = require('ytdl-core')
 const fetch = require('node-fetch')
 const { MessageEmbed } = require('discord.js')
 const { utc } = require('moment')
@@ -53,6 +53,8 @@ exports.getVideoByQuery = async function (client, query, message) {
   const parsed = await res.json().catch(function (e) {
     return message.channel.send('<:error:466995152976871434> An error has occured: ' + e)
   })
+
+  console.log(parsed)
 
   if (parsed) {
     const videos = parsed
@@ -194,15 +196,13 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
       const v = guild.queue[0]
 
       try {
-        let link = exports.getLinkFromID(v.video.videoId);
-
         let y = null;
         /*setTimeout(() => {
           if(y == null) {
             console.log('[MUSIC DEBUG] y is still null');
           };
         }, 5000);*/
-        y = await ytdl(link, { highWaterMark: 1024 * 1024 * 32 });
+        y = await ytdl(exports.getLinkFromID(v.video.videoId) || v.video.videoId, { highWaterMark: 1024 * 1024 * 32 });
 
         guild.dispatcher = connection.play(y, { type: 'opus' });
       } catch (err) {
@@ -212,7 +212,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
           guild.queue.pop()
         }
 
-        client.logger.error('(YT API change, disregard) ' + err)
+        client.logger.error(err.stack)
         return message.channel.send(`<:error:466995152976871434> An error has occured: \n\`${err}\``)
         // return message.channel.send('<:error:466995152976871434> YouTube have made changes to their site that break Woomy\'s music module. An announcement will be made in the development server when this issue is resolved.')
       }
