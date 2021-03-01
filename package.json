@@ -8,6 +8,7 @@
     "better-sqlite3": "^7.1.2",
     "chalk": "^4.0.0",
     "dblapi.js": "^2.4.1",
+    "discord-paginator.js": "github:mudkipscience/discord-paginator.js",
     "discord.js": "^12.5.1",
     "enmap": "^5.8.4",
     "ffmpeg-static": "^4.2.7",
@@ -16,14 +17,14 @@
     "moment-duration-format": "^2.3.2",
     "nekos.life": "^2.0.5",
     "node-fetch": "^2.6.1",
+    "pretty-ms": "^7.0.1",
     "randomcolor": "^0.6.2",
     "relevant-urban": "^2.0.0",
     "to-zalgo": "^1.0.1",
     "urban": "^0.3.2",
     "weather-js": "^2.0.0",
-    "ytdl-core": "^4.4.5"
+    "ytdl-core": "^4.5.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
