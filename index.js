@@ -13,7 +13,8 @@ const client = new Discord.Client({ ws: { intents: [
   'GUILD_EMOJIS',
   'GUILD_VOICE_STATES',
   'GUILD_MESSAGES',
-  'DIRECT_MESSAGES'
+  'DIRECT_MESSAGES',
+  'GUILD_MESSAGE_REACTIONS',
 ]}});
 
 try {
