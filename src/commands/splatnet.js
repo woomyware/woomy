@@ -48,6 +48,6 @@ exports.conf = {
 exports.help = {
     name: "splatnet",
     category: "Splatoon",
-    description: "Get current and upcoming maps and modes for regular, ranked and league battles.",
-    usage: "splatoonmaps"
+    description: "See what is currently on offer in the splatnet shop.",
+    usage: "splatnet"
     };
