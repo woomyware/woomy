@@ -12,7 +12,7 @@
     "discord-paginator.js": "github:mudkipscience/discord-paginator.js",
     "discord.js": "^12.5.1",
     "enmap": "^5.8.4",
-    "ffmpeg-static": "^4.2.7",
+    "ffmpeg-static": "^4.2.8",
     "hastebin-gen": "^2.0.5",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",

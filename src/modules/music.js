@@ -54,8 +54,6 @@ exports.getVideoByQuery = async function (client, query, message) {
     return message.channel.send('<:error:466995152976871434> An error has occured: ' + e)
   })
 
-  console.log(parsed)
-
   if (parsed) {
     const videos = parsed
     if (videos) {
@@ -196,15 +194,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
       const v = guild.queue[0]
 
       try {
-        let y = null;
-        /*setTimeout(() => {
-          if(y == null) {
-            console.log('[MUSIC DEBUG] y is still null');
-          };
-        }, 5000);*/
-        y = await ytdl(exports.getLinkFromID(v.video.videoId) || v.video.videoId, { highWaterMark: 1024 * 1024 * 32 });
-
-        guild.dispatcher = connection.play(y, { type: 'opus' });
+        guild.dispatcher = connection.play(ytdl(v.video.videoId, { type: 'opus', bitrate: 'auto' }));
       } catch (err) {
         if (playNext && playNext === true) {
           guild.queue.splice(1, 1)
