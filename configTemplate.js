@@ -12,6 +12,8 @@ const config = {
   "token": "", // Your bot's token.
   "devtoken": "", // (optional) another token, meant for a bot used for development
   "dblkey": "", // (optional) top.gg key, sends bot statistics to top.gg. You do not need this.
+  "sentry": "",
+  "server": "",
 
   // Configurable API endpoints
   endpoints: {
