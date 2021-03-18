@@ -12,6 +12,7 @@ exports.run = async (client, message) => {
   guild.paused = false
   guild.skippers = []
   guild.fixers = []
+  guild.channel = null
 
   message.channel.send('<:success:466995111885144095> Playback stopped!')
 };

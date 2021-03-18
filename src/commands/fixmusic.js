@@ -10,6 +10,7 @@ module.exports.run = async (client, message, args, level) =>{
     guild.paused = false
     guild.skippers = []
     guild.fixers = []
+    guild.channel = null
   
     if (guild.dispatcher) {
       guild.dispatcher.end('silent')
@@ -35,6 +36,7 @@ module.exports.run = async (client, message, args, level) =>{
       guild.paused = false
       guild.skippers = []
       guild.fixers = []
+      guild.channel = null
     
       if (guild.dispatcher) {
         guild.dispatcher.end('silent')

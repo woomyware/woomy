@@ -104,6 +104,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
         guild.paused = false
         guild.skippers = []
         guild.fixers = []
+        guild.channel = null
       // music not playing, something is in queue
       } else if ((!guild.playing || !guild.dispatcher) && guild.queue.length > 0) {
         guild.queue = []
@@ -227,6 +228,7 @@ exports.play = async function (client, message, query, playNext, ignoreQueue) {
           guild.paused = false
           guild.skippers = []
           guild.fixers = []
+          guild.channel = null
 
           connection.disconnect()
         }
