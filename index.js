@@ -6,6 +6,7 @@ const Discord = require('discord.js');
 const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const Enmap = require('enmap');
+const sentry = require('@sentry/node');
 const chalk = require('chalk');
 const client = new Discord.Client({ ws: { intents: [
   'GUILDS',
@@ -54,6 +55,10 @@ if(client.config.devmodeEnabled == true && process.env['USER'] != 'container') {
   if(client.config.dblkey.length > 0) {
     const DBL = require("dblapi.js");
     const dblapi = new DBL(client.config.dblkey, client);
+  };
+  
+  if(client.config.sentry.length > 0) {
+    sentry.init({ dsn: client.config.sentry });
   };
 };
 
