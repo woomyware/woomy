@@ -13,6 +13,7 @@ module.exports = (client, omsg, nmsg) => {
     );
 
     if (channel) {
+      if (!nmsg.member) return;
       let embed = new Discord.MessageEmbed();
       embed.setColor("#fff937");
       embed.setAuthor("Message Edited!", nmsg.member.user.avatarURL({dynamic: true}));

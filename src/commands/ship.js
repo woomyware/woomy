@@ -12,11 +12,15 @@ exports.run = async (client, message, args) => {
   ]
 
   if (!args[0]) {
-    return message.channel.send(client.userError(exports, 'Missing argument, the `name1` argument is required!'))
+    return message.channel.send(
+      `<:error:466995152976871434> No message provided. Usage: \`${client.commands.get(`ship`).help.usage}\``
+    );
   }
 
   if (!args[1]) {
-    return message.channel.send(client.userError(exports, 'Missing argument, the `name2` argument is required!'))
+    return message.channel.send(
+      `<:error:466995152976871434> No message provided. Usage: \`${client.commands.get(`ship`).help.usage}\``
+    );
   }
 
   const firstName = args[0]

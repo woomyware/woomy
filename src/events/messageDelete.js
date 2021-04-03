@@ -3,6 +3,8 @@ const Discord = require("discord.js");
 module.exports = (client, message) => {
   if (message.author.bot) return;
 
+  if(!message.guild) return;
+
   const settings = (message.settings = client.getSettings(message.guild.id));
 
   if (settings.chatlogsChannel !== "off") {
