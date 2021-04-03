@@ -1,7 +1,7 @@
 exports.run = (client, message, args) => {
   if (!args[0])
     return message.channel.send(
-      `<:error:466995152976871434> No username provided. Usage: \`${client.commands.get(``).help.usage}\``
+      `<:error:466995152976871434> No username provided. Usage: \`${client.commands.get(`msearch`).help.usage}\``
     );
   var mlist = "";
   var count = 0;
