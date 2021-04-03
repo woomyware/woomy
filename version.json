@@ -1,4 +1,4 @@
 {
-    "number": "1.4.2",
+    "number": "1.4.3",
     "changelog": "**1.4 Changelog**\n> • Splatoon commands have been added! check current and upcoming maps and modes with `~splatoonmaps`, current and upcoming salmon run maps, weapons and reward gear with `~salmonrun` and see what gear is on offer in the splatnet shop with `~splatnet`!\n**Notes:**\n> • Music is still broken and likely will be until v2 is released. Fixing v1 would delay v2 a lot, sorry >.<"
 }
