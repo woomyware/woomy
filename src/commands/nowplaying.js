@@ -17,7 +17,7 @@ exports.run = async (client, message) => {
 
   const embed = new MessageEmbed()
   embed.setTitle('Now playing')
-  embed.setThumbnail(s.video.videoThumbnails[1].url)
+  embed.setThumbnail('https://invidiou.site' + s.video.videoThumbnails[1].url)
   embed.setColor(client.embedColour(message))
   embed.setDescription(`**[${s.video.title}](https://www.youtube.com/watch?v=${s.video.videoId})**`)
   embed.addField('Channel:', s.video.author, true)

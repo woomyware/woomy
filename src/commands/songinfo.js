@@ -15,8 +15,12 @@ exports.run = async (client, message, args) => {
 
   const s = guild.queue[songID]
 
+  if (!s) {
+    return message.channel.send('<:error:466995152976871434> No song was found in the position you specified.')
+  }
+
   const embed = new MessageEmbed()
-  embed.setThumbnail(s.video.videoThumbnails[1].url)
+  embed.setThumbnail('https://invidiou.site' + s.video.videoThumbnails[1].url)
   embed.setColor(client.embedColour(message))
   embed.setDescription(`**[${s.video.title}](https://www.youtube.com/watch?v=${s.video.videoId})**`)
   embed.addField('Channel:', s.video.author, true)
