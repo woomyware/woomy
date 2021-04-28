@@ -9,7 +9,10 @@ exports.run = async (client, message, args) => {
   try{
     fetch(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`)
       .then(res => res.json())
-      .then(json => message.channel.send(json.yodish));
+      .then(json => message.channel.send(json.yodish))
+      .catch(err => {
+        message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
+      });
     message.channel.stopTyping();
   } catch(err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);

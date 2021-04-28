@@ -5,6 +5,9 @@ exports.run = async (bot, message, args) => {
     fetch('https://catfact.ninja/facts')
       .then(res => res.json())
       .then(json => message.channel.send(`__**Did you know?**__\n${json.data[0].fact}`))
+      .catch(err => {
+        message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
+      });
   } catch(err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
   };

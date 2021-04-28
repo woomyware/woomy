@@ -12,6 +12,9 @@ exports.run = async (client, message) => {
           .setURL('https://www.mezzacotta.net/garfield/?comic=' + json.data.number)
           .setImage(json.data.image.src);
           message.channel.send(embed)
+      })
+      .catch(err => {
+        message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
       });
     message.channel.stopTyping();
   } catch (err) {

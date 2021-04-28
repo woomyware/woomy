@@ -13,6 +13,8 @@ exports.run = (client, message) => {// eslint-disable-line no-unused-vars
     method: 'post',
     body: JSON.stringify({ 'signal': 'restart' }),
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${client.config.server}` }
+  }).catch(err => {
+    message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
   });
 };
 

@@ -4,7 +4,10 @@ exports.run = async (client, message) => {
   try {
     fetch('http://inspirobot.me/api?generate=true')
       .then(res => res.text())
-      .then(body => message.channel.send({files: [new Discord.MessageAttachment(body)]}));
+      .then(body => message.channel.send({files: [new Discord.MessageAttachment(body)]}))
+      .catch(err => {
+        message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
+      });
     message.channel.stopTyping();
   } catch (err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`)

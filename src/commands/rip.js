@@ -6,6 +6,9 @@ exports.run = (client, message) => {
     fetch('http://mityurl.com/y/yKsQ/r', { redirect: 'follow' })
       .then(res => res)
       .then(res => message.channel.send(`>:] ${res.url}`))
+      .catch(err => {
+        message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
+      });
   } catch(err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
   };

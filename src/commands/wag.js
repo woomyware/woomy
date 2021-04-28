@@ -4,7 +4,10 @@ exports.run = async (client, message, args) => {
   try{
     fetch(`https://purrbot.site/api/img/sfw/tail/gif/`)
       .then(res => res.json())
-      .then(json => message.channel.send(json.link));
+      .then(json => message.channel.send(json.link))
+      .catch(err => {
+        message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
+      });
       message.channel.stopTyping();
   } catch(err) {
     message.channel.send(`<:error:466995152976871434> An error has occurred: ${err}`);
