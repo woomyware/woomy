@@ -5,13 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
-    "@sentry/node": "^6.2.5",
-    "better-sqlite3": "^7.1.4",
-    "chalk": "^4.0.0",
+    "@sentry/node": "^6.3.6",
+    "better-sqlite3": "^7.3.1",
+    "chalk": "^4.1.1",
     "dblapi.js": "^2.4.1",
     "discord-paginator.js": "github:mudkipscience/discord-paginator.js",
     "discord.js": "^12.5.3",
-    "enmap": "^5.8.4",
+    "enmap": "^5.8.5",
     "ffmpeg-static": "^4.3.0",
     "hastebin-gen": "^2.0.5",
     "moment": "^2.29.1",
@@ -24,7 +24,7 @@
     "to-zalgo": "^1.0.1",
     "urban": "^0.3.2",
     "weather-js": "^2.0.0",
-    "ytdl-core": "^4.5.0"
+    "ytdl-core": "^4.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
