@@ -30,7 +30,7 @@ module.exports = (client, omsg, nmsg) => {
         return;
       }
       
-      embed.setDescription(`• Author: ${nmsg.member} (${nmsg.member.user.id})\n• Channel: ${nmsg.channel}\n• Old message: ${omsg.content}\n• New message: ${nmsg.content}`)
+      embed.setDescription(`[Jump to message](https://discord.com/channels/${nmsg.guild.id}/${nmsg.channel.id}/${nmsg.id})\n• Author: ${nmsg.member} (${nmsg.member.user.id})\n• Channel: ${nmsg.channel}\n• Old message: ${omsg.content}\n• New message: ${nmsg.content}`)
       try {
         channel.send({ embed });
       } catch (err) {
