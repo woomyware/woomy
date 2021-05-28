@@ -5,8 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
-    "@sentry/node": "^6.3.6",
-    "better-sqlite3": "^7.3.1",
+    "@sentry/node": "^6.4.1",
+    "better-sqlite3": "^7.4.0",
     "chalk": "^4.1.1",
     "dblapi.js": "^2.4.1",
     "discord-paginator.js": "github:mudkipscience/discord-paginator.js",
@@ -24,7 +24,7 @@
     "to-zalgo": "^1.0.1",
     "urban": "^0.3.2",
     "weather-js": "^2.0.0",
-    "ytdl-core": "^4.7.0"
+    "ytdl-core": "^4.8.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
