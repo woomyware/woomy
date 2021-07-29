@@ -1,3 +1,5 @@
+# Development has moved! Find my new home [here](https://gitdab.com/embee/woomy)
+
 # Woomy
 Woomy is a all-purpose discord bot built off the [guidebot](https://github.com/AnIdiotsGuide/guidebot) base and coded in node.js using discord.js.
 
